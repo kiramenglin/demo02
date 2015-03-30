@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>$title</title>
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+    <style type="text/css">
+		.ui-jqgrid tr.jqgrow td{
+			text-overflow:ellipsis;
+			overflow:hidden;
+			word-wrap:normal;
+			white-space:nowrap !important;
+		}
+  	</style>
+    <script type="text/javascript">
+  //过滤按钮权限
+	var auth = "#{RESOURCE_AUTH}";
+	jQuery(document).ready(function () {
+		//主题切换
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		//tab组件初始化
+		if($("#contentTabs").html()!=null){
+			$( "#contentTabs").tabs({
+				ajaxOptions: {
+					error: function( xhr, status, index, anchor ) {
+						$( anchor.hash ).html("加载出错" );
+					}
+				}
+			});
+			//移去tabs的ui-widget-header样式
+			$( "#contentTabs > ul").removeClass("ui-widget-header");
+			$( "#contentTabs > ul").addClass("ui-widget-content");
+			$(".ui-tabs-panel").css("padding","0").css("padding-top","2px");
+		}
+		//tab点击事件
+		$('#contentTabs').bind('tabsselect', function(event, ui) {
+			   $("#buttons").append($("#buttonset"));
+			   var pan = $(".ui-tabs-panel");
+			   for(var i=0;i<pan.length;i++){
+		    		pan.html("");
+		       }
+		});
+		
+	});
+
+    </script>
+</head>
+<body class="demo-single">	   
+		<div id="contentTabs" >
+			<ul >
+				<LI label="用户列表"><A href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=back.tab&TABID=1">用户列表1</A></LI>
+				<LI label="用户列表"><A href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=back.tab&TABID=2">用户列表2</A></LI>
+			</ul>
+		</div>
+		<div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;"></div>
+</body>
+</html>
+<!--Form Setting Start-->
+<!--Form Setting End-->

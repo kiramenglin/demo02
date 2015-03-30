@@ -1,0 +1,97 @@
+.content_title {
+	height : 111px;  
+	margin-left : 37px;
+	background: url("/fmcis/css/website/background/content_title_bg.png") repeat-x ;
+	line-height: 20px;
+}
+
+.content_body_l {
+	float : left;
+	width: 37px;
+	height: 500px;
+	background: url("/fmcis/css/website/background/content_body_l.png") no-repeat;
+}
+
+.content_body_m {
+	float : left;
+	width : 920px;
+	height: 500px;
+	background: url("/fmcis/css/website/background/content_body_bottom.png") repeat-x bottom; 
+}
+.content_body_r {
+	float : left;
+	width : 44px;
+	height: 500px;
+	background: url("/fmcis/css/website/background/content_body_r.png") no-repeat;
+}
+.content_l {
+	width : 440px;
+	float: left;
+	height : 500px;
+	line-height: 70px;
+}
+
+.content_subject {
+	margin-left: 15px;
+	font-size: 15pt;
+	color: #005BAE;
+	font-weight:bolder;
+}
+.content_l div {
+	font-size: 12pt;
+}
+.content_l div span{
+	width : 150px;
+	text-align: right;
+	display: inline-block;
+}
+.content_l input{
+	width : 260px;
+	height: 30px;
+	line-height : 20px;
+	font-size: 12pt;
+}
+.content_r {
+	float: left;
+	width : 440px;
+	line-height:500px;
+	height:100%;
+	height : 500px;
+	margin : 0 auto;
+	background: url("/fmcis/css/website/background/content_body_m.png") no-repeat left;
+}
+.content_note {
+	margin-top : 170px;
+	width: 100%;
+	height : 100%;
+	line-height: 40px;
+	text-indent: 65px;
+}
+
+.btn_div {
+	margin: 0 auto;
+}
+
+
+.submit_btn {
+	height:32px;
+	width : 80px;
+	border : none;
+	background: url("/fmcis/css/website/btn/submit_btn.png") no-repeat;
+}
+.submit_btn:hover {
+	border: 1px;
+}
+
+.cannel_btn {
+	height:32px;
+	width : 80px;
+	border : none;
+	background: url("/fmcis/css/website/btn/cannel_btn.png") no-repeat;
+}
+
+.content_body_bottom {
+	width: 1003px;
+	height : 4px;
+}
+

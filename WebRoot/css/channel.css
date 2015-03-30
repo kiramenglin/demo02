@@ -1,0 +1,342 @@
+
+
+.head {
+	height: 10%;
+	margin :0 auto; 
+	width:1003px;
+}
+
+.bottom {
+	margin: 0 auto; 
+	width: 1003px;
+	height: 10%;
+}
+
+ /*页面中部*/
+ .body_div {
+ 	margin: 0 auto;
+ 	width: 1003px;
+ 	height: 80%;
+ 	/**height : 500px;*/ 	
+ 	background-color: #ffffff;
+ }
+ /*页面中部内容*/
+ .content_div{
+ 	height: 635px;
+ }
+
+
+.title_font {
+	font-family: Tahoma,"宋体",  Verdana, Arial, sans-serif;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 12pt;
+}
+
+/*位置导航*/
+.nav_position {
+ 	height:35px; 
+ 	line-height:35px;
+ 	overflow:hidden; 
+ 	background-color:#f6f1ee;
+ 	
+ }
+ 
+.nav_position span{
+	background : url("/fmcis/css/website/channel_position.png") no-repeat left center;
+	display : block;
+ 	margin-left: 8px;
+ 	text-indent: 15px;
+ 	font-size: 11pt;
+ }
+
+ /*页面中部内容左边*/
+ .body_l_div {
+ 	float: left;
+ 	height: 100%;
+ 	width: 277px;
+ 	background-color: #ffffff;
+ }
+ 
+ .body_l_box {
+ 	width: 251px; 
+ 	margin-top: 10px;
+ 	margin-left: 5px;
+ }
+ 
+ /*登录框box*/
+ .login_box {
+ 	height: 135px;  
+ }
+ /*登录框头部左边*/
+ .login_head_l {
+ 	height:33px;
+ 	width:4px; 
+ 	float:left; 
+ 	background: url('/fmcis/css/website/login/login_head_l.png') no-repeat;
+ }
+  /*登录框头部中间*/
+ .login_head_m{
+ 	height:33px; 
+ 	line-height:33px;
+ 	width:243px; 
+ 	float:left; 
+ 	background: url('/fmcis/css/website/login/login_head_m.png') repeat-x;
+ }
+  /*登录框头部右边*/
+ .login_head_r{
+ 	height:33px; 
+ 	width:4px; 
+ 	float:left; 
+ 	background: url('/fmcis/css/website/login/login_head_r.png') no-repeat;
+ }
+ /*登录框body左边*/
+ .login_body_l {
+ 	float:left;
+ 	height:101px;
+ 	width:3px; 
+ 	background: url('/fmcis/css/website/login/login_l.png') no-repeat;margin:0px;
+ }
+  /*登录框body中间*/
+.login_body_m {
+  	float:left;
+  	height:101px;
+  	width:245px; 
+  	background: url('/fmcis/css/website/login/login_m.png') repeat;
+}
+/*登录框body右边*/  
+.login_body_r {
+   float:left;
+   height:101px;
+   width:3px; 
+   margin : 0 auto; 
+   background: url('/fmcis/css/website/login/login_r.png') no-repeat;
+}
+
+ /*页面中部左边栏目框*/
+.body_l_content_box {
+	border: #dadada solid 1px; 
+}
+ /*左边栏目框标题*/
+.body_l_content_title{
+	line-height:32px; 
+	background: url('/fmcis/css/website/content_title_bg.png') repeat-x;
+	padding: 0px;
+}
+
+.body_l_content_title {
+	padding-left:5px;
+}
+.content_title_l {
+	width:170px;
+	font-size:11pt;
+	font-weight :bold;
+	display:inline-block;
+	margin-left:8px;
+	background: url("/fmcis/css/website/content_title.png") no-repeat left center;
+	text-indent: 15px;
+}
+
+
+.content_title_r {
+	display:inline-block;
+}
+
+/*栏目框内容*/
+.content_box {
+	height: 200px;
+	margin-top:20px;
+}
+
+/*栏目框行样式*/
+.content_record {
+	line-height: 25px;
+	text-overflow:ellipsis;
+	white-space:nowrap; 
+	width:250px; 
+	overflow:hidden;
+}
+
+
+.login_btn {
+	height:101px;
+	line-height : 101px;
+	width: 87px; 
+	margin :0 auto;
+	cursor:pointer;
+	background: url('/fmcis/css/website/login/login_btn.png') no-repeat center;
+}
+
+.content_record a{
+	width:250px;
+	font-size:11pt;
+	color:black;
+	overflow:hidden;
+	text-decoration:none;
+	text-overflow: ellipsis;
+	display:inline; 
+	padding-left:10px;
+	padding-bottom:5px;
+	margin-left:5px;
+}
+div[class='content'] a {
+	width: 200px; 
+	font-size: 14px; 
+	color: black; 
+	overflow: hidden; 
+	text-decoration: none; 
+	text-overflow: ellipsis; 
+	display: inline; 
+	padding-left: 10px; 
+	margin-left: 5px;
+	background: url('/fmcis/css/website/content.png') no-repeat left center;
+}
+div[class='content']  a:hover{
+	font-size: 14px;
+	color:#23A4FF;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	display: inline;
+	padding-left: 10px;
+	margin-left: 5px;
+	background: url('/fmcis/css/website/content.png') no-repeat left center;
+}
+
+.body_r_div {
+ 	float: left;
+ 	height: 100%;
+ 	background-color: #ffffff;
+}
+/*页面中部主要部分*/
+.body_main {
+	width: 726px;
+	height: 100%;
+	background-color: #ffffff;
+}
+
+.search_div {
+	height: 48px;
+	line-height: 48px;
+}
+
+/*查询部分左边*/
+.main_search_l {
+	float:left; 
+	width:6px; 
+	height:48px; 
+	background: url('/fmcis/css/website/channel_search_bg_l.png') no-repeat;
+}
+/*查询部分中间*/
+.main_search_m {
+	float:left; 
+	width:714px; 
+	height:48px;
+	line-height:48px;
+	vertical-align:middle; 
+	background: url('/fmcis/css/website/channel_search_bg_m.png') repeat-x;
+}
+/*查询部分右边*/
+.main_search_r{
+	float:left;
+	width:6px; 
+	height:48px; 
+	background: url('/fmcis/css/website/channel_search_bg_r.png') no-repeat;
+}
+.search {
+	width: 400px;
+	height: 30px;
+}
+.search_btn {
+	height: 30px;
+	line-height:30px;
+	width: 80px; 
+	display : inline-block;
+	background: url('/fmcis/css/website/search_btn_focus.png') no-repeat;
+	
+}
+
+
+.report_body {
+	border: #dadada solid 1px;
+	margin-top: 8px;
+	font-size: 11pt;
+}
+
+.report_title {
+
+	font-family : "宋体";
+	font-size : 12pt;
+	font-weight:bold;
+	height : 70px;
+	line-height:70px;
+	background: url("/fmcis/css/website/channel/channel_m.png") repeat-x;
+}
+
+.report_row {
+	width: 680px; height: 35px;line-height: 35px; margin: 0 auto;
+}
+
+.row_title {
+	display : inline-block;
+	width : 480px;
+}
+.row_date{
+	display : inline-block;
+	width: 90px;
+}
+.row_buy{
+	display : inline-block;
+	width: 90px;
+}
+
+.buy_btn {	
+	height: 20px;
+	width: 59px;
+	line-height:20px;
+	margin :0px;
+	margin-bottom : -5px;
+	padding:0px;
+	cursor:pointer;
+	background: url("/fmcis/css/website/channel/buy_btn.png") no-repeat;
+}
+
+.buy_btn:hover {
+	height: 20px;
+	width: 59px;
+	line-height:20px;
+	margin :0px;
+	margin-bottom : -5px;
+	padding:0px;
+	cursor:pointer;
+	background : url("/fmcis/css/website/channel/buy_btn_focus.png") no-repeat;
+}
+/* 报告间隔线  */
+.spac {
+	border: #dadada dashed 1px;
+}
+.title_icon {
+	margin-left: 25px;
+}
+
+.spanIcon{
+	width: 200px; 
+	color: black; 
+	overflow: hidden; 
+	text-decoration: none; 
+	text-overflow: ellipsis; 
+	display: inline; 
+	padding-left: 10px; 
+	margin-left: 5px;
+	vertical-align:middle; 
+	background: url('/fmcis/css/website/content.png') no-repeat left center;
+}
+.spanIcon:hover{
+	color:#23A4FF;
+	text-decoration: underline;
+	text-overflow: ellipsis;
+	display: inline;
+	padding-left: 10px;
+	margin-left: 5px;
+	vertical-align:middle; 
+	background: url('/fmcis/css/website/content.png') no-repeat left center;}
+}

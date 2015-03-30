@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<link href="/e9common/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/e9common/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+	<script type="text/javascript" src="js/ssocommon.js"></script>    
+    <script type="text/javascript">
+    //验证变量
+    var validateForm = false;
+    $(function(){
+    	//重置表单（防止IE缓存）
+    	//$("#infoForm")[0].reset();
+    	//主题切换
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		//按钮样式
+		$( "input:button, a, button", "div" ).button();
+    	//验证表单
+    	commonValidate("infoForm");
+		//绑定表单提交事件
+		submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=back.user");
+		//按钮
+		$( "#buttonset" ).buttonset();
+		
+		//$("#ORGNAME").click(popOrg);//不需要弹出选择组织机构了，职员信息已经包含了组织机构，如果一个职员有多个组织机构，则采用下拉框选择
+		
+		//getOrgInfo($("#EMPLOYEE_ID").val())
+    });
+    
+    //表单提交
+    function saveInfo(){
+    	$('#infoForm').submit();
+    }
+	</script>
+</head>
+<body class="ui-widget-content" style="border: 0">
+	<form method="post" name="infoForm" id="infoForm" action="/">
+		<input type="text" style="display: none;" name="CMD" id="CMD">
+		<div class="form-group">
+		  <label for="exampleInputEmail1">脊柱</label>
+		  <input type="email" class="form-control" id="SPINE" placeholder="SPINE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">肋脊骨</label>
+		  <input type="email" class="form-control" id="ATTRIBUTE1" placeholder="ATTRIBUTE1">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">四肢</label>
+		  <input type="email" class="form-control" id="LIMB" placeholder="LIMB">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">关节</label>
+		  <input type="email" class="form-control" id="JOINT" placeholder="JOINT">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">末梢动脉</label>
+		  <input type="email" class="form-control" id="ENDARTERY" placeholder="ENDARTERY">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">脉搏</label>
+		  <input type="email" class="form-control" id="SPINEPULSE" placeholder="SPINEPULSE">
+		</div>
+		
+		
+		
+		
+	</form>
+	<!-- 以下是按钮区域 -->
+	<div style="position:absolute;width: 100%;border-bottom:0px;border-left:0px;border-right:0px;bottom:40px;font-size: 0px;" class="ui-widget-content"></div>
+	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
+		<span id="buttonset">
+			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()" class="btn btn-default"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
+			<button id="cancelBtn" onclick="cancel()" class="btn btn-default"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
+		</span>
+	</div>
+</body>
+</html>
+<!--Form Setting Start-->
+	
+<!--Form Setting End-->

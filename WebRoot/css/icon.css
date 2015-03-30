@@ -1,0 +1,25 @@
+@charset "utf-8";
+#iconarea {
+	BORDER-RIGHT: #ff8800 2px solid; BORDER-TOP: #ff8800 2px solid; DISPLAY: none; BACKGROUND: #ffffff; BORDER-LEFT: #ff8800 2px solid; WIDTH: 510px; BORDER-BOTTOM: #ff8800 2px solid; POSITION: absolute
+}
+#iconarea IMG {
+	BORDER-RIGHT: #eeeeee 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: #eeeeee 1px solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: #eeeeee 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #eeeeee 1px solid
+}
+#iconarea2 IMG {
+	BORDER-RIGHT: #eeeeee 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: #eeeeee 1px solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 4px; BORDER-LEFT: #eeeeee 1px solid; PADDING-TOP: 4px; BORDER-BOTTOM: #eeeeee 1px solid
+}
+#iconarea .hoverf {
+	BORDER-RIGHT: #fdb913 1px solid; BORDER-TOP: #fdb913 1px solid; BORDER-LEFT: #fdb913 1px solid; BORDER-BOTTOM: #fdb913 1px solid
+}
+#iconarea2 .hoverf {
+	BORDER-RIGHT: #fdb913 1px solid; BORDER-TOP: #fdb913 1px solid; BORDER-LEFT: #fdb913 1px solid; BORDER-BOTTOM: #fdb913 1px solid
+}
+#iconarea .outf {
+	BORDER-RIGHT: #eeeeee 1px solid; BORDER-TOP: #eeeeee 1px solid; BORDER-LEFT: #eeeeee 1px solid; BORDER-BOTTOM: #eeeeee 1px solid
+}
+#iconarea2 .outf {
+	BORDER-RIGHT: #eeeeee 1px solid; BORDER-TOP: #eeeeee 1px solid; BORDER-LEFT: #eeeeee 1px solid; BORDER-BOTTOM: #eeeeee 1px solid
+}
+.iconctrl {
+	BORDER-RIGHT: #ff8800 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #ff8800 1px solid; BACKGROUND: url(../images/xljt2.gif) no-repeat 22px center; MARGIN: 3px; BORDER-LEFT: #ff8800 1px solid; CURSOR: pointer; BORDER-BOTTOM: #ff8800 1px solid
+}

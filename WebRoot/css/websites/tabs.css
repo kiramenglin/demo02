@@ -1,0 +1,92 @@
+.search_m{
+	width:730px;
+	height:135px;
+	margin-top:10px;
+	background: url(/fmcis/css/website/search/search_m.png) repeat-x;
+}
+
+.searchBtn{
+	cursor:pointer;
+	height:30px;
+	overflow:hidden;
+	border:0px;
+	margin-top:0px;
+	background: url(/fmcis/css/website/search/searchBtn.png) no-repeat;
+}
+
+ul,li {
+	margin: 0;
+	padding: 0;
+	
+}
+
+#tabbox {
+	width: 720px;
+	height:150px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+ 
+.search_l{
+	height:150px;
+	width:8px;
+	background: url(/fmcis/css/website/search/search_l.png) no-repeat;
+}
+
+.search_r{
+	height:150px;
+	width:8px;
+	background: url(/fmcis/css/website/search/search_r.png) no-repeat;
+} 
+
+
+.tab_conbox {
+	border: 0px;
+	border-top: none;
+	margin-left: -100px;
+}
+
+.tabs {
+	height: 32px;
+	width: 100%;
+}
+
+.tabs li {
+	height: 31px;
+	line-height: 31px;
+	width : 125px;
+	float: left;
+	margin-bottom: -1px;
+	list-style-type:none;
+	overflow: hidden;
+	position: relative;
+	color:#fff;
+	background: url(/fmcis/css/website/search/search_blue.png) no-repeat;
+}
+
+.tabs li a:hover {
+	width: 100%;
+	background: #fff;
+}
+
+.tabs .thistab,.tabs .thistab a:hover {
+	height: 31px;
+	line-height: 31px;
+	width : 125px;
+	float: left;
+	margin-bottom: -1px;
+	list-style-type:none;
+	overflow: hidden;
+	position: relative;
+	color:#fff;
+	background: url(/fmcis/css/website/search/search_yellow.png) no-repeat;
+}
+
+.tab_con {
+	margin-top:40px;
+	padding:0px;
+	font-size: 18px;
+	font-weight: bold;
+	list-style-type:none;
+}
+

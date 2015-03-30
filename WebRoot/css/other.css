@@ -1,0 +1,30 @@
+/*Layout*/
+.pagemain {
+	position: relative;
+	height:100%;
+	/*width:100%;*/
+	padding: 0 0 0 1px;
+	overflow: hidden;
+}
+
+#titlebar {
+	padding-top:8px;
+	height:28px;
+	background-image:url(../images/titlebar_bg.gif);
+	background-repeat:repeat-x;
+	width: 100%;
+}
+
+#titlebar span{
+	padding-left:25px;
+	margin-left:11px;
+	background-image:url(../images/promotion.png);
+	background-repeat:no-repeat;
+	background-position:0 2px;
+	width: 100%;
+	font-size: 12px;
+	font-weight: none;
+	color: #0e5e97;
+	height:25px;
+
+}

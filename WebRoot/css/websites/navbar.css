@@ -1,0 +1,214 @@
+td {
+	font-family: 宋体;
+	font-size: 12px;
+}
+html,body{
+	margin: 0px;
+	padding: 0px;
+}
+
+/*logo*/
+.back_to_index {
+	background-image: url(/fmcis/css/website/head/head.jpg);
+	background-repeat: no-repeat;
+	height: 110px;
+}
+
+.return_plat {
+	text-decoration: none; 
+	font-size: 12pt; 
+	color: black; 
+	float: right; 
+	width : 150px;
+	margin-right: 50px;
+	margin-top: 15px;
+}
+
+.navbar_l {
+	float:left;
+	width : 2px;
+	height : 37px;
+	background: url(/fmcis/css/website/head/navbar_l.png) no-repeat;
+}
+
+.navbar_r {
+	float:left;
+	width : 2px;
+	height : 37px;
+	background: url(/fmcis/css/website/head/navbar_r.png) no-repeat;
+}
+.navbar {
+		float: left;
+	list-style: none;
+	height: 37px;
+	line-height : 37px;
+	margin : 0px;
+	width : 999px;
+	font-family: arial, verdana, sans-serif;
+	text-align: center;
+	vertical-align:middle;
+	background: url(/fmcis/css/website/head/navbar_m.png) repeat-x;
+}
+
+#nav {
+	list-style: none;
+	height: 37px;
+	line-height : 37px;
+	z-index: 500;
+	font-family: arial, verdana, sans-serif;
+	text-align: center;
+	vertical-align:middle;
+	margin: 0px;
+	padding: 0px;
+}
+
+
+#nav ul{
+	position: absolute;
+	left: -9999px;
+	top: -9999px;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#nav li.top {
+	display: block;
+	width:150px;
+	float: left;
+	height: 37px;
+	line-height: 37px;
+	text-align:center;
+	vertical-align:middle;	
+}
+
+#nav li a.top_link2 {
+	display: block;
+	float: left;
+	height: 37px;
+	width:100%;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-family: "宋体";
+	font-size: 17px;
+	font-weight: bold;
+}
+
+#nav li:hover a.top_link2 {
+	display: block;
+	float: left;
+	height: 37px;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-family: "宋体";
+	font-size: 17px;
+	font-weight: bold;
+	background: url(/fmcis/css/website/head/navbar_click_m.png);
+}
+
+
+#nav li a.top_link {
+	display: block;
+	float: left;
+	height: 37px;
+	width:100%;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-family: "宋体";
+	font-size: 17px;
+	font-weight: bold;
+	background: url(/fmcis/css/website/head/navbar_jg.png) no-repeat left center;
+}
+
+#nav li:hover a.top_link {
+	display: block;
+	float: left;
+	height: 37px;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-family: "宋体";
+	font-size: 17px;
+	font-weight: bold;
+	background: url(/fmcis/css/website/head/navbar_click_m.png);
+}
+
+/* Default list styling */
+#nav li:hover {
+	position: relative;
+	z-index: 200;
+}
+
+#nav li:hover ul.sub /** 下拉大框 **/ {
+	left: 1px;
+	top: 37px;
+	padding:0px;
+	white-space: nowrap;
+	height: auto;
+	z-index: 300;
+	font-family: "宋体";
+	font-size: 12px;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+
+#nav li:hover ul.sub li {
+	display: block;
+	height: 30px;
+	width: 150px;
+	position: relative;
+	float:left;
+	font-weight:normal;
+	text-align:center;
+	vertical-align:middle;
+	line-height: 30px;
+	background: url(/fmcis/css/website/head/navbar_click_xl.png);	
+}
+
+#nav li:hover ul.sub li a /*子标题外框*/ {
+	display: block;
+	font-size: 15px;
+	width: 100%;
+	color:#fff;
+	text-indent: 5px;
+	font-family: "宋体";
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	text-decoration: none;
+	margin-bottom:0px;
+	background: url(/fmcis/css/website/head/navbar_click_jg.png) repeat-x bottom left;
+	
+}
+
+#nav li:hover ul.sub li a:hover {
+	display: block;
+	font-size: 15px;
+	width: 100%;
+	color:#fff;
+	text-indent: 5px;
+	font-family: "宋体";
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	text-decoration: none;
+	background: url(/fmcis/css/website/head/navbar_click_m.png);
+}
+
+

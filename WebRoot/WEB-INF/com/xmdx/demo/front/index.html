@@ -1,0 +1,504 @@
+  <body class="">
+
+    <!-- Docs master nav -->
+    <header class="navbar navbar-default navbar-fixed-top bs-docs-nav" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="./" id="brand"></a>
+    </div>
+    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav navbar">
+        <li>
+          <a track="how it works" href="./how-it-works">How It Works</a>
+        </li>
+        <li>
+          <a track="enterprise" href="./enterprise">Enterprise</a>
+        </li>
+        <li>
+          <a track="editions" href="./editions">Editions</a>
+        </li>
+        <li>
+          <a track="documentation" href="./documentation/">Docs</a>
+        </li>
+        <li>
+          <a track="blog" href="./blog">Blog</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" id="workspace-menu" style="display:none;">
+        <li id="loggedin-user" class="hidden-xs">
+          <a href="" class="dropdown-toggle dropdown" data-toggle="dropdown">
+            <span class="user-avatar">
+              <span></span>
+              <img id="user-icon" src="">
+            </span>
+            <span id="user-name" class="user-name">
+              
+            </span>
+          </a>
+          <ul class="menu dropdown-menu">
+            <li class="arrow"><span></span></li>
+            <li>
+                <a track="" href="./#/instances"><i class="icon icon-myworkspace"></i>My Workspace</a>
+            </li>
+            <li style="display:none;">
+                <a track="Help Web Profile" href="./documentation"><i class="icon icon-help"></i>Help</a>
+            </li>
+            <li>
+                <a track="Logout" id="nav-logout"><i class="icon icon-logout"></i>Logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" id="buttons-menu" style="display:none;">
+        <li>
+          <a href="./login" class="btn btn-secondary navbar-btn" track="nav login">Log In</a>
+        </li>
+        <li>
+          <a href="./signup" track="sign up" class="btn btn-primary navbar-btn">Sign Up</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+    <!-- Page content of course! -->
+    <body onload="mixpanel.track('home page')">
+<main id="content" role="main" class="home-page">
+  <div class="jumbotron slate hero-walkthrough hero-main">
+    <div class="container">
+      <div class="row">
+          <h2 class="features-hero text-center">Cloud Management for DevOps</h2>
+          <h3 class="lead text-center sub features-hero-sub">Dev and Ops working together to accelerate the delivery<br/> of applications to any cloud</h3>
+      </div>
+
+      <div class="row text-center">
+        <a href="./signup" track="sign up" class="btn btn-primary btn-sign-up">Sign Up</a>
+      </div>
+    </div>
+  </div>
+  <div id="animation-wrapper">
+    <section id="pick-your-boxes">
+      <div class="inner">
+        <div class="copy">
+          <h2>Transform Infrastructure into Services</h2>
+          <p class="lead">Create a catalog of ready to use application and infrastructure components, available as a service.</p>
+        </div>
+
+        <div class="static-illustration"></div>
+
+        <div class="boxes hidey">
+          <div class="box ruby"></div>
+          <div class="box mongo"></div>
+          <div class="box mysql"></div>
+          <div class="box newrelic"></div>
+          <div class="box jenkins"></div>
+          <div class="box node"></div>
+          <div class="box angular"></div>
+          <div class="box linux"></div>
+          <div class="box postgres"></div>
+          <div class="box rabbitmq"></div>
+          <div class="box chef"></div>
+          <div class="box apache"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack-your-boxes">
+      <div class="inner">
+        <div class="copy">
+          <h2>Package Your Applications</h2>
+          <p class="lead">Build a customized stack using components from your service catalog to create single or multi-tier applications.</p>
+        </div>
+
+        <div class="static-illustration"></div>
+      </div>
+    </section>
+
+    <section id="deploy-applications">
+      <div class="inner">
+        <div class="copy">
+          <h2>Continuous Delivery</h2>
+          <p class="lead">Deploy your applications in any public or private cloud. Share and collaborate to deliver success across environments.</p>
+        </div>
+
+        <div class="static-illustration"></div>
+
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="cloud c3"></div>
+        <div class="cloud c4"></div>
+        <div class="cloud c5"></div>
+        <div class="cloud c6 front"></div>
+        <div class="cloud c7 front"></div>
+        <div class="cloud c8 front"></div>
+        <div class="cloud c9 front"></div>
+
+        <div id="shuttle">
+          <div class="nose"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="jumbotron not-convinced-block slate">
+    <div class="container text-center">
+      <h2 class="jumbo-not-convinced">A New Way To Deliver Applications</h2>
+      <h3 class="home-sub hidden-xs">Dev And Ops Working Together.</h3>
+        <a class="btn btn-primary btn-lg btn-convinced" id="sign-up-home" track="not convinced sign up" href="#" data-toggle="modal" data-target="#sign-up-modal">Try For Yourself</a>
+    </div>
+  </div>
+
+  <div class="jumbotron jumbotron-home-special">
+    <div class="container elasticbox-special padding-4x">
+      <h2 class="text-center ">Why ElasticBox</h2>
+      <h3 class="col-md-8 col-md-offset-2 lead text-center">Imagine a world where Developers and Operations work together to deliver and manage applications.</h3>
+      <div class="row">
+        <div class="col-lg-5 col-lg-offset-1 col-md-6 col-sm-6 col-xs-6">
+
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-6 col-xs-6">
+
+        </div>
+      </div>
+      <div class="row padding-4x" id="special-tools">
+        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-sm-5">
+          <h3 class="">Use The Technologies You Trust</h3>
+          <p class="lead">Maximize the value of your existing investments in scripting (bash, powershell), configuration management (chef, puppet) or container (docker) technologies using ElasticBox. By encapsulating the tools you trust, you can reuse the components across applications, environments and teams.</p>
+          <a class="more" track="learn more deploy" href="./how-it-works/#deploy">Learn More &rsaquo;</a>
+        </div>
+        <div id="special-tools-img" class="col-lg-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-md-5 col-sm-6">
+          <img class="img-responsive" id="img-dev-workflow" src="./assets/img/developer-workflow-chef-solo.png"></img>
+        </div>
+      </div>
+      <div class="row padding-4x" id="special-collaborate">
+        <div id="special-collaborate-img" class="col-lg-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-md-5 col-sm-5">
+          <img class="img-responsive" id="img-colab-innovate" src="./assets/img/collaboration-special.png"></img>
+        </div>
+        <div class="col-lg-5 col-lg-offset-1 col-md-5 col-sm-5">
+          <h3 class="">Collaborate And Innovate</h3>
+          <p class="lead">Collaborate faster than ever by sharing your application or infrastructure components with individual team members or entire teams in workspaces. Break down friction between teams and platforms with real-time collaboration and bring a whole new approach to delivering applications.</p>
+          <a class="more" track="learn more collaborate" href="./how-it-works/#collaboration-features">Learn More &rsaquo;</a>
+        </div>
+      </div>
+      <div class="row padding-4x" id="special-clouds">
+        <div class="col-lg-5 col-lg-offset-1 col-md-6 col-sm-6">
+          <h3 class="">Pick a Cloud, Any Cloud</h3>
+          <p class="lead">Deploy in public, private, and hybrid environments on AWS, RackSpace, HP Cloud, Google Compute, OpenStack, CloudStack or VMware. Use cloud-specific services such as storage, databases, load balancers, and auto-scaling.</p>
+          <a class="more" track="learn more providers" href="./how-it-works/#clouds">Learn More &rsaquo;</a>
+        </div>
+        <div class="col-lg-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-md-5 col-sm-5">
+          <img class="img-responsive" id="img-any-cloud" src="./assets/img/any-cloud-special.png"></img>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="jumbotron slate hero-walkthrough hero-quotes">
+
+  <div class="padding-1x">
+         <br>
+          <div class="container">
+            <img class="img-quote" src="../assets/img/logos/netflix_logo.png">
+            <h3 class="q-quote">“ElasticBox has provided us with the technology that we had been looking for, but had never found a great solution…[ElasticBox] allows us to focus on innovation instead of orchestration.”</h3>
+            <h5 class="auth-quote">- Former VP of IT Operations</h5>
+          </div>
+          <br>
+          <br>
+          <div class="container">
+            <img class="img-quote" src="../assets/img/logos/cytobank_logo.png">
+            <h3 class="q-quote">“To serve our clients we need to be able to run hundreds of virtual machines [and] ElasticBox allows us to quickly respond to the demand spikes. We are able to automate the launching and terminating of all needed VMs within minutes”</h3>
+            <h5 class="auth-quote">- Robin Lee Powell, Director of IT Operations</h5>
+          </div>
+          <br>
+          <br>
+          <div class="container">
+            <img class="img-quote" src="../assets/img/logos/451.png">
+            <h3 class="q-quote">“ElasticBox seems to be scratching the right enterprise application development and deployment itches when it takes on infrastructure management, allowing developers... to focus on their applications and their jobs.”</h3>
+            <h5 class="auth-quote">- Jay Lyman, Senior Analyst, Enterprise Software</h5>
+          </div>
+        <br>
+        <br>
+   </div>
+
+</div>
+
+  <div id="container-enterprise">
+    <div class="container text-center padding-2x split">
+      <div class="row">
+        <div class="col-lg-10 col-lg-offset-1 padding-1x">
+          <h2>For Enterprises</h2>
+          <p class="lead text-center">ElasticBox is all you need to innovate rapidly as an enterprise. Give your developers the tools they need to build applications and give IT operations the platform they need to deploy and manage those applications in any cloud.</p>
+          <a href="./enterprise" track="home enterprise" class="btn btn-lg btn-split btn-primary">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+    <!-- Footer and Other Javascript. -->
+    <footer class="bs-footer" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+        <ul class="footer-links">
+          <h4 class="">How It Works</h4>
+          <li><a href="./how-it-works/#deploy" track="deploy footer">Deploy</a></li>
+          <li><a href="./how-it-works/#clouds" track="clouds footer">Clouds</a></li>
+          <li><a href="./how-it-works/#life-cycle-editor" track="lce footer">Lifecycle Editor</a></li>
+          <li><a href="./how-it-works/#collaboration" track="collaboration footer">Collaboration</a></li>
+          <li><a href="./how-it-works/#box-overview" track="boxes footer">Boxes</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+        <ul class="footer-links">
+          <h4 class="">Enterprise</h4>
+          <li><a href="./enterprise/#unified-enterprise" track="unified enterprise footer">Unified Enterprise</a></li>
+          <li><a href="./enterprise/#use-cases" track="use cases footer">Use Cases</a></li>
+          <li><a href="./enterprise/#access-control" track="access control footer">Access Control</a></li>
+          <li><a href="./enterprise/#workspaces" track="workspaces footer">Workspaces</a></li>
+          <li><a href="./enterprise/#enterprise-contact" track="contact footer">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+        <ul class="footer-links">
+          <h4 class="">Resources</h4>
+          <li><a href="./appliance" track="appliance footer">Virtual Appliance</a></li>
+          <li><a href="./documentation" track="documenation footer">Documentation</a></li>
+          <li><a href="mailto:support@elasticbox.com" track="support footer">Email Support</a></li>
+          <li><a href="./releases" target="blank" track="release notes footer">Release Notes</a></li>
+          <li><a href="./terms-of-service" target="blank" track="terms of service footer">Terms of Service</a></li>
+          <li><a href="./privacy" target="blank" track="privacy policy footer">Privacy Policy</a></li>
+        </ul>
+      </div>
+          <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+        <ul class="footer-links">
+          <h4 class="">About</h4>
+          <li><a href="./blog" track="blog footer">Blog</a></li>
+          <li><a href="./news" track="news footer">News</a></li>
+          <li><a href="./about" track="about footer">About ElasticBox</a></li>
+          <li><a href="./careers" track="careers footer">Careers</a><em class="hiring">We're Hiring!</em></li>
+          <li><a href="mailto:info@elasticbox.com" track="">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12">
+        <ul class="footer-links social-buttons">
+	<h4 class="">Connect</h4>
+  <li><a track="social github" href="https://github.com/ElasticBox" target="blank"><i class="social-github"></i>GitHub</a></li>
+  <li><a track="social twitter" href="https://twitter.com/ElasticBox" target="blank"><i class="social-twitter"></i>Twitter</a></li>
+  <li><a track="social google" href="https://plus.google.com/106309790790896390635" target="blank"><i class="social-google"></i>Google+</a></li>
+    <li><a track="social facebook" href="http://facebook.com/ElasticBox" target="blank"><i class="social-facebook"></i>Facebook</a></li>
+  <li><a track="social linkedin" href="http://www.linkedin.com/company/elasticbox" target="blank"><i class="social-linkedin"></i>LinkedIn</a></li>
+</ul>
+
+
+        <br>
+        <ul class="footer-links">
+          <br>
+          <li><h4 class="">Call</h4><a href="tel:+14159415042">+1 415 941 5042</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row copyright">
+      <a href="./"><img class="footer-brand" src="./assets/img/elasticbox-logo-white.png"></img></a>
+      <div class="footer-legal pull-right">&#169; ElasticBox 2015. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+    <script type="javascript">
+  $('#sign-up-modal').modal('show');
+</script>
+
+<div id="sign-up-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="#sign-up-modal" aria-hidden="true">
+  <div class="modal-dialog modal-login">
+    <div class="modal-content signup-form">
+      <div class="modal-header">
+        <button type="button" class="close fa fa-times" data-dismiss="modal" aria-hidden="true"></button>
+        <h3 class="modal-title text-center" id="myModalLabel">Sign Up</h3>
+      </div>
+      <div class="modal-body">
+        <p class="modal-terms text-muted text-center">By signing up you agree to the ElasticBox <a href="./terms-of-service" target="_blank">Terms</a>
+        <form role="form" action="/services/security/username_password?accept_terms=true" method="post" autocomplete="on" id="signup-form" validate>
+          <a class="btn btn-lg btn-secondary btn-block btn-sign-up" id="sign up" track="sign up google modal" href="https://accounts.google.com/o/oauth2/auth?client_id=726336950247-p6172q2aojfuntnp8e0rocg45c19ss4b.apps.googleusercontent.com&response_type=code&scope=profile+email&redirect_uri=https%3A//elasticbox.com/services/security/google_callback%3Faccept_terms%3Dtrue&approval_prompt=auto"><i class="sso-google"></i>Sign Up with Google</a>
+          <span class="divider"><strong>or</strong></span>
+          <p id="signup-with-email-error" class="alert alert-danger" style="display:none"></p>
+          <div class="form-group">
+            <input name="name" type="name" track="sign-up-name" placeholder="Your Name" class="form-control input-lg" id="signup-name" required>
+          </div>
+          <div class="form-group">
+            <input name="email" type="email" track="sign-up-email" placeholder="Email Address" class="form-control input-lg" id="signup-email" required>
+          </div>
+          <div class="form-group">
+            <input name="password" type="password" track="sign-up-password" placeholder="Password" class="form-control input-lg" id="signup-password" required>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block btn-sign-up" track="sign up email modal" id="signup-with-email">Sign Up</button>
+        </form>
+        <p class="padding-1x text-muted text-center">Already have an account? <a id="login-link" data-dismiss="modal" data-toggle="modal" data-target="#login-modal" href="">Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var form = $('#signup-form'),
+        name = form.find('#signup-name'),
+        email = form.find('#signup-email'),
+        password = form.find('#signup-password'),
+        button = form.find('#signup-with-email'),
+
+        toggleButton = function() {
+          var isEmpty = function(value) {
+            return value.trim() === '';
+          };
+
+          button.prop('disabled', isEmpty(name.val()) || isEmpty(email.val()) || isEmpty(password.val()));
+        };
+
+    toggleButton();
+    email.change(toggleButton).keyup(toggleButton);
+    password.change(toggleButton).keyup(toggleButton);
+
+    form.submit(function(event) {
+      var $form = $(this),
+          data = {
+            name: name.val(),
+            email: email.val(),
+            password: password.val()
+          };
+
+      button.prop('disabled', true);
+
+      // stop normal submitting
+      event.preventDefault();
+
+      // Send the data using post
+      $.post( '/services/security/username_password?accept_terms=true', $.param(data))
+     
+        .done(function( data, textStatus, jqXHR ) {
+          var redirection = jqXHR.getResponseHeader('x-location') || '/';
+          window.location = redirection;
+        })
+
+        .fail(function( data, textStatus, jqXHR ) {
+          var alertMessage = $('#signup-with-email-error');
+
+          alertMessage.html(data.status === 401 ? 'Email already exists.' : 'We found some problems. Please, try again later.');
+          alertMessage.slideDown( 200 );
+
+          setTimeout(function() {
+            alertMessage.slideUp( 200 );
+          }, 3000);
+        })
+
+        .always(function() {
+          toggleButton();
+        });
+    });
+  })();
+</script>
+    <script type="javascript">
+  $('#login-modal').modal('show');
+</script>
+
+<div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="#login-modal" aria-hidden="true">
+  <div class="modal-dialog modal-login">
+    <div class="modal-content login-form">
+        <div class="modal-header">
+          <button type="button" class="close fa fa-times" data-dismiss="modal" aria-hidden="true"></button>
+          <h3 class="modal-title text-center">Login</h3>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="login-form" action="/services/security/username_password" method="post">
+            <p id="login-with-email-error" class="alert alert-danger" style="display:none">Invalid username or password.</p>
+            <div class="form-group">
+              <input name="email" type="email" placeholder="Email Address" class="form-control input-lg" id="login-email">
+            </div>
+            <div class="form-group">
+              <input name="password" type="password" placeholder="Password" class="form-control input-lg" id="login-password">
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" id="login-with-email">Login</button>
+            <span class="divider"><strong>or</strong></span>
+            <a href="#" class="btn btn-lg btn-secondary btn-block js-btn-google-auth"><i class="sso-google"></i>Login with Google</a>
+          </form>
+          <p class="padding-1x text-muted text-center">Don't have an account? <a id="sign-up-link" data-dismiss="modal" data-toggle="modal" data-target="#sign-up-modal" href="">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  (function() {
+    var form = $('#login-form'),
+        email = form.find('#login-email'),
+        password = form.find('#login-password'),
+        button = form.find('#login-with-email'),
+        googleAuthBtn = form.find('.js-btn-google-auth'),
+        googleAuthURL = 'https://accounts.google.com/o/oauth2/auth?client_id=726336950247-p6172q2aojfuntnp8e0rocg45c19ss4b.apps.googleusercontent.com&response_type=code&scope=profile+email&redirect_uri=https%3A//{0}/services/security/google_callback%3Faccept_terms%3Dtrue&approval_prompt=auto',
+
+        toggleButton = function() {
+          var isEmpty = function(value) {
+            return value.trim() === '';
+          };
+
+          button.prop('disabled', isEmpty(email.val()) || isEmpty(password.val()));
+        };
+
+    googleAuthBtn.attr('href', googleAuthURL.replace('{0}', window.location.hostname));
+
+    form.submit(function(event) {
+      var $form = $(this),
+          data = {
+            email: email.val(),
+            password: password.val()
+          };
+
+      button.prop('disabled', true);
+
+      // stop normal submitting
+      event.preventDefault();
+
+      // Send the data using post
+      $.post( '/services/security/username_password', $.param(data))
+
+        .done(function( data, textStatus, jqXHR ) {
+          var redirection = jqXHR.getResponseHeader('x-location') || '/';
+          window.location = redirection;
+        })
+
+        .fail(function( data, textStatus, jqXHR ) {
+            var alertMessage = $('#login-with-email-error');
+
+            if (data.status === 404) {
+                window.location = '/signup';
+            } else {
+                if (data.status === 401) {
+                    alertMessage.html(data.responseJSON.message);
+                } else {
+                    alertMessage.html('Invalid username or password');
+                }
+
+                alertMessage.slideDown( 200 );
+
+                setTimeout(function() {
+                    alertMessage.slideUp( 200 );
+                }, 3000);
+            }
+        })
+
+        .always(function() {
+          toggleButton();
+        });
+    });
+  })();
+</script>
+
+  </body>

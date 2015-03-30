@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>$title</title>
+    <style type="text/css">
+		.ui-jqgrid tr.jqgrow td{
+			text-overflow:ellipsis;
+			overflow:hidden;
+			word-wrap:normal;
+			white-space:nowrap !important;
+		}
+  	</style>
+   
+</head>
+<body class="demo-single">
+    <div class="ui-layout-center">
+	    <div id="queryDiv" style="border:0;padding:0;padding-top:3px;overflow:hidden;" class="ui-widget-content ui-widget">
+			<fieldset id="selectCondition" class="ui-corner-all" style="margin-left: 0px; margin-right: 4px">
+				<div>
+					<form id="searchform" onSubmit="return false" style="margin:0;">	
+						<table>	
+							<tr>
+								<td>用户名称：<input type="text" id="USER_NAME" name="USER_NAME"/></td>
+								<td>
+							    	<button id="searchBtn" type="button"><span class="ui-icon ui-icon-search" style="float: left;"></span>查询</button>
+							    	<button id="resetBtn" onclick="searchform.reset()" type="button"><span class="ui-icon ui-icon-reset" style="float: left;"></span>重置</button>
+							    </td>
+							</tr>
+							
+						</table>							
+					</form>
+				</div>
+			</fieldset>
+		</div>
+		<script type="text/javascript">
+			createSelectCondition();//显示查询条件
+		</script>
+		<!-- tabLogo的值必须全局唯一 -->
+		<div id="contentDiv" style="padding:0;width:100%;height:100%;margin-top: 2px;margin-left: 2px;" tabLogo="#{tabLogo}">
+			<table id="gridTable" class="ui-pg-table"></table>  
+	        <div id="gridPager" style="height: 36px;"></div>
+	        <span id="buttonset">
+			</span>
+		</div>
+		<div id="hiddenDiv" style="height: 26px;display: none"></div>
+    </div>
+</body>
+ <script type="text/javascript">
+    var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=back.user";
+    
+	jQuery(document).ready(function () {
+		
+		initDatePicker('/e9common/images/date.gif');
+		//初始化时间控件后，隐藏div
+		$('#ui-datepicker-div').hide();
+		//日期居中
+		setMiddle();		
+		//表单回车键查询功能
+		registEnterSubmit("searchform","searchBtn");
+		
+		//过滤按钮权限
+		author(auth);
+		//主题切换		
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		
+		jQuery( "input:button, button", "div" ).button();
+		
+		
+
+		// 配置jqGrid组件  
+		//初始化表格.grid(gridid,url,param,pagerid, options)
+		jQuery.grid(
+				"gridTable",
+				queryAction,
+				jQuery("#searchform").serialize(),
+				"gridPager",
+				{
+					//multiboxonly: true,
+					datatype: 'json',
+					rowNum:#{com.e9rj.platform.common.BaseConstants.getGlobalValue("505","20")},
+					colModel:
+						[													
+							 {name:"U_ID",index:"U_ID",label:"用户ID"}, 
+							 {name:"USER_NAME",index:"USER_NAME",label:"用户名称",width:"60px"},
+							 {name:"SEX",index:"SEX",label:"性别",width:"30px", align:"center"},
+							 {name:"BIRTHDAY",index:"BIRTHDAY",label:"出生日期",width:"70px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},
+							 {name:"ADDRESS",index:"ADDRESS",label:"住址",align:"left"}
+						],
+						footerrow: true,
+						multiselect: false,
+						rownumbers: true,
+						ondblClickRow:function(rowid,iRow,iCol,e){
+							selectCheckbox("gridTable",rowid);
+				    		var rowData = $("#gridTable").jqGrid("getRowData", rowid);  
+							var url = gotoAction + "&U_ID="+rowData.U_ID+"&TMP="+new Date();
+							popReadInfo(url,"查看用户信息",globalPopWidth,globalPopHeightShort);
+				    	},
+			    	loadComplete:function(){
+			    		//设置菜单
+			    		setContextMenu("gridTable","contentDiv");
+			    		resizeGrid('gridTable','queryDiv,hiddenDiv','contentDiv',true);
+			    		
+			        	resetPage("gridPager");
+			        },
+			    	gridComplete: function (){
+			    		$("#gridTable td").addClass("ui-jqgrid tr.jqgrow td");
+			    		$("#gridTable td").removeClass("ui-jqgrid tr.jqgrow td");
+			    	}
+				});
+		//判断分页设置
+		checkPager("gridTable"); 
+		jQuery(window).bind('resize', function(){resizeGrid('gridTable','queryDiv,hiddenDiv','contentDiv', true);});	
+		jQuery( "input:button, button", "div" ).button();
+		
+		//把按钮拷到主页面
+		$("#buttonDiv").html("").append($("#buttonset"));
+		jQuery("#buttonset" ).buttonset(); 
+		
+		//查询按钮
+		jQuery("#searchBtn").click(function(){
+			$("#gridTable").jqGrid("setGridParam", {datatype:'json',  
+	    		url: queryAction + "&" + $("#searchform").serialize() + "&TMP=" + new Date()
+			}).trigger("reloadGrid", [{page:1}]);
+		});
+		
+	});
+	
+    </script>
+</html>
+<!--Form Setting Start-->
+<!--Form Setting End-->

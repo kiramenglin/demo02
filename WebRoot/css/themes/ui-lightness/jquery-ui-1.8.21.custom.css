@@ -1,0 +1,14 @@
+/*theme main.html*/
+.theme-title-bg{background:url(theme/title_bg.jpg) repeat-x;padding:0;margin:0;overflow:hidden;border:0;}
+.theme-title{height:93px;width:496px;float:left;padding-left:2px;background:url(theme/title.jpg) no-repeat;}
+.theme-title-text{margin-left:30px;margin-top:15px; height:93px;width:496px;float:left;padding-left:2px;background:url(theme/title_text.png) no-repeat;}
+.theme-title-btn-1{float:left;width:73px;height:56px;background:url(theme/btn_bg_1.png) no-repeat;text-align:center;padding-top:6px;line-height:22px;cursor:pointer;}
+.theme-title-btn-1-hover{background:url(theme/btn_bg_1_hover.png) no-repeat;}
+.theme-title-btn-2{float:left;width:73px;height:56px;background:url(theme/btn_bg_2.png) no-repeat;text-align:center;padding-top:6px;line-height:22px;cursor:pointer;}
+.theme-title-btn-2-hover{background:url(theme/btn_bg_2_hover.png) no-repeat;}
+.theme-title-btn-3{float:left;width:73px;height:56px;background:url(theme/btn_bg_3.png) no-repeat;text-align:center;padding-top:6px;line-height:22px;cursor:pointer;}
+.theme-title-btn-3-hover{background:url(theme/btn_bg_3_hover.png) no-repeat;}
+.theme-title-btn-4{float:left;width:75px;height:56px;background:url(theme/btn_bg_4.png) no-repeat;text-align:center;padding-top:6px;line-height:22px;cursor:pointer;}
+.theme-title-btn-4-hover{background:url(theme/btn_bg_4_hover.png) no-repeat;}
+.theme-bottom{overflow:hidden;background:url(theme/bottom_bg.jpg) repeat-x;border:0px;}
+.theme-title-right{background-image: url(theme/title_right.jpg);background-repeat: repeat-x;background-position: center left;wrap:nowrap;}

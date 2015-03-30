@@ -1,0 +1,207 @@
+﻿html, body {
+    margin:0;
+    padding:0;
+    font-family: Tahoma,"宋体",  Verdana, Arial, sans-serif;
+    font-size: 12px;
+    /*text-align: center;*/
+    overflow: hidden;
+    border: 0;
+}
+table{
+		font-size: 12px;
+	}
+form {
+	/*padding-left: 10px;*/
+}
+button{
+	/*width:expression((39+$(this).text().length*20)+"px");IE6 7 only*/
+	width:80px;
+}
+input, select {
+    font-size:12px;
+}
+#infoTableLong input{
+	width: 150px;
+}
+#infoTableLong select{
+	width: 162px;
+}
+#infoTableLong textarea{
+	width: 162px;
+	height: 36px;
+}
+#infoTableLong input[type="checkbox"],#infoTableLong input[type="radio"] {
+	width: 15px;
+}
+#infoTableShort input{
+	width: 250px;
+}
+#infoTableShort select{
+	width: 260px;/*FireFox下会多2px*/
+}
+#infoTableShort textarea{
+	width: 255px;
+	height: 36px;
+}
+#infoTableShort input[type="checkbox"],#infoTableShort input[type="radio"] {
+	width: 15px;
+}
+
+
+
+#infoTable1 input{
+	width: 250px;
+}
+#infoTable1 select{
+	width: 260px;/*FireFox下会多2px*/
+}
+#infoTable1 textarea{
+	width: 255px;
+	height: 36px;
+}
+#infoTable1 input[type="checkbox"],#infoTable1 input[type="radio"] {
+	width: 15px;
+}
+#infoTable1 td {
+	height: 33px;
+}
+#infoTable1 td:first-child {
+	width: 200px;
+}
+
+
+#infoTable2 input{
+	width: 250px;
+}
+#infoTable2 select{
+	width: 260px;/*FireFox下会多2px*/
+}
+#infoTable2 textarea{
+	width: 255px;
+	height: 36px;
+}
+#infoTable2 input[type="checkbox"],#infoTable2 input[type="radio"] {
+	width: 15px;
+}
+/*复制infoTable*/
+.editInfoTable input{
+	width: 250px;
+}
+.editInfoTable select{
+	width: 260px;/*FireFox下会多2px*/
+}
+.editInfoTable textarea{
+	width: 255px;
+	height: 36px;
+}
+.editInfoTable input[type="checkbox"],#infoTable2 input[type="radio"] {
+	width: 15px;
+}
+
+a {
+    color:#23A4FF;
+}
+
+/*表格样式*/
+.styleTable { border-collapse: separate; }
+.styleTable TD { font-weight: normal !important; padding: .4em; border-top-width: 0px !important; }
+.styleTable TH { text-align: center; padding: .8em .4em; }
+.styleTable TD.first, .styleTable TH.first { border-left-width: 0px !important; }
+
+form input,form select,select{
+	padding: 3px;
+}
+
+form select,select{position:relative;line-height:14px;}
+
+#contentTabs{
+	border: 0px;
+	width: 100%; 
+	height: 100%; 
+	padding-left: 2px;
+}
+/*表格自动换行*/
+.ui-jqgrid tr.jqgrow td {
+    white-space: normal !important;
+    min-height:27px;
+}
+.search-area-whole { width: 100%;}
+.search-area-condition { width: 80%;}
+.search-area-btn { width: 20%; }
+/*树样式*/
+ul.ztree {width:300px;overflow-y:auto;overflow-x:auto;}
+
+#condition_name {
+	position:relative;
+	FONT-WEIGHT: 700;
+	font-size: 12px;
+	CURSOR: hand;
+	COLOR: #43b102;
+}
+#gridPager_left {
+	/*width: 65%;*/
+}
+#gridPager_right {
+	/*min-width: 100px;*/
+}
+.innerselect {
+	background: url(/fmcis/images/showmore.gif) no-repeat;
+	background-position: center right;
+	border-top:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+	padding-right: 15px;
+	cursor: pointer;
+	padding-bottom: 4px;
+	padding-top: 4px;
+}
+#searchtable th {
+	font-weight: normal;
+	text-align: right;
+}
+#searchtable input {
+	width: 136px;
+}
+#searchtable select {
+	width: 146px;
+}
+#searchform input {
+	width: 136px;
+}
+#searchform select {
+	width: 146px;
+}
+.validate-dialog{
+	opacity:0.6;
+}
+
+input[readonly="readonly"]
+{
+    border: 1px solid #DDD;
+	background-color: #F5F5F5;
+	color:#ACA899;
+}
+
+input[readonly="readonly"]
+{
+    border: 1px solid #DDD;
+	background-color: #F5F5F5;
+	color:#ACA899;
+}
+
+input[disabled="disabled"]
+{
+    border: 1px solid #DDD;
+	background-color: #F5F5F5;
+	color:#ACA899;
+}
+
+/*前台页面背景*/
+.content_back {
+	margin:0px; 
+	padding:0px;
+	width:100%; 
+	height:100%;  
+	background: url('/fmcis/css/website/background/back.png') repeat;
+}

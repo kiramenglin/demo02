@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<taglib>
+<tlib-version>1.0</tlib-version>
+<jsp-version>1.2</jsp-version>
+
+<tag>
+  <name>errMsgTag</name>
+  <tag-class>com.fjkind.frameext.taglib.ShowErrMsg</tag-class>
+  <body-content>empty</body-content>
+</tag>
+
+<tag>
+  <name>showValueTag</name>
+  <tag-class>com.fjkind.frameext.taglib.ShowValue</tag-class>
+  <body-content>empty</body-content>
+   <attribute>
+    <name>para</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>  
+  <attribute>
+    <name>defaultValue</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>  
+</tag>
+
+<tag>
+  <name>showForm</name>
+  <tag-class>com.fjkind.frameext.taglib.ShowForm</tag-class>
+  <body-content>empty</body-content>
+   <attribute>
+    <name>formName</name>
+    <required>true</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>  
+  <attribute>
+    <name>showHTML</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>  
+  <attribute>
+    <name>readonly</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>
+  <attribute>
+    <name>showStarSymbol</name>
+    <required>false</required>
+    <rtexprvalue>true</rtexprvalue>
+  </attribute>  
+</tag>
+</taglib>

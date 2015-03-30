@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<link href="/e9common/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/e9common/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+	<script type="text/javascript" src="js/ssocommon.js"></script>    
+    <script type="text/javascript">
+    //验证变量
+    var validateForm = false;
+    $(function(){
+    	//重置表单（防止IE缓存）
+    	//$("#infoForm")[0].reset();
+    	//主题切换
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		//按钮样式
+		$( "input:button, a, button", "div" ).button();
+    	//验证表单
+    	commonValidate("infoForm");
+		//绑定表单提交事件
+		submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=back.user");
+		//按钮
+		$( "#buttonset" ).buttonset();
+		
+		//$("#ORGNAME").click(popOrg);//不需要弹出选择组织机构了，职员信息已经包含了组织机构，如果一个职员有多个组织机构，则采用下拉框选择
+		
+		//getOrgInfo($("#EMPLOYEE_ID").val())
+    });
+    
+    //表单提交
+    function saveInfo(){
+    	$('#infoForm').submit();
+    }
+	</script>
+</head>
+<body class="ui-widget-content" style="border: 0">
+	<form method="post" name="infoForm" id="infoForm" action="/">
+		<input type="text" style="display: none;" name="CMD" id="CMD">
+		
+		<div class="form-group">
+		  <label for="exampleInputEmail1">唇形状</label>
+		  <input type="email" class="form-control" id="MOUTH_SHAPE" placeholder="MOUTH_SHAPE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">唇大小</label>
+		  <input type="email" class="form-control" id="MOUTH_SIZE" placeholder="MOUTH_SIZE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">颌骨大小对称</label>
+		  <input type="email" class="form-control" id="JAWSIZE_SYMMETRY" placeholder="JAWSIZE_SYMMETRY">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">颌骨外形对称</label>
+		  <input type="email" class="form-control" id="JAWSHAPE_SYMMETRY" placeholder="JAWSHAPE_SYMMETRY">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">骨面乒乓感</label>
+		  <input type="email" class="form-control" id="BONE_PPSENS" placeholder="BONE_PPSENS">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">压痛</label>
+		  <input type="email" class="form-control" id="TENDERNESS" placeholder="TENDERNESS">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">唇颊系带位置</label>
+		  <input type="email" class="form-control" id="LIPFRENUM_LOC" placeholder="LIPFRENUM_LOC">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">唇颊及牙龈粘膜色泽</label>
+		  <input type="email" class="form-control" id="LIPFRENUM_COLOR" placeholder="LIPFRENUM_COLOR">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">导管口排出物量</label>
+		  <input type="email" class="form-control" id="CONDUIT_LITER" placeholder="CONDUIT_LITER">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">导管口排出物质</label>
+		  <input type="email" class="form-control" id="CONDUIT_STATUS" placeholder="CONDUIT_STATUS">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">牙齿咬合关系</label>
+		  <input type="email" class="form-control" id="TEETH_OCCLUSION" placeholder="TEETH_OCCLUSION">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">牙齿数目</label>
+		  <input type="email" class="form-control" id="TEETH_NUMBER" placeholder="TEETH_NUMBER">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">牙齿排列情况</label>
+		  <input type="email" class="form-control" id="TEETH_ARRANGE" placeholder="TEETH_ARRANGE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">舌质</label>
+		  <input type="email" class="form-control" id="TONGUE_NATURE" placeholder="TONGUE_NATURE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">舌形态</label>
+		  <input type="email" class="form-control" id="TONGUE_SHAPE" placeholder="TONGUE_SHAPE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">舌系带附着位置</label>
+		  <input type="email" class="form-control" id="TONFRENUM_LOC" placeholder="TONFRENUM_LOC">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">舌系带长度</label>
+		  <input type="email" class="form-control" id="TONFRENUM_LENGTH" placeholder="TONFRENUM_LENGTH">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">软腭运动情况</label>
+		  <input type="email" class="form-control" id="SOFTPALATE_MOVE" placeholder="SOFTPALATE_MOVE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">舌感觉</label>
+		  <input type="email" class="form-control" id="TONGUE_SENSE" placeholder="TONGUE_SENSE">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">两侧髁状突运动是否对称</label>
+		  <input type="email" class="form-control" id="CONDYLE_SYMMETRY" placeholder="CONDYLE_SYMMETRY">
+		</div>
+		<div class="form-group">
+		  <label for="exampleInputEmail1">两侧髁咬合关系是否正常</label>
+		  <input type="email" class="form-control" id="CONDYLE_OCCLUSION" placeholder="CONDYLE_OCCLUSION">
+		</div>
+		
+		
+		
+	</form>
+	<!-- 以下是按钮区域 -->
+	<div style="position:absolute;width: 100%;border-bottom:0px;border-left:0px;border-right:0px;bottom:40px;font-size: 0px;" class="ui-widget-content"></div>
+	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
+		<span id="buttonset">
+			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()" class="btn btn-default"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
+			<button id="cancelBtn" onclick="cancel()" class="btn btn-default"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
+		</span>
+	</div>
+</body>
+</html>
+<!--Form Setting Start-->
+	
+<!--Form Setting End-->

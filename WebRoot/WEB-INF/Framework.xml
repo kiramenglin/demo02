@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<Channel id="chn_http">
+		<SessionContext>
+			<Data name="session_id" type="String" /><!-- 必须需要此项 -->
+			<Data name="LoginType" type="String" />
+			<Data name="LoginOpNo" type="String" /><!-- 登录者名 OPNO -->
+			<Data name="LoginName" type="String" /><!-- 登录者名 OPNAME -->
+			<Data name="SubSystem" type="String" /><!-- 子系统 -->
+			<Data name="LoginFailNum" type="Integer" /><!-- 登录错误次数 -->
+			<Data name="LoginValidateNumber" type="String" /><!-- 登录验证码 -->
+			<Data name="SESSION_USER_BEAN" type="Object" /><!-- 登录用户BEAN -->
+			<Data name="ssoUserInfo" type="Object" /><!-- 登录用户BEAN -->
+		</SessionContext>
+		<SessionTimeout>
+			<timeout>30</timeout>
+		</SessionTimeout>
+	</Channel>
+
+	<Service id="MessageService" classname="com.xmzy.framework.service.MessageService">
+		<Param name="StartService" value="true" />
+		<!-- framework -->
+		<Param name="framework" value="/WEB-INF/framework.properties" />
+		<Param name="system" value="/WEB-INF/properties/system.properties" />
+		<Param name="memcached" value="/WEB-INF/properties/memcached.properties" />
+		<Param name="cachedsql" value="/WEB-INF/properties/cachedsql.properties" />
+		<Param name="formparsemapping" value="/WEB-INF/properties/formparsemapping.properties" />
+		<Param name="pohandleProperties" value="/WEB-INF/properties/DBDYPOHandle.properties" />
+	</Service>
+ 
+	<Service id="SimpledbService" classname="com.xmzy.frameext.simpledb.service.SimpledbService">
+		<Param name="StartService" value="true" />
+		<Param name="default" value="true" />
+		<Param name="type" value="mysql"></Param>
+		<Param name="class" value="com.mysql.jdbc.Driver" />
+		<Param name="url" value="jdbc:mysql://localhost:3306/medical_platform?useunicode=true&amp;characterEncoding=utf-8"/>
+		<Param name="user" value="mourin" />
+		<Param name="password" value="lacus518" />
+		<Param name="filters" value="stat" />
+		<!-- 连接池最大使用连接数量 -->
+		<Param name="maxActive" value="20" />
+		<!-- 初始化大小  -->
+		<Param name="initialSize" value="1" />
+		<!-- 配置获取连接等待超时的时间 -->  
+		<Param name="maxWait" value="5000" />
+		<!-- 连接池最小空闲 -->
+		<Param name="minIdle" value="1" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+		<Param name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+		<Param name="minEvictableIdleTimeMillis" value="300000" />
+		<!-- mysql 建议为 false, oracle 建议为 true; -->
+		<Param name="poolPreparedStatements" value="false" />
+		<Param name="maxOpenPreparedStatements" value="20" />
+		<!-- 对于长时间不使用的连接强制关闭 -->
+		<Param name="removeAbandoned" value="true" />
+		<!-- 超过24小开始关闭空闲连接 -->
+		<Param name="removeAbandonedTimeout" value="3600" />
+		<Param name="logAbandoned" value="true" />
+		<Param name="usedbpool" value="true" />
+	</Service>
+	<Service id="SSOdbService" classname="com.xmzy.frameext.simpledb.service.SimpledbService">
+		<Param name="StartService" value="true" />
+		<Param name="default" value="false" />
+		<Param name="type" value="mysql"></Param>
+		<Param name="class" value="com.mysql.jdbc.Driver" />
+ 		<Param name="url" value="jdbc:mysql://localhost:3306/sso?useunicode=true&amp;characterEncoding=utf-8"/>
+		<Param name="user" value="mourin" />
+		<Param name="password" value="lacus518" />
+		<Param name="filters" value="stat" />
+		<!-- 连接池最大使用连接数量 -->
+		<Param name="maxActive" value="100" />
+		<!-- 初始化大小  -->
+		<Param name="initialSize" value="2" />
+		<Param name="maxWait" value="30000" />
+		<!-- 连接池最小空闲 -->
+		<Param name="minIdle" value="2" />
+		<Param name="timeBetweenEvictionRunsMillis" value="60000" />
+		<Param name="minEvictableIdleTimeMillis" value="300000" />
+		<!-- mysql 建议为 false, oracle 建议为 true; -->
+		<Param name="poolPreparedStatements" value="false" />
+		<Param name="maxOpenPreparedStatements" value="20" />
+		<!-- 对于长时间不使用的连接强制关闭 -->
+		<Param name="removeAbandoned" value="false" />
+		<!-- 超过24小开始关闭空闲连接 -->
+		<Param name="removeAbandonedTimeout" value="8640000" />
+		<Param name="logAbandoned" value="true" />
+		<Param name="usedbpool" value="true" />
+	</Service>
+	<!-- 
+	<Service id="HibernateService"
+		classname="com.xmzy.frameext.hibernate.service.HibernateService">
+		<Param name="StartService" value="true" />
+		<Param name="ConfFile" value="/WEB-INF/hibernate.cfg.xml" />
+	</Service>
+	-->
+	<Service id="FormService" classname="com.xmzy.frameext.form.service.FormService">
+		<Param name="StartService" value="true" />
+		<Param name="usecache" value="false" />
+		<Param name="validatesymbol" value="*" />
+		<Param name="requiredcolor" value="red" />
+		<Param name="checkcolor" value="cray" />
+	</Service>
+	
+	<Service id="ServiceScanner" classname="com.xmzy.frameext.business.service.ServiceScanner">
+		<Param name="devMode" value="true" />
+		<Param name="servicepackage1" value="com.e9rj" />
+		<Param name="servicepackage2" value="com.xmdx" />
+	</Service>
+	
+	<Service id="LogService" classname="com.xmzy.framework.log.businesslog.BusinessLogService">
+	<!-- 需要输出哪种类型的才配置,可以添加自定义的log，需要实现BusinessLog接口 -->
+		<Param name="log" value="com.e9rj.platform.log.Log"></Param>
+	</Service>
+	<Service id="ThreadPoolService" classname="com.xmzy.frameext.thread.ThreadPoolService">
+		<Param name="corePoolSize" value="8" />
+		<Param name="maximumPoolSize" value="16" />
+		<Param name="keepAliveTime" value="1" /><!-- 单位：小时 -->
+	</Service>
+</Config>
