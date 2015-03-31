@@ -2,14 +2,14 @@
 <!-- 配置文件 -->
 <Config xmlns="http://app/action" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://app/action DefAction.xsd">
 	
-	<Action id="KSP_INDEX_ACTION">
+	<Action id="IG_INDEX_ACTION">
 		<Description>网站入口</Description>
 		<ErrorAction>com.xmzy.frameext.simpledb.action.RollbackAndEndTrans</ErrorAction>
 		<ActionContext>
 		</ActionContext>
 		<ActionParam>
 			<ActionStep id="1" classname="com.xmzy.frameext.simpledb.action.BeginConnWithNoTrans" on1Do="next" onOtherDo="error" />
-			<ActionStep id="2" classname="edu.xmu.ksp.website.WebSiteMainAction" onOtherDo="next" on0Do="error" isresult="true" />
+			<ActionStep id="2" classname="com.xmdx.demo.website.action.WebSiteMainAction" onOtherDo="next" on0Do="error" isresult="true" />
 			<ActionStep id="3" classname="com.xmzy.frameext.simpledb.action.EndConnWithNoTrans" on1Do="return" onOtherDo="error" />
 		</ActionParam>
 		<PresentationConfig>
@@ -17,14 +17,14 @@
 			<ActionDestination method="form" return_code="1">edu/xmu/ksp/website/index.html</ActionDestination>
 		</PresentationConfig>
 	</Action>
-	<Action id="KSP_FRONT_ACTION">
+	<Action id="IG_FRONT_ACTION">
 		<Description>前台入口</Description>
 		<ErrorAction>com.xmzy.frameext.simpledb.action.RollbackAndEndTrans</ErrorAction>
 		<ActionContext>
 		</ActionContext>
 		<ActionParam>
 			<ActionStep id="1" classname="com.xmzy.frameext.simpledb.action.BeginConnWithNoTrans" on1Do="next" onOtherDo="error" />
-			<ActionStep id="2" classname="edu.xmu.ksp.website.WebFrontAction" onOtherDo="next" on0Do="error" isresult="true" />
+			<ActionStep id="2" classname="com.xmdx.demo.website.action.WebFrontAction" onOtherDo="next" on0Do="error" isresult="true" />
 			<ActionStep id="3" classname="com.xmzy.frameext.simpledb.action.EndConnWithNoTrans" on1Do="return" onOtherDo="error" />
 		</ActionParam>
 		<PresentationConfig>
