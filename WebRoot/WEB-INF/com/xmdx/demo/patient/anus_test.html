@@ -5,7 +5,6 @@
 	<title>Insert title here</title>
 	<link href="/e9common/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="/e9common/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
-	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
 	<script type="text/javascript" src="js/ssocommon.js"></script>    
     <script type="text/javascript">
     //验证变量
@@ -36,32 +35,36 @@
 	</script>
 </head>
 <body class="ui-widget-content" style="border: 0">
-	<form method="post" name="infoForm" id="infoForm" action="/">
-		<input type="text" style="display: none;" name="CMD" id="CMD">
-		<div class="form-group">
-		  <label for="exampleInputEmail1">肛门</label>
-		  <input type="email" class="form-control" id="ANUS" placeholder="ANUS">
+	<div class="container-fluid">
+		<div class="row">
+			<form method="post" name="infoForm" id="infoForm" action="/">
+				<input type="text" style="display: none;" name="CMD" id="CMD">
+				<div class="form-group">
+				  <label for="exampleInputEmail1">肛门</label>
+				  <input type="email" class="form-control" id="ANUS" placeholder="ANUS">
+				</div>
+				<div class="form-group">
+				  <label for="exampleInputEmail1">直肠指诊</label>
+				  <input type="email" class="form-control" id="RECTALTOUCH" placeholder="RECTALTOUCH">
+				</div>
+				<div class="form-group">
+				  <label for="exampleInputEmail1">尿道口</label>
+				  <input type="email" class="form-control" id="ATTRIBUTE1" placeholder="ATTRIBUTE1">
+				</div>	
+			</form>
 		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">直肠指诊</label>
-		  <input type="email" class="form-control" id="RECTALTOUCH" placeholder="RECTALTOUCH">
+		<div class="row" id="buttonDiv">
+			<span id="buttonset">
+				#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()" class="btn btn-default"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
+				<button id="cancelBtn" onclick="cancel()" class="btn btn-default"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
+			</span>
 		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">尿道口</label>
-		  <input type="email" class="form-control" id="ATTRIBUTE1" placeholder="ATTRIBUTE1">
-		</div>
-		
-		
-		
-		
-	</form>
+	</div>
+	
 	<!-- 以下是按钮区域 -->
 	<div style="position:absolute;width: 100%;border-bottom:0px;border-left:0px;border-right:0px;bottom:40px;font-size: 0px;" class="ui-widget-content"></div>
 	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
-		<span id="buttonset">
-			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()" class="btn btn-default"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
-			<button id="cancelBtn" onclick="cancel()" class="btn btn-default"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
-		</span>
+		
 	</div>
 </body>
 </html>
