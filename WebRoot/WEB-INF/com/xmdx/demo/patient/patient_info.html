@@ -6,12 +6,18 @@
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
 <script type="text/javascript" src="js/ssocommon.js"></script>    
-<script type="text/javascript">
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-6 col-md-4">
+			<div class="col-md-4">
+				<h3 align="center">    患者信息</h3>
+			</div>
+			<div class="col-md-8">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
 			 	<div class="text-center profile-pic">
 				    <img src="image/1.png" alt="">
 				</div>
@@ -26,7 +32,7 @@
 				   
 				</ul>
 			</div>
-			<div class="col-xs-12 col-sm-6 col-md-8">
+			<div class="col-md-8">
 				<h4>@{USER.get("NAME")}<br><small>@{USER.get("WORKPLACE")}</small></h4>
 				<table class="table table-borderless">
 				    <tbody>
@@ -65,10 +71,15 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+			<div class="col-xs-6 col-sm-4">
+				
+				
+			</div>
+				
+			<div class="col-xs-6 col-sm-4">
 				<button type="button" class="btn btn-warning">修改</button>
 				<button type="button" class="btn btn-info">确认</button>
-			<div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+			</div>
 		</div>
 	</div>
 </body>
