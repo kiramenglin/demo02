@@ -157,10 +157,10 @@ public class DoctorService extends BusinessServices {
 		}
 		if(0 == result) {
 			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存用户失败!");
-			setMessage(ac, "保存医生失败!");
+			setMessage(ac, "保存失败!");
 		} else {
 			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存用户成功!");
-			setMessage(ac, "保存医生成功!");
+			setMessage(ac, "保存成功!");
 		}
 		
 		return CONST_RESULT_AJAX;

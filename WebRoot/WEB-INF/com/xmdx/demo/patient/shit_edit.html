@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+	<script type="text/javascript" src="js/ssocommon.js"></script>    
+    <script type="text/javascript">
+    //验证变量
+    var validateForm = false;
+    $(function(){
+    	//重置表单（防止IE缓存）
+    	//$("#infoForm")[0].reset();
+    	//主题切换
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		//表格样式
+		$("#infoTableShort").styleTable();
+		//按钮样式
+		$( "input:button, a, button", "div" ).button();
+    	//验证表单
+    	commonValidate("infoForm");
+		//绑定表单提交事件
+		submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=patient.shit");
+		//按钮
+		$( "#buttonset" ).buttonset();
+		
+		//$("#ORGNAME").click(popOrg);//不需要弹出选择组织机构了，职员信息已经包含了组织机构，如果一个职员有多个组织机构，则采用下拉框选择
+		
+		getOrgInfo($("#EMPLOYEE_ID").val())
+    });
+    
+    //表单提交
+    function saveInfo(){
+    	$('#infoForm').submit();
+    }
+	</script>
+</head>
+<body class="ui-widget-content" style="border: 0">
+	<form method="post" name="infoForm" id="infoForm" action="/">
+		<input type="text" style="display: none;" name="CMD" id="CMD">
+		<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" />
+		<table style="width: 100%; " cellpadding="0" cellspacing="0" id="infoTableShort" class="full" >
+			<!-- 为了样式协调必需要 -->
+			<tr style="height: 1px;">
+				<td style="height: 0px;font-size: 0px;border-top-style: none;border-left-style: none;border-right-style: none; " colspan="4"><img src="/e9common/images/empty.gif" style="height: 1px;"></td>
+			</tr>
+			<!-- ***end*** -->
+			
+			<tr>
+				<td height="33" width="200" align="right" >粪便颜色：</td>
+				<td align="left" >
+				   <select name="SHIT_COLOR">
+				   <option value ="黄褐色">黄褐色</option>
+  				   <option value ="黄色或金黄色">黄色或金黄色</option>
+  				   <option value ="柏油色">柏油色</option>
+  				   <option value ="陶土色">陶土色</option>
+  				   <option value ="绿色">绿色</option>
+  				   <option value ="黄绿色">黄绿色</option>
+				   </select>
+				  
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >粪便形状：</td>
+				<td align="left" >
+				<select name="SHIT_SHAPE">
+				   <option value ="成形软便">成形软便</option>
+  				   <option value ="粥样或水样稀便">粥样或水样稀便</option>
+  				   <option value ="粘液性或脓血性便">粘液性或脓血性便</option>
+  				   <option value ="凝乳块便">凝乳块便</option>
+  				   <option value ="细条状">细条状</option>
+  				   
+				   </select>
+				  
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >粪便红细胞：</td>
+				<td align="left" >
+				    <input type="text" name="SHIT_HEMATID" >
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >粪便白细胞：</td>
+				<td align="left" >
+				    <input type="text" name="SHIT_LEUCOCYTE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >粪便潜血：</td>
+				<td align="left" >
+				    
+				    <select name="FOB">
+				   <option value ="阴性">阴性</option>
+  				   <option value ="阳性">阳性</option>
+  				  
+  				   
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >粪胆素：</td>
+				<td align="left" >
+				    
+				    <select name="STERCOBILINOGEN">
+				   <option value ="阴性">阴性</option>
+  				   <option value ="阳性">阳性</option>
+  				  </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >粪便胆红素：</td>
+				<td align="left" >
+				    
+				    <select name="FECALBILIRUBIN">
+				   <option value ="阴性">阴性</option>
+  				   <option value ="阳性">阳性</option>
+  	
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >粪便细菌培养加药敏：</td>
+				<td align="left" >
+				  
+				    <select name="GERMICULTURE">
+				   <option value ="阴性">阴性</option>
+  				   <option value ="阳性">阳性</option>
+  			
+				   </select>
+				</td>
+			</tr>
+			
+        </table>
+	</form>
+	<!-- 以下是按钮区域 -->
+	<div style="position:absolute;width: 100%;border-bottom:0px;border-left:0px;border-right:0px;bottom:40px;font-size: 0px;" class="ui-widget-content"></div>
+	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
+		<span id="buttonset">
+			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
+			<button id="cancelBtn" onclick="cancel()"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
+		</span>
+	</div>
+</body>
+</html>
+<!--Form Setting Start-->
+	<var name="CMD" value="USER_BEAN.getCmd()"/>
+	<var name="SHIT_ID" value="USER_BEAN.get('SHIT_ID')" required="true"/><!-- 用户ID -->
+	<var name="SHIT_COLOR" value="USER_BEAN.get('SHIT_COLOR')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="SHIT_SHAPE" value="USER_BEAN.get('SHIT_SHAPE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="SHIT_HEMATID" value="USER_BEAN.get('SHIT_HEMATID')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="SHIT_LEUCOCYTE" value="USER_BEAN.get('SHIT_LEUCOCYTE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="FOB" value="USER_BEAN.get('FOB')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="STERCOBILINOGEN" value="USER_BEAN.get('STERCOBILINOGEN')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="FECALBILIRUBIN" value="USER_BEAN.get('FECALBILIRUBIN')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="GERMICULTURE" value="USER_BEAN.get('GERMICULTURE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	
+<!--Form Setting End-->
