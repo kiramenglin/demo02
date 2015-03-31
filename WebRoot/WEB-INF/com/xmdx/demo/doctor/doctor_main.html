@@ -9,9 +9,9 @@
     <script type="text/javascript">
     var pDialog;//用于弹窗
     var gridHeight=0;//必须要，用于计算grid高度
-    var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=patient.list";
-    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=patient.list";
-    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=patient.list";
+    var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=doctor.list";
+    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.list";
+    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=doctor.list";
     
 	$(document).ready(function () {
 		//过滤按钮权限
@@ -34,29 +34,19 @@
 					colModel:
 						#{com.e9rj.platform.form.GridFormUtil.getColumnSetting(SESSION_USER_BEAN.getSysUserPO().getOpNo(),
 						tabLogo, 
-						'[{name:"PATIENT_ID",index:"PATIENT_ID",label:"病患ID",width:"60px"},' +
-						'{name:"NAME",index:"NAME",label:"病患名称",width:"60px"},' +
+						'[{name:"DOCTOR_ID",index:"DOCTOR_ID",label:"医生ID",width:"60px"},' +
+						'{name:"NAME",index:"NAME",label:"医生名称",width:"60px"},' +
 						'{name:"GENDER",index:"GENDER",label:"性别",width:"30px", align:"center"},' +
-						'{name:"BIRTHDAY",index:"BIRTHDAY",label:"出生年月",width:"70px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},' +
-						'{name:"NATION",index:"NATION",label:"民族",width:"30px", align:"center"},' +
-						'{name:"OCCUPATION",index:"OCCUPATION",label:"职业",width:"30px", align:"center"},' +
-						'{name:"MARRIAGE",index:"MARRIAGE",label:"婚姻",width:"30px", align:"center"},' +
-						'{name:"IN_DATE",index:"IN_DATE",label:"入院年月",width:"70px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},'+
-						'{name:"PATCH",index:"PATCH",label:"病区",width:"30px", align:"center"},' +
-						'{name:"ADDRESS",index:"ADDRESS",label:"地址",width:"30px", align:"center"},' +
-						'{name:"BIRTHPLACE",index:"BIRTHPLACE",label:"出生地",width:"30px", align:"center"},' +
-						'{name:"WORKPLACE",index:"WORKPLACE",label:"工作地点",width:"30px", align:"center"},' +
-						'{name:"NARRATOR",index:"NARRATOR",label:"病史陈述者",width:"30px", align:"center"},' +
-						'{name:"RELIABILITY",index:"RELIABILITY",label:"可靠程度",width:"30px", align:"center"},' +
-						'{name:"RECORD_DATE",index:"RECORD_DATE",label:"记录年月",width:"70px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},' +
+						'{name:"BIRTHDAY",index:"BIRTHDAY",label:"出生日期",width:"70px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},' +
+						
 						']'
 						)},
 			    	onSelectRow:function(rowid){},
 			    	ondblClickRow:function(rowid,iRow,iCol,e){
 			    		selectCheckbox("gridTable",rowid);
 			    		var rowData = $("#gridTable").jqGrid("getRowData", rowid);  
-						var url = gotoAction + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-						popReadInfo(url,"查看病患信息",globalPopWidth,globalPopHeightShort);
+						var url = gotoAction + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
+						popReadInfo(url,"查看医生信息",globalPopWidth,globalPopHeightShort);
 			    	},
 			    	gridComplete: function () {
 			    		//设置菜单
@@ -85,7 +75,7 @@
 		//新增按钮
 		$("#addBtn").click(function(){
 			var url = gotoAction + "&TMP="+new Date();
-			popSaveInfo(url,"新增病患信息",globalPopWidth,globalPopWidth);
+			popSaveInfo(url,"新增医生信息",globalPopWidth,globalPopHeightShort);
 		});
 		
 		//修改按钮
@@ -97,8 +87,8 @@
 	        var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
 	        
 	        
-	        var url = gotoAction + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-	        popSaveInfo(url,"修改病患信息",globalPopWidth,globalPopHeightShort);
+	        var url = gotoAction + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
+	        popSaveInfo(url,"修改医生信息",globalPopWidth,globalPopHeightShort);
 	        
 		});
 		
@@ -107,8 +97,8 @@
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
 			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = gotoAction + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-			popReadInfo(url,"查看病患信息",globalPopWidth,globalPopHeightShort);
+			var url = gotoAction + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
+			popReadInfo(url,"查看医生信息",globalPopWidth,globalPopHeightShort);
 		});
 		
 		//删除按钮
@@ -127,11 +117,11 @@
 			var ids = "";
 			jQuery.each(rows, function() {
 				var rowData = $("#gridTable").jqGrid("getRowData", this);  
-				ids = ids + rowData.PATIENT_ID + ",";
+				ids = ids + rowData.DOCTOR_ID + ",";
 			});
 			$.uiconfirm("确定要删除吗？", "确认提示",
 		      function() {
-				var url = delAction + "&PATIENT_ID="+ids;
+				var url = delAction + "&DOCTOR_ID="+ids;
 				commonDelete(url);
 		      },
 		      function() {

@@ -1,4 +1,4 @@
-package com.xmdx.demo.patient.service;
+package com.xmdx.demo.doctor.service;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -10,15 +10,15 @@ import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
 
-@Service(name="patient.list")
-public class PatientService extends BusinessServices {
+@Service(name="doctor.list")
+public class DoctorService extends BusinessServices {
 
 	//功能号
-	private static final String authFuncNo = "patient.list";
+	private static final String authFuncNo = "doctor.list";
 	//表名
-	private static final String tableName = "PATIENT";
+	private static final String tableName = "DOCTOR";
 	//主键名
-	private static final String keyField = "PATIENT_ID";
+	private static final String keyField = "DOCTOR_ID";
 	
 	/**
 	 * 删除用户
@@ -28,7 +28,7 @@ public class PatientService extends BusinessServices {
 		
 		checkAuth(ac, authFuncNo, RIGHT_EIGHT);
 		
-		String uidStr = ac.getHttpRequest().getParameter("PATIENT_ID");
+		String uidStr = ac.getHttpRequest().getParameter("DOCTOR_ID");
 		
 		if(StringUtils.isNotBlank(uidStr)) {
 			String[] uids = uidStr.split(",");
@@ -41,9 +41,9 @@ public class PatientService extends BusinessServices {
 					result = DBDYDao.delete(ac.getConnection(), po);
 					
 					if(result == 0) {
-						super.log(ac, LOGLEVEL_W, "SYS01", po.getTableName(), uid, "delete", "删除病患失败!");
+						super.log(ac, LOGLEVEL_W, "SYS01", po.getTableName(), uid, "delete", "删除医生失败!");
 					} else {
-						super.log(ac, LOGLEVEL_I, "SYS01", po.getTableName(), uid, "delete", "删除病患成功!");
+						super.log(ac, LOGLEVEL_I, "SYS01", po.getTableName(), uid, "delete", "删除医生成功!");
 					}
 				}
 			}
@@ -58,7 +58,7 @@ public class PatientService extends BusinessServices {
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
 		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
-		String uid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		String uid = ac.getHttpRequest().getParameter("DOCTOR_ID");
 		if (StringUtils.isNotEmpty(uid)) {
 			
 			if("read".equalsIgnoreCase(ac.getStringValue(CONST_RESOURCEAUTH))) {
@@ -72,7 +72,7 @@ public class PatientService extends BusinessServices {
 			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
 			
 			if(pos.length == 0) {
-				ac.setErrorContext("您所选择的病患已被删除！");
+				ac.setErrorContext("您所选择的医生已被删除！");
 				return CONST_RESULT_ERROR;
 			}
 			DBDYPO old = pos[0];
@@ -84,7 +84,7 @@ public class PatientService extends BusinessServices {
 			po.setCmd("A");
 			ac.setObjValue("USER_BEAN", po);
 		}
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/back/patient_edit.html");
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/doctor/doctor_edit.html");
 		return CONST_RESULT_SUCCESS;
 	}
 
@@ -97,7 +97,7 @@ public class PatientService extends BusinessServices {
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		
 		ac.setStringValue("tabLogo", authFuncNo);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/patient_main.html");		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_main.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 
@@ -113,7 +113,7 @@ public class PatientService extends BusinessServices {
 	@Override
 	public int query(ActionContext ac) throws Exception {
 		
-		StringBuilder sql = new StringBuilder("SELECT * FROM PATIENT U ");
+		StringBuilder sql = new StringBuilder("SELECT * FROM DOCTOR U ");
 		String userName = request.getParameter("NAME");
 		
 		if(StringUtils.isNotBlank(userName)) {
@@ -121,7 +121,7 @@ public class PatientService extends BusinessServices {
 		}
 		
 		//设置排序条件，默认的按BIRTHDAY降序
-		sql.append(super.order(ac, "U.NAME", "DESC"));
+		sql.append(super.order(ac, "U.BIRTHDAY", "DESC"));
 		
 		querySql = sql.toString();
 		
@@ -156,11 +156,11 @@ public class PatientService extends BusinessServices {
 			result = DBDYDao.insert(ac.getConnection(), user);
 		}
 		if(0 == result) {
-			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患失败!");
-			setMessage(ac, "保存病患失败!");
+			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存用户失败!");
+			setMessage(ac, "保存医生失败!");
 		} else {
-			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患成功!");
-			setMessage(ac, "保存病患成功!");
+			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存用户成功!");
+			setMessage(ac, "保存医生成功!");
 		}
 		
 		return CONST_RESULT_AJAX;
