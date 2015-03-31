@@ -1,61 +1,69 @@
-  <body class="">
-
-    <!-- Docs master nav -->
-    <header class="navbar navbar-default navbar-fixed-top bs-docs-nav" role="banner">
-  <div class="container">
-    <div class="navbar-header">
-      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="./" id="brand"></a>
-    </div>
-    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-      <ul class="nav navbar-nav navbar">
-        <li>
-          <a track="how it works" href="./how-it-works">How It Works</a>
-        </li>
-        <li>
-          <a track="enterprise" href="./enterprise">Enterprise</a>
-        </li>
-        <li>
-          <a track="editions" href="./editions">Editions</a>
-        </li>
-        <li>
-          <a track="documentation" href="./documentation/">Docs</a>
-        </li>
-        <li>
-          <a track="blog" href="./blog">Blog</a>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right" id="workspace-menu" style="display:none;">
-        <li id="loggedin-user" class="hidden-xs">
-          <a href="" class="dropdown-toggle dropdown" data-toggle="dropdown">
-            <span class="user-avatar">
-              <span></span>
-              <img id="user-icon" src="">
-            </span>
-            <span id="user-name" class="user-name">
-              
-            </span>
-          </a>
-          <ul class="menu dropdown-menu">
-            <li class="arrow"><span></span></li>
-            <li>
-                <a track="" href="./#/instances"><i class="icon icon-myworkspace"></i>My Workspace</a>
-            </li>
-            <li style="display:none;">
-                <a track="Help Web Profile" href="./documentation"><i class="icon icon-help"></i>Help</a>
-            </li>
-            <li>
-                <a track="Logout" id="nav-logout"><i class="icon icon-logout"></i>Logout</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right" id="buttons-menu" style="display:none;">
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/ssocommon.js"></script>    
+ 
+</head>
+<body class="">
+<header class="navbar navbar-default navbar-fixed-top bs-docs-nav" role="banner">
+<div class="container">
+  <div class="navbar-header">
+    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a href="./" id="brand"></a>
+  </div>
+  <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+    <ul class="nav navbar-nav navbar">
+      <li>
+        <a track="how it works" href="./how-it-works">How It Works</a>
+      </li>
+      <li>
+        <a track="enterprise" href="./enterprise">Enterprise</a>
+      </li>
+      <li>
+        <a track="editions" href="./editions">Editions</a>
+      </li>
+      <li>
+        <a track="documentation" href="./documentation/">Docs</a>
+      </li>
+      <li>
+        <a track="blog" href="./blog">Blog</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" id="workspace-menu" style="display:none;">
+<li id="loggedin-user" class="hidden-xs">
+  <a href="" class="dropdown-toggle dropdown" data-toggle="dropdown">
+    <span class="user-avatar">
+      <span></span>
+      <img id="user-icon" src="">
+    </span>
+    <span id="user-name" class="user-name">
+      
+    </span>
+  </a>
+  <ul class="menu dropdown-menu">
+    <li class="arrow"><span></span></li>
+    <li>
+        <a track="" href="./#/instances"><i class="icon icon-myworkspace"></i>My Workspace</a>
+    </li>
+    <li style="display:none;">
+          <a track="Help Web Profile" href="./documentation"><i class="icon icon-help"></i>Help</a>
+      </li>
+      <li>
+          <a track="Logout" id="nav-logout"><i class="icon icon-logout"></i>Logout</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+<ul class="nav navbar-nav navbar-right" id="buttons-menu" style="display:none;">
         <li>
           <a href="./login" class="btn btn-secondary navbar-btn" track="nav login">Log In</a>
         </li>
@@ -68,7 +76,7 @@
 </header>
 
     <!-- Page content of course! -->
-    <body onload="mixpanel.track('home page')">
+<body onload="mixpanel.track('home page')">
 <main id="content" role="main" class="home-page">
   <div class="jumbotron slate hero-walkthrough hero-main">
     <div class="container">
@@ -315,7 +323,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
-    <script type="javascript">
+<script type="javascript">
   $('#sign-up-modal').modal('show');
 </script>
 
@@ -349,62 +357,62 @@
   </div>
 </div>
 <script type="text/javascript">
-  (function() {
-    var form = $('#signup-form'),
-        name = form.find('#signup-name'),
-        email = form.find('#signup-email'),
-        password = form.find('#signup-password'),
-        button = form.find('#signup-with-email'),
+(function() {
+  var form = $('#signup-form'),
+      name = form.find('#signup-name'),
+      email = form.find('#signup-email'),
+      password = form.find('#signup-password'),
+      button = form.find('#signup-with-email'),
 
-        toggleButton = function() {
-          var isEmpty = function(value) {
-            return value.trim() === '';
-          };
-
-          button.prop('disabled', isEmpty(name.val()) || isEmpty(email.val()) || isEmpty(password.val()));
+      toggleButton = function() {
+        var isEmpty = function(value) {
+          return value.trim() === '';
         };
 
-    toggleButton();
-    email.change(toggleButton).keyup(toggleButton);
-    password.change(toggleButton).keyup(toggleButton);
+        button.prop('disabled', isEmpty(name.val()) || isEmpty(email.val()) || isEmpty(password.val()));
+      };
 
-    form.submit(function(event) {
-      var $form = $(this),
-          data = {
-            name: name.val(),
-            email: email.val(),
-            password: password.val()
-          };
+  toggleButton();
+  email.change(toggleButton).keyup(toggleButton);
+  password.change(toggleButton).keyup(toggleButton);
 
-      button.prop('disabled', true);
+  form.submit(function(event) {
+    var $form = $(this),
+        data = {
+          name: name.val(),
+          email: email.val(),
+          password: password.val()
+        };
 
-      // stop normal submitting
-      event.preventDefault();
+    button.prop('disabled', true);
 
-      // Send the data using post
-      $.post( '/services/security/username_password?accept_terms=true', $.param(data))
-     
-        .done(function( data, textStatus, jqXHR ) {
-          var redirection = jqXHR.getResponseHeader('x-location') || '/';
-          window.location = redirection;
-        })
+    // stop normal submitting
+    event.preventDefault();
 
-        .fail(function( data, textStatus, jqXHR ) {
-          var alertMessage = $('#signup-with-email-error');
+    // Send the data using post
+    $.post( '/services/security/username_password?accept_terms=true', $.param(data))
+   
+      .done(function( data, textStatus, jqXHR ) {
+        var redirection = jqXHR.getResponseHeader('x-location') || '/';
+        window.location = redirection;
+      })
 
-          alertMessage.html(data.status === 401 ? 'Email already exists.' : 'We found some problems. Please, try again later.');
-          alertMessage.slideDown( 200 );
+      .fail(function( data, textStatus, jqXHR ) {
+        var alertMessage = $('#signup-with-email-error');
 
-          setTimeout(function() {
-            alertMessage.slideUp( 200 );
-          }, 3000);
-        })
+        alertMessage.html(data.status === 401 ? 'Email already exists.' : 'We found some problems. Please, try again later.');
+        alertMessage.slideDown( 200 );
 
-        .always(function() {
-          toggleButton();
-        });
-    });
-  })();
+        setTimeout(function() {
+          alertMessage.slideUp( 200 );
+        }, 3000);
+      })
+
+      .always(function() {
+        toggleButton();
+      });
+  });
+})();
 </script>
     <script type="javascript">
   $('#login-modal').modal('show');
@@ -436,69 +444,69 @@
   </div>
 </div>
 <script type="text/javascript">
-  (function() {
-    var form = $('#login-form'),
-        email = form.find('#login-email'),
-        password = form.find('#login-password'),
-        button = form.find('#login-with-email'),
-        googleAuthBtn = form.find('.js-btn-google-auth'),
-        googleAuthURL = 'https://accounts.google.com/o/oauth2/auth?client_id=726336950247-p6172q2aojfuntnp8e0rocg45c19ss4b.apps.googleusercontent.com&response_type=code&scope=profile+email&redirect_uri=https%3A//{0}/services/security/google_callback%3Faccept_terms%3Dtrue&approval_prompt=auto',
+(function() {
+  var form = $('#login-form'),
+      email = form.find('#login-email'),
+      password = form.find('#login-password'),
+      button = form.find('#login-with-email'),
+      googleAuthBtn = form.find('.js-btn-google-auth'),
+      googleAuthURL = 'https://accounts.google.com/o/oauth2/auth?client_id=726336950247-p6172q2aojfuntnp8e0rocg45c19ss4b.apps.googleusercontent.com&response_type=code&scope=profile+email&redirect_uri=https%3A//{0}/services/security/google_callback%3Faccept_terms%3Dtrue&approval_prompt=auto',
 
-        toggleButton = function() {
-          var isEmpty = function(value) {
-            return value.trim() === '';
-          };
-
-          button.prop('disabled', isEmpty(email.val()) || isEmpty(password.val()));
+      toggleButton = function() {
+        var isEmpty = function(value) {
+          return value.trim() === '';
         };
 
-    googleAuthBtn.attr('href', googleAuthURL.replace('{0}', window.location.hostname));
+        button.prop('disabled', isEmpty(email.val()) || isEmpty(password.val()));
+      };
 
-    form.submit(function(event) {
-      var $form = $(this),
-          data = {
-            email: email.val(),
-            password: password.val()
-          };
+  googleAuthBtn.attr('href', googleAuthURL.replace('{0}', window.location.hostname));
 
-      button.prop('disabled', true);
+  form.submit(function(event) {
+    var $form = $(this),
+        data = {
+          email: email.val(),
+          password: password.val()
+        };
 
-      // stop normal submitting
-      event.preventDefault();
+    button.prop('disabled', true);
 
-      // Send the data using post
-      $.post( '/services/security/username_password', $.param(data))
+    // stop normal submitting
+    event.preventDefault();
 
-        .done(function( data, textStatus, jqXHR ) {
-          var redirection = jqXHR.getResponseHeader('x-location') || '/';
-          window.location = redirection;
-        })
+    // Send the data using post
+    $.post( '/services/security/username_password', $.param(data))
 
-        .fail(function( data, textStatus, jqXHR ) {
-            var alertMessage = $('#login-with-email-error');
+      .done(function( data, textStatus, jqXHR ) {
+        var redirection = jqXHR.getResponseHeader('x-location') || '/';
+        window.location = redirection;
+      })
 
-            if (data.status === 404) {
-                window.location = '/signup';
-            } else {
-                if (data.status === 401) {
-                    alertMessage.html(data.responseJSON.message);
-                } else {
-                    alertMessage.html('Invalid username or password');
-                }
+      .fail(function( data, textStatus, jqXHR ) {
+          var alertMessage = $('#login-with-email-error');
 
-                alertMessage.slideDown( 200 );
+          if (data.status === 404) {
+              window.location = '/signup';
+          } else {
+              if (data.status === 401) {
+                  alertMessage.html(data.responseJSON.message);
+              } else {
+                  alertMessage.html('Invalid username or password');
+              }
 
-                setTimeout(function() {
-                    alertMessage.slideUp( 200 );
-                }, 3000);
-            }
-        })
+              alertMessage.slideDown( 200 );
 
-        .always(function() {
-          toggleButton();
-        });
-    });
-  })();
+              setTimeout(function() {
+                  alertMessage.slideUp( 200 );
+              }, 3000);
+          }
+      })
+
+      .always(function() {
+        toggleButton();
+      });
+  });
+})();
 </script>
-
-  </body>
+</body>
+</html>

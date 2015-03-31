@@ -14,7 +14,7 @@
 		</ActionParam>
 		<PresentationConfig>
 			<ActionDestination method="forward" return_code="error">main/error.jsp</ActionDestination>
-			<ActionDestination method="form" return_code="1">edu/xmu/ksp/website/index.html</ActionDestination>
+			<ActionDestination method="form" return_code="1">com/xmdx/demo/front/index.html</ActionDestination>
 		</PresentationConfig>
 	</Action>
 	<Action id="IG_FRONT_ACTION">
@@ -29,7 +29,7 @@
 		</ActionParam>
 		<PresentationConfig>
 			<ActionDestination method="forward" return_code="error">main/error.jsp</ActionDestination>
-			<ActionDestination method="form" return_code="1">edu/xmu/ksp/front/index.html</ActionDestination>
+			<ActionDestination method="form" return_code="1">com/xmdx/demo/front/index.html</ActionDestination>
 		</PresentationConfig>
 	</Action>
 	
