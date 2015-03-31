@@ -13,7 +13,7 @@
 		<div class="row">
 			<div class="col-xs-6 col-md-4">
 			 	<div class="text-center profile-pic">
-				    <img src="img/profile-pic.jpg" alt="">
+				    <img src="image/1.png" alt="">
 				</div>
 				<ul class="nav nav-tabs nav-stacked">
 				    <li><a href="javascript:void(0)"><i class="icon-coffee"></i> 公文包</a></li>
@@ -27,37 +27,37 @@
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-8">
-				<h4>@{USER.get("NAME")}<br><small>@{USER.get("NAME")}</small></h4>
+				<h4>@{USER.get("NAME")}<br><small>@{USER.get("WORKPLACE")}</small></h4>
 				<table class="table table-borderless">
 				    <tbody>
 				    <tr>
 				        <td class="span2">性别 :</td>
 				        <td>
-				        	@{USER.get("NAME")}
+				        	@{USER.get("GENDER")}
 				        </td>
 				    </tr>
 				    <tr>
 				        <td class="span2">年龄 :</td>
 				        <td>
-				        	@{USER.get("NAME")}
+				        	@{USER.get("AGE")}
 				        </td>
 				    </tr>
 				    <tr>
 				        <td class="span2">职业 :</td>
 				        <td>
-				        	@{USER.get("NAME")}
+				        	@{USER.get("OCCUPATION")}
 				        </td>
 				    </tr>
 				    <tr>
 				        <td class="span2">婚姻:</td>
 				        <td>
-				        	@{USER.get("NAME")}
+				        	@{USER.get("MARRIAGE")}
 				        </td>
 				    </tr>
 				    <tr>
 				        <td class="span2">住址 :</td>
 				        <td>
-				        	@{USER.get("NAME")}
+				        	@{USER.get("ADDRESS")}
 				        </td>
 				    </tr>
 				    </tbody>
@@ -66,6 +66,8 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+				<button type="button" class="btn btn-warning">修改</button>
+				<button type="button" class="btn btn-info">确认</button>
 			<div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
 		</div>
 	</div>
