@@ -43,7 +43,7 @@ public class PatientInfoService extends BusinessServices {
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		
 		ac.setStringValue("tabLogo", authFuncNo);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/patient_info.html");		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/patient/patient_info.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 
