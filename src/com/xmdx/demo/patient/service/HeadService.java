@@ -1,11 +1,12 @@
 package com.xmdx.demo.patient.service;
 
 import com.e9rj.platform.common.services.BusinessServices;
+import com.xmzy.frameext.business.service.annotate.Service;
 import com.xmzy.framework.context.ActionContext;
-
+@Service(name="patient.head")
 public class HeadService extends BusinessServices {
 	//功能号
-	private static final String authFuncNo = "back.user";
+	private static final String authFuncNo = "patient.head";
 	//表名
 	private static final String tableName = "TB_USER";
 	//主键名
