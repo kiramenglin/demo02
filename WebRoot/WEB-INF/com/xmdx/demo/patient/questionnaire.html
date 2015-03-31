@@ -11,12 +11,25 @@
 	<div class="container-fluid">
 		<div class="row">
 			@foreach{q:Q}
+				<div>
 				 @{q.get("QUESTIONNAIRE_TITLE")}<br>
-				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_A")} 
-				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_B")}
-				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_C")}
-				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_D")}
-				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_E")} <br>				 
+				 	<div>
+				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_A")}
+				 	</div> 
+				 	<div>
+				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_B")}
+				 	</div>
+				 	<div>
+				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_C")}
+				 	</div>
+				 	<div>
+				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_D")}
+				 	</div>
+				 	<div>
+				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_E")}
+				 		@{q.get('QUESTIONNAIRE_ID')}
+				 	</div> <br>	
+				 </div>			 
 			@end{}
 		</div>
 	</div>
