@@ -38,7 +38,7 @@ public class QuestionnaireService extends BusinessServices {
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		
 		ac.setStringValue("tabLogo", authFuncNo);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/user_main.html");		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/patient/questionnaire.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 
