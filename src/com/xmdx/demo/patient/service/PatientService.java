@@ -156,10 +156,10 @@ public class PatientService extends BusinessServices {
 			result = DBDYDao.insert(ac.getConnection(), user);
 		}
 		if(0 == result) {
-			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存用户失败!");
+			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患失败!");
 			setMessage(ac, "保存病患失败!");
 		} else {
-			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存用户成功!");
+			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患成功!");
 			setMessage(ac, "保存病患成功!");
 		}
 		
