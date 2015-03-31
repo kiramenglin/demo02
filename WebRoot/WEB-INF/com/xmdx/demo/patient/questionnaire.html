@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>患者信息</title>
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ssocommon.js"></script>    
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			@foreach{q:Q}
+				 @{q.get("QUESTIONNAIRE_TITLE")}<br>
+				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_A")} 
+				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_B")}
+				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_C")}
+				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_D")}
+				 <input type="radio" name="fldRadio1">@{q.get("QUESTIONNAIRE_E")} <br>				 
+			@end{}
+		</div>
+	</div>
+</body>
+</html>
