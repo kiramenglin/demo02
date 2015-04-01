@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+	<head>
+	    <meta charset="utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Bootstrap --> 
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+	
+	    <title>过考平台用户注册</title>
+		
+		<!-- Bootstrap core CSS -->
+	    <link href="/e9common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- 验证 -->
+	    
+		<link rel="stylesheet" href="/e9common/jquery/validate/css/template.css" type="text/css"/>
+		<link href="css/websites/user/register.css" rel="stylesheet">
+	    <!-- Just for debugging purposes. Don't actually copy this line! -->
+	    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	
+	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<style type="text/css">
+			font[color=red], font[color=cray]{
+	    		display: none;
+	    	}
+
+			.content-box {
+				background-color: white;
+				margin-top : 15px;
+				margin-bottom: 15px;
+			}
+			span[id$=_SUCCESS],
+			span[id$=_INFO], 
+			span[id$=_WARN]{
+				height: 46px;
+				font-size: 18px;
+				line-height: 46px;
+			}
+			span[id$=_SUCCESS] {
+				background: url("images/right.png") no-repeat left center;
+				padding-left: 20px;
+			}
+			span.noteInfo {
+				background: url("images/ico_tips.png") no-repeat left center;
+				padding-left: 20px;
+				overflow: hidden;
+				display : inline-block;
+				text-overflow:ellipsis;   
+				white-space:nowrap !important;
+			}
+			span.warnInfo {
+				background: url("images/ico_wrong.png") no-repeat left center;
+				padding-left: 20px;
+				overflow: hidden;
+				display : inline-block;
+				text-overflow:ellipsis;   
+				white-space:nowrap !important;
+			}
+			
+			.tit {
+				height: 46px;
+				font-size: 18px;
+				line-height: 46px;
+			}
+		</style>
+	</head>
+	<body>
+	<!-- BEGIN HEADER -->
+
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/zkgk/website/header.html"/>
+	
+	<!-- END HEADER -->
+	<div id="content" class="container content-box">
+		<div>
+		<form class="form-horizontal" role="form" id="registerForm">
+			<input id="COURSE_CODE" name="COURSE_CODE" type="hidden" value="@{ COURSE_CODE }"/>
+			<input id="sub_site_org" name="ORGCODE" type="hidden" value="@{sub_site_org}"/>
+			<div class="form-group">
+				<div class="col-md-12 text-center">
+					<img alt="" src="images/register-process.png" style="max-width: 100%;margin-right: auto;margin-left: auto;min-height: 33px">
+				</div>
+			</div>
+		
+			<div class="form-group">
+	          	<div class="col-md-4 col-xs-4" align="right">
+	          		<span class="tit" id="OPNOEMAIL_LAB" >邮箱地址：</span>
+	          		<span class="tit" id="OPNO_LAB" style="display: none">用&nbsp;户&nbsp;&nbsp;名：</span>
+	          	</div>
+				<div class=" col-md-4 col-xs-4">
+					<input type="hidden" id="PERSON_ID" name="PERSON_ID" class="form-control"/>
+					<input type="text" id="OPNOEMAIL" name="OPNO" class="form-control input-lg" />
+					<input type="text" id="OPNO" name="OPNO" class="form-control input-lg" disabled>
+				</div>
+				<div class="col-md-4  col-xs-4" >
+					<span id="OPNOEMAIL_SUCCESS"></span>
+					<span id="OPNOEMAIL_INFO" class="noteInfo" title="您输入的邮箱将作为登录@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}用户名">您输入的邮箱将作为登录@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}用户名</span>
+					<span id="OPNOEMAIL_WARN"  class="warnInfo"></span>
+				</div>
+	        </div>
+	     	<div class="form-group" id="pwddiv" style="display: none">
+	     		<div class="col-md-4  col-xs-4 " align="right">
+	     			<div class="tit">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</div>
+	     		</div>
+				<div class="col-md-4 col-xs-4">
+					<input type="password" id="PWD" name="PWD" class="form-control input-lg" />
+				</div>
+				<div class="col-md-4 col-xs-4">
+					<span id="PWD_SUCCESS"></span>
+					<span id="PWD_INFO" class="noteInfo" title="请输入6~15位由数字、字母密码，字母区分大小">请输入6~15位由数字、字母密码，字母区分大小</span>
+					<span  id="PWD_WARN"  class="warnInfo"></span>
+				</div>
+			</div>
+			<div class="form-group" id="surepwddiv"  style="display: none">
+				<div class="col-md-4 col-xs-4" align="right">
+					<span class="tit">确认密码：</span>
+				</div>
+				<div class="col-md-4 col-xs-4">
+					<input type="password" id="SUREPWD" name="SUREPWD" class="form-control input-lg" />
+					
+				</div>
+				<div class="col-md-4 col-xs-4">
+					<span id="SUREPWD_SUCCESS"></span>
+					<span id="SUREPWD_INFO" class="noteInfo" title="请输入确认密码">请输入确认密码</span>
+					<span  id="SUREPWD_WARN"  class="warnInfo"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-4 col-xs-4" align="right">
+					<span class="tit">验&nbsp;证&nbsp;&nbsp;码：</span>
+				</div>
+				<div class="col-md-2 col-xs-2">
+					<input type="text" id="CHECKCODE" name="CHECKCODE" class="form-control input-lg"/>
+				</div>
+				<div class="col-md-2 col-xs-2 text-left" style="height: 46px; line-height: 46px;">
+					<img id="randomIMG" style="vertical-align: middle; cursor: pointer;height:33px;" onClick="this.src='HttpChannel?action=GET_VALIDATENUM&width=80&height=33&rand=' + Math.random();" title="看不清？点击重新获取验证码">
+				</div>
+				<div class="col-md-4  col-xs-4">
+					<span id="CHECKCODE_SUCCESS"></span>
+					<span id="CHECKCODE_INFO" class="noteInfo" title="请输入验证码">请输入验证码</span>
+					<span id="CHECKCODE_WARN" class="warnInfo"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-4 col-xs-offset-4 col-md-4 col-xs-4">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="accept" name="accept" checked="checked" readonly="readonly"> 我已仔细阅读并接受 <a href="HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.user.register!gotoAgreement&sub_site_org=@{sub_site_org}" target="_blank" style="font-weight:bold;">《服务使用协议》</a>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-4 col-xs-4">
+					<span id="accept_WARN" class="warnInfo" style="height: 27px !important; line-height: 27px !important;"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-4  col-xs-offset-4 col-md-8 col-xs-8">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked="checked" readonly="readonly" style="height: 13px !important; line-height: 13px !important;">我同意接收平台资讯邮件
+						</label>
+					</div>
+				</div>
+			</div>
+			
+		</form>
+		</div>
+		<div class="form-group">
+			<button class="col-md-offset-4 col-xs-offset-4 col-md-4 col-xs-4 btn btn-info" style="background-color: #47b471;" id="registerBtn"> 确认注册 </button>
+		</div>
+	</div>
+	<!-- BEGIN FOOTER -->
+		<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/zkgk/website/footer_goldoar.html"/>
+	<!-- END FOOTER -->
+		
+		<script type="text/javascript" src="/e9common/jquery/js/jquery-1.7.2.min.js"></script>
+   		<script type="text/javascript" src="/e9common/jquery/js/jquery-ui-1.8.22.custom.min.js"></script>
+    	<script src="/e9common/bootstrap/js/bootstrap.min.js"></script>
+    	<script src="/e9common/jquery/validate/js/languages/jquery.validationEngine-zh_CN.js"></script>
+    	<script src="/e9common/jquery/validate/js/jquery.validationEngine.js"></script>
+    	<script src="js/com/e9rj/zkgk/website/user/register.js"></script>
+    	<!-- 
+    	 -->
+    	<script src="/e9common/js/common.js"></script>
+    	<script src="js/websiteCommon.js"></script>
+    	<script type="text/javascript">
+    		$(function() {
+    			
+    			//隐藏所有提示信息
+    			hidenAllNoteInfo();
+    			
+    			//绑定得到焦点事件时，显示提示信息
+    			$("input").bind("focus", function(){
+    				var id = $(this).attr("id");
+    				showInfo(id);
+    			});
+    			//绑定失去焦点时，进行字段信息验证
+    			$("input").bind("blur", function(){
+    				var id = $(this).attr("id");
+    				validateField(id);
+    			});
+    			
+    			$("#OPNOEMAIL,#CHECKCODE").bind("change", function() {
+					$(this).attr("validate", false);
+				});
+    			
+    			$("#randomIMG").click();
+    			
+    			//注册回车进入下一表单域事件
+    			registEnterNext("registerForm");
+    			
+    			//用户注册按钮点击事件
+    			$("#registerBtn").bind("click", function() {
+    				//触发失去焦点事件，进行字段校验
+    				$("input").trigger("blur");
+    				
+    				$("#registerForm").submit();    				
+    			});
+    			//用户注册按钮回车事件
+    			$("#registerBtn,#CHECKCODE").bind("keydown", function(e) {
+    				var key = e.which;
+    				if(key == 13) {
+    					$("#registerBtn").click();
+	    				 e.preventDefault();
+	    				 e.stopPropagation();
+    				}
+    			});    			
+    			
+    			//表单验证初始化
+    			registerValidate("registerForm");
+    			
+    			//删除输入框后的必填标识
+    			//改成样式控制,页面初始化的时候就不会晃动 zdc 2014-07-26
+    			//$(".form-group font[color=red]").remove();
+    			
+    			if('@{OP_BEAN.get("PERSON_ID")}') {
+    				$("#pwddiv").remove();
+    				$("#surepwddiv").remove();
+    				$("#OPNOEMAIL").remove();
+    				$("#OPNOEMAIL_LAB").remove();
+    				$("#OPNO_LAB").css("display", "block");
+    				$("#CHECKCODE").trigger("focus");
+    			} else {
+    				$("#pwddiv").css("display", "block")
+    				$("#surepwddiv").css("display", "block");
+    				$("#OPNO_LAB").remove();
+    				$("#OPNO").remove();
+    				$("#OPNOEMAIL").trigger("focus");
+    			}
+    			//保存注册信息
+    			submitRegisterForm("registerForm", "HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.user.register!register",function(data) {
+					if(data.result==true) {
+						//COURSE_CODE 有值，表示是从zkxj->学生平台->已报课程->在线学习 发起的申请
+						location.href= "HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.user.register!gosuccess&_username=" + $("input[name=OPNO]").val() + "&_passwrod=" + ($("#PWD").length ?$("#PWD").val():'') 
+							+ "&sub_site_org=" + $("#sub_site_org").val() + "&COURSE_CODE=" + $("#COURSE_CODE").val();
+					} else {
+						$.alert("友情提示", data.msg, null, null, true);
+					}					
+    			});
+    			//隐藏所有的提示信息
+    			function hidenAllNoteInfo() {
+    				$("span[id$=_WARN],span[id$=_INFO],span[id$=_SUCCESS]").css("display", "none");
+    			}
+    			
+    			//显示提示信息
+    			function showInfo(id) {
+    				
+    				var isdisplay = $("#" + id + "_SUCCESS").css("display") == "none" ? false : true;
+    				
+    				if(!isdisplay) {
+	    				$("#" + id + "_INFO").css({
+	    					display : "",
+	    					width : $("#" + id + "_INFO").parent().width()
+	    				});	    				
+	    				$("#" + id + "_WARN").css("display", "none");
+    				} 
+    			}
+    			
+    			//字段验证
+    			function validateField(id) {
+    				var iserror = $("#" + id).validationEngine("validate");
+    				var json = null;
+    				if(iserror) {
+    					var html  = $("."+ id + "formError > .formErrorContent").html();
+    		
+    					html = html.replaceAll("<br>","；")
+    					
+    					showErrorMsg(id, html);
+    					return ;
+    				} 
+    				
+   					switch(id) {
+   					case "OPNOEMAIL" : 
+   						json = checkUserName();   	
+   						if(json && json[0]) {
+   							$("#OPNOEMAIL").attr("validate", true);
+   						}
+   						break;
+   					case "CHECKCODE" :
+   						json = checkCode();
+   						if(json && json[0]) {
+   							$("#CHECKCODE").attr("validate", true);
+   						}
+   						break;
+   					default : 
+   						
+   					}
+   					if(json && !json[0]) {
+   						validateForm = false;
+   						showErrorMsg(id, json[1] ? json[1] : "");
+   					} else {
+   						$("#" + id + "_SUCCESS").css("display", "");
+   	   					$("#" + id + "_INFO").css("display", "none");
+   	   					$("#" + id + "_WARN").css("display", "none");
+   					}
+   					
+    			}
+    			
+    			function checkUserName() {
+    				
+    				if($("#OPNOEMAIL").attr("validate")!='true') {
+    					
+    					var result = null;
+	    				$.ajax({
+	    					url : "HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.user.register!opnoValidate",
+	    					data : {
+	    						OPNO : $("#OPNOEMAIL").val() 
+	    					},
+	    					async:false,
+	    					dataType : "json",
+	    					success : function(json) {
+	    	
+	    						result =json;
+	    					}
+	    				});
+	    				return result;
+    				}
+    			} 
+    			function checkCode() {
+    				if($("#CHECKCODE").attr("validate")!='true') {
+    					var result = null;
+	    				$.ajax({
+	    					url : "HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.user.register!codeValidate",
+	    					data : {
+	    						CHECKCODE : $("#CHECKCODE").val() 
+	    					},
+	    					async : false,
+	    					dataType : "json",
+	    					success : function(json) {
+	    						result =json;
+	    					}
+	    				});
+	    				return result;
+    				}
+    			} 
+    			
+    			function showErrorMsg(id, html) {
+    				$("#" + id + "_SUCCESS").css("display", "none");
+					$("#" + id + "_INFO").css("display", "none");
+					$("#" + id + "_WARN").css({
+						display : "",
+						width : $("#" + id + "_WARN").parent().width()
+					});
+					
+					$("#" + id + "_WARN").html(html);
+					$("#" + id + "_WARN").attr("title", html);
+    			} 
+    		});
+    	</script>
+	</body>
+</html>
+<!--Form Setting Start-->
+<var name="PERSON_ID" value="OP_BEAN.get('PERSON_ID')" /><!-- -->
+<var name="OPNO" value="OP_BEAN.get('OPNO')" validate="required,custom[email],maxSize[20]"/><!-- -->
+<var name="PWD" validate="required,minSize[6],maxSize[15]"/><!-- -->
+<var name="SUREPWD" validate="required,minSize[6],equals[PWD],maxSize[15]"/><!-- -->
+<var name="CHECKCODE" validate="required"/><!-- -->
+<var name="accept" validate="required"/><!-- -->
+<!--Form Setting End-->

@@ -118,12 +118,15 @@ public class ShitService extends BusinessServices {
 	public int save(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
 		DBDYPO user = new DBDYPO(tableName, keyField, request);
+		
 		String uid = request.getParameter(keyField);
 		int result = 0;
 		boolean isAdd = false;
+	
 		
 		if (StringUtils.isNotBlank(uid)) {
 			//修改
+			
 			checkAuth(ac, authFuncNo, RIGHT_FOUR);
 			result = DBDYDao.update(ac.getConnection(), user);
 			

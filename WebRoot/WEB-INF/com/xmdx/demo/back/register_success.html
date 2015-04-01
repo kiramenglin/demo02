@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
+	    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+	
+	    <title>过考平台用户注册</title>
+		
+		<!-- Bootstrap core CSS -->
+	    <link href="/e9common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	    <link href="css/base.css" rel="stylesheet">
+	
+	    <!-- Just for debugging purposes. Don't actually copy this line! -->
+	    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	
+	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		
+		<style type="text/css">
+			body {
+				background-color: #ececec;
+			}
+			#content {
+				padding: 15px;
+			}
+			.register-process-two {
+				background: url("images/register-success.png") no-repeat center center;
+				width: 980px;
+				height: 33px;
+				margin: 15px auto;
+			}
+			
+			.content-box {
+				background-color: white;
+				margin-top : 15px;
+				margin-bottom: 15px;
+			}
+			#content .row{
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+	<body>
+	<!-- BEGIN HEADER -->
+
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/zkgk/website/header.html"/>
+	
+	<input type="hidden" id="COURSE_CODE" value="#{COURSE_CODE}" />
+	<div id="content" class="container  content-box">
+		
+		<div class="row">
+			<div class="col-md-12 col-xs-12 text-center">
+				<img alt="" src="images/register-success.png" style="max-width: 100%;margin-right: auto;margin-left: auto;min-height: 33px">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12 text-center"> 
+				<img alt="" src="images/register-success-img.png">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center"> 
+				<label style="font-size: 13px;color:#a3a3aa">您的帐号：</label>
+				<label style="font-size: 11px; color: #d24a24;">@{OPNO}</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div id="show" class="text-center" style="width: 100%; height: 100%;"></div>
+				<input type="hidden" id="forwordUrl" name="forwordUrl" value="/zkgk?org=@{sub_site_org}">
+				<input type="hidden" id="sub_site_org" value="@{sub_site_org}">
+			</div>
+		</div>
+	</div>
+	
+	<iframe src="" name="cas_serverFrame"  id="cas_serverFrame" style="display: none"></iframe>  
+	
+	<!-- BEGIN FOOTER -->
+		<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/zkgk/website/footer_goldoar.html"/>
+	<!-- END FOOTER -->
+		
+		<script type="text/javascript" src="/e9common/jquery/js/jquery-1.7.2.min.js"></script>
+   		<script type="text/javascript" src="/e9common/jquery/js/jquery-ui-1.8.22.custom.min.js"></script>
+    	<script src="/e9common/bootstrap/js/bootstrap.min.js"></script>
+    	<script src="js/websiteCommon.js"></script>
+		<script src="/e9common/js/appcode.js"></script>
+    	<script type="text/javascript">
+    	
+	    	var t=3;//设定跳转的时间
+			var timmerId="";
+			var casServerURL = '@{com.e9rj.platform.common.BaseConstants.getGlobalValue("5")}/login';  
+			var callbackUrl = "http://" + location.host + zkgkAppCode +'/logincallback.html';
+			var loginURL = callbackUrl+"&_username=@{OPNO}&_password=@{PWD}";
+ 			var url = casServerURL+"?service=" + loginURL;
+ 			var havePwd = "@{PWD}" ? true :　false;
+ 			var html ="秒后跳转到" + (havePwd ? "学习中心" :"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，请重新登录" ) + "<a id='linkBtn' href='#' style='font-weight : bold;' onclick='nowforward();'>马上跳转</a></div>";
+
+    		$(function(){
+    			
+    			if(!havePwd) {
+    				
+    				var logoutUrl = "@{com.e9rj.platform.common.BaseConstants.getGlobalValue(String.valueOf(com.e9rj.platform.common.Constants.PARA_SYS_CAS_URL),"")}/logout";//CAS退出地址
+    				
+    				
+    				
+    				var stationUrl = loadSubStationUrl();
+    				
+    				url = "HttpChannel?action=USER_LOGOUT&STATION_URL=" + stationUrl;
+    			}
+
+    			timmerId = setInterval("refer()",1000); //启动1秒定时 
+    			
+    		});
+	    	
+    		function refer(){
+    			
+				if(t==0){
+					html ="正在跳转到" + (havePwd?"学习中心……":"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，稍候请重新登录……");
+					$('#show').html( html); //显示倒计时
+					if(havePwd) {
+						$("#cas_serverFrame").attr("src", url);
+						clearInterval(timmerId);
+					} else {
+						var courseCode = $("#COURSE_CODE").val();
+						if(courseCode != ""){
+							//COURSE_CODE 有值，表示是从zkxj->学生平台->已报课程->在线学习 发起的申请，所以要跳到课程明细页下
+							location.href = "HttpChannel?action=COURSE_LIST_ACTION&COURSE_CODE=" + courseCode;
+						}else{
+							location.href = url;
+						}
+					}
+				} else {
+					$('#show').html( "<div id='timmer'>" + t+html); //显示倒计时
+				}
+				
+				t--; //计数器递减
+			} 
+    		
+    		function nowforward() {
+    			
+    			if(timmerId) {
+    				clearInterval(timmerId);
+    			}  
+    			html ="正在跳转到" + (havePwd?"学习中心……":"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，稍候请重新登录……");
+    			$('#show').html(html);
+    			if(havePwd) {
+    				$("#cas_serverFrame").attr("src", url);
+    			} else {
+    				var courseCode = $("#COURSE_CODE").val();
+					if(courseCode != ""){
+						//COURSE_CODE 有值，表示是从zkxj->学生平台->已报课程->在线学习 发起的申请，所以要跳到课程明细页下
+						location.href = "HttpChannel?action=COURSE_LIST_ACTION&COURSE_CODE=" + courseCode;
+					}else{
+						location.href = url;
+					}
+    			}
+			}
+    		
+    		//加载子站首页链接
+    		function loadSubStationUrl() {
+    			var stationUrl = "";
+    			
+    			if($("#sub_site_org").val()) {
+	    			var url = 'HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.sub.station!getStationByOrgcode&sub_site_org=' + $("#sub_site_org").val();
+					$.webAjax( url, null, {
+					    error: function(request) {      // 设置表单提交出错
+					    	$.alert("友情提示", "请求获取子站异常，请稍候再试", null, null, true);
+					    },
+					    success: function(data) {
+					    	if(data.Rows.length == 0){
+					    		$.alert("友情提示", "无法获取到子站信息或者子站的URL路径", null, null, true);
+					    		return;
+					    	}
+					    	$.each(data.Rows, function(i, station){
+					    		stationUrl = station.STATION_URL;
+					    		
+					    	});
+					    },
+					    async : false
+					});
+    			}
+				return stationUrl;
+    			
+    		}
+    	</script>
+	</body>
+</html>
+<!--Form Setting Start-->
+<!--Form Setting End-->
+
