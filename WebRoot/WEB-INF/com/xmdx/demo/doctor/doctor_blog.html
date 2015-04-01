@@ -3,12 +3,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	<link href="css/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
-	<script type="text/javascript" src="js/ssocommon.js"></script>    
+	
+	
  	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="ckeditor/adapters/jquery.js"></script>	
 	<script type="text/javascript">
+	
 	var config = {
 			extraPlugins : 'uicolor',
 			removePlugins:'elementspath',
@@ -23,12 +23,12 @@
 //以下为工具栏，可自由配置
 			toolbar:
 			[
-				//[ 'Source' , '-' , 'Save' , 'NewPage' , 'Preview' , '-' , 'Templates' ],
-				//[ 'Cut' , 'Copy' , 'Paste' , 'PasteText' , 'PasteFromWord' , '-' , 'Print' , 'SpellChecker' , 'Scayt' ],
+				[ 'Source' , '-' , 'Save' , 'NewPage' , 'Preview' , '-' , 'Templates' ],
+				[ 'Cut' , 'Copy' , 'Paste' , 'PasteText' , 'PasteFromWord' , '-' , 'Print' , 'SpellChecker' , 'Scayt' ],
 				[ 'Undo' , 'Redo' , '-' , 'Find' , 'Replace' , '-' , 'SelectAll' , 'RemoveFormat' ],
 				[ 'Form' , 'Checkbox' , 'Radio' , 'TextField' , 'Textarea' , 'Select' , 'Button' , 'ImageButton' , 'HiddenField' ],
 				[ 'Bold' , 'Italic' , 'Underline' , 'Strike' , '-' , 'Subscript' , 'Superscript' ],
-				//[ 'NumberedList' , 'BulletedList' , '-' , 'Outdent' , 'Indent' , 'Blockquote' ],
+				[ 'NumberedList' , 'BulletedList' , '-' , 'Outdent' , 'Indent' , 'Blockquote' ],
 				[ 'JustifyLeft' , 'JustifyCenter' , 'JustifyRight' , 'JustifyBlock' ],
 				[ 'Link' , 'Unlink' , 'Anchor' ],
 				[ 'Image' , 'Flash' , 'Table' , 'HorizontalRule' , 'Smiley' , 'SpecialChar' , 'PageBreak' ],
@@ -38,18 +38,22 @@
 		};
 	$('.jquery_ckeditor').ckeditor(config);
 	//**********end********
-
+	
 	</script>
+	<link href="css/css/bootstrap.css" rel="stylesheet" />
+	<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
 </head>
 <body>
 <div class="row">
+<table>
 	<tr>
 		<td height="33" width="80" align="right" >内容：</td>
-		<td align="left" >
+		<th align="left" >
 			<textarea class="jquery_ckeditor" cols="80" rows="10" name="CONTENT" id="CONTENT" ></textarea>
-		</td>
+		</th>
+		
 	</tr>
-	
+</table>
 </div>
 </body>
 </html>
