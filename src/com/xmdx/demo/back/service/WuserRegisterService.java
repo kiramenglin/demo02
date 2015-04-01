@@ -18,7 +18,16 @@ import com.e9rj.platform.common.OperateIP;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
 import com.e9rj.platform.util.SsoUtil;
-
+import com.xmdx.demo.back.dao.CourseDao;
+import com.xmdx.demo.back.dao.MessageSendDao;
+import com.xmdx.demo.back.dao.MoneyRecordDao;
+import com.xmdx.demo.back.dao.ZkgkConstants;
+import com.xmdx.demo.back.dao.ZkgkUtil;
+//import com.e9rj.zkgk.backstage.learncourse.dao.CourseDao;
+//import com.e9rj.zkgk.backstage.message.dao.MessageSendDao;
+//import com.e9rj.zkgk.system.ZkgkConstants;
+//import com.e9rj.zkgk.util.ZkgkUtil;
+//import com.e9rj.zkgk.website.platform.dao.MoneyRecordDao;
 import com.xmzy.frameext.business.service.annotate.Service;
 import com.xmzy.frameext.cache.CachedFactory;
 import com.xmzy.frameext.simpledb.DBConn;
