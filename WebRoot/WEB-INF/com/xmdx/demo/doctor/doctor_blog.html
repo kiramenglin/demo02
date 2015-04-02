@@ -42,18 +42,45 @@
 	</script>
 	<link href="css/css/bootstrap.css" rel="stylesheet" />
 	<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+	<script type="text/javascript">
+    //验证变量
+    var validateForm = false;
+    $(function(){
+    	//验证表单
+    	commonValidate("infoForm");
+		//绑定表单提交事件
+		submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.list");
+		//按钮
+		$( "#buttonset" ).buttonset();
+    });
+    
+    //表单提交
+    function saveInfo(){
+    	$('#infoForm').submit();
+    }
+	</script>
 </head>
 <body>
-<div class="row">
-<table>
-	<tr>
-		<td height="33" width="80" align="right" >内容：</td>
-		<th align="left" >
-			<textarea class="jquery_ckeditor" cols="80" rows="10" name="CONTENT" id="CONTENT" ></textarea>
-		</th>
-		
-	</tr>
-</table>
-</div>
+	<div class="container-fluid">
+		<div class="row">
+		<form method="post" name="infoForm" id="infoForm" action="/">
+		<table>
+			<tr>
+				<td height="33" width="80" align="right" >内容：</td>
+				<td align="left" >
+					<textarea name="BLOG" id="BLOG" class="jquery_ckeditor" cols="80" rows="10" name="CONTENT" id="CONTENT" ></textarea>
+				</td>
+				
+			</tr>
+		</table>
+		</form>
+		</div>
+		<div id="buttonDiv" class="row">
+				<span id="buttonset">
+					#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
+					<button id="cancelBtn" onclick="cancel()"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
+				</span>
+		</div>
+	</div>
 </body>
 </html>
