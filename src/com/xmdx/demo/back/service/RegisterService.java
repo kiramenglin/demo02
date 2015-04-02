@@ -59,7 +59,7 @@ public class RegisterService extends BusinessServices {
 	
 			// 操作员（ts_op）表为空，传向注册页面。注册为平台用户，及操作员。
 			if(null == po) {
-				ac.setStringValue(CONST_FORMNAME, "com/e9rj/zkgk/website/user/register.html");
+				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register.html");
 				return CONST_RESULT_SUCCESS;
 			}
 			

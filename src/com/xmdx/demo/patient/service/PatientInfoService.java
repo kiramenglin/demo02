@@ -1,9 +1,14 @@
 package com.xmdx.demo.patient.service;
 
+import java.sql.Connection;
+
 import org.apache.commons.lang.StringUtils;
 
 import com.e9rj.platform.common.services.BusinessServices;
+import com.e9rj.platform.util.SessionUtil;
+import com.xmdx.demo.back.dao.ZkgkConstants;
 import com.xmzy.frameext.business.service.annotate.Service;
+import com.xmzy.frameext.simpledb.DBConn;
 import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
@@ -29,9 +34,11 @@ public class PatientInfoService extends BusinessServices {
 
 	@Override
 	public int init(ActionContext ac) throws Exception {
+		String userName=SessionUtil.getOpno(ac);
 		
+		System.out.println(userName+"这个是sessionid哦");
 		StringBuilder sql = new StringBuilder("SELECT * FROM PATIENT U ");
-		String userName = "Kira";
+		
 		
 		if(StringUtils.isNotBlank(userName)) {
 			sql.append(" WHERE U.NAME LIKE '%").append(userName).append("%' ");
