@@ -170,8 +170,7 @@ public class RegisterService extends BusinessServices {
 		DBDYPO regUser = new DBDYPO("GO_REGUSER", KEY_FIELD, request);
 		DBDYPO tsop = new DBDYPO(TABLE_TSOP, KEY_FIELD, request);		
 		DBDYPO person = new DBDYPO("TB_PERSON", KEY_FIELD, request);
-		// 积分信息
-		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);		
+		
 		
 		Connection conn = null;
 		Connection ssoconn = null;
@@ -192,7 +191,7 @@ public class RegisterService extends BusinessServices {
 			tsop.set(KEY_FIELD, personId);
 			regUser.set(KEY_FIELD, personId);			
 			person.set(KEY_FIELD, personId);
-			integral.set(KEY_USER_INTEGRAL, integralId);
+			
 			
 			
 			String opno = "" + tsop.get(KEY_OPNO);
@@ -227,11 +226,6 @@ public class RegisterService extends BusinessServices {
 			regUser.set(creatorKey, personId);
 			regUser.set(CREATE_TIME, createTime);
 			
-			integral.set(KEY_FIELD, personId);
-			integral.set("INTEGRAL", Integer.valueOf("0"));
-			integral.set("ENT_ID", request.getParameter("ORGCODE"));
-			integral.set(creatorKey, personId);
-			integral.set(CREATE_TIME, createTime);
 			String registerFail = "注册失败！";
 			
 			// 操作操作员信息

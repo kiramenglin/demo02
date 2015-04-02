@@ -5,7 +5,8 @@
 <title>患者信息</title>
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
-<script type="text/javascript" src="js/ssocommon.js"></script>    
+<script type="text/javascript" src="js/ssocommon.js"></script>   
+ 
 </head>
 <body>
 	<div class="container-fluid">
@@ -14,24 +15,32 @@
 				<div>
 				 @{q.get("QUESTIONNAIRE_TITLE")}<br>
 				 	<div>
+				 	 @if{q.get("QUESTIONNAIRE_A")!=null}
 				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_A")}
+				 		@end{}
 				 	</div> 
 				 	<div>
 				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_B")}
 				 	</div>
 				 	<div>
+				 	@if{q.get("QUESTIONNAIRE_D")!=null}
 				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_C")}
+				 	@end{}
 				 	</div>
 				 	<div>
+				 	@if{q.get("QUESTIONNAIRE_D")!=null}
 				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_D")}
+				 	@end{}
 				 	</div>
 				 	<div>
+				 	@if{q.get("QUESTIONNAIRE_E")!=null}
 				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_E")}
-				 		
+				 	@end{}	
 				 	</div> <br>	
 				 </div>			 
 			@end{}
 		</div>
+		
 	</div>
 </body>
 </html>
