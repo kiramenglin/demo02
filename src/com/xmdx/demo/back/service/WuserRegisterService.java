@@ -52,9 +52,9 @@ public class WuserRegisterService extends BusinessServices {
 	private static final String CREATE_TIME = "CREATE_TIME";
 	private static final String MSG = "msg";
 	
-	private MoneyRecordDao moneyRecordDao = new MoneyRecordDao();
+//	private MoneyRecordDao moneyRecordDao = new MoneyRecordDao();
 	private final MessageSendDao messageSendDao = new MessageSendDao();
-	private final CourseDao courseDao = new CourseDao();
+//	private final CourseDao courseDao = new CourseDao();
 
 	// 打开用户注册页面
 	@Override
@@ -64,14 +64,14 @@ public class WuserRegisterService extends BusinessServices {
 		DBDYPO regUser = null;
 		DBDYPO po = null;
 		
-		// 取出子站参数据，没有测试子站参数值的，不能注册会员
-		String subSiteOrg = request.getParameter(ZkgkConstants.SUB_SITE_ORG_KEY);		
-		ZkgkUtil.getStationByOrgcode(ac);
-		if(StringUtils.isBlank(subSiteOrg)) {
-			ac.setErrorContext("", "没有设置子站ID(sub_site_org)参数值");
-			return CONST_RESULT_ERROR;
-		}
-		ac.setStringValue(ZkgkConstants.SUB_SITE_ORG_KEY, subSiteOrg);
+//		// 取出子站参数据，没有测试子站参数值的，不能注册会员
+//		String subSiteOrg = request.getParameter(ZkgkConstants.SUB_SITE_ORG_KEY);		
+//		ZkgkUtil.getStationByOrgcode(ac);
+//		if(StringUtils.isBlank(subSiteOrg)) {
+//			ac.setErrorContext("", "没有设置子站ID(sub_site_org)参数值");
+//			return CONST_RESULT_ERROR;
+//		}
+//		ac.setStringValue(ZkgkConstants.SUB_SITE_ORG_KEY, subSiteOrg);
 		
 		Connection conn = null;
 		
@@ -83,7 +83,7 @@ public class WuserRegisterService extends BusinessServices {
 	
 			// 操作员（ts_op）表为空，传向注册页面。注册为平台用户，及操作员。
 			if(null == po) {
-				ac.setStringValue(CONST_FORMNAME, "com/e9rj/zkgk/website/user/register.html");
+				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register.html");
 				return CONST_RESULT_SUCCESS;
 			}
 			
@@ -101,7 +101,7 @@ public class WuserRegisterService extends BusinessServices {
 			// 操作员注册为平台用户，直接打开注册页面
 			ac.setObjValue("OP_BEAN", po);
 			ac.setObjValue(ZkgkConstants.COURSE_CODE, request.getParameter(ZkgkConstants.COURSE_CODE));
-			ac.setStringValue(CONST_FORMNAME, "com/e9rj/zkgk/website/user/register.html");
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register.html");
 		} else {
 			
 			String appCode = "" + po.get(KEY_APP_CODE);
@@ -110,17 +110,17 @@ public class WuserRegisterService extends BusinessServices {
 			}
 			
 			// 己经注册成为平台用户及操作员的，直接打开我的课程页面
-			ac.setStringValue(CONST_FORMNAME, "com/e9rj/zkgk/website/user/registed.html");
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/registed.html");
 		}
 		
 		return CONST_RESULT_SUCCESS;
 	}
-	public int gotoAgreement(ActionContext ac){
-		String subSiteOrg = request.getParameter(ZkgkConstants.SUB_SITE_ORG_KEY);
-		ZkgkUtil.getStationByOrgcode(ac);
-		ac.setStringValue(CONST_FORMNAME, "com/e9rj/zkgk/website/user/service_agreement.html");
-		return CONST_RESULT_SUCCESS;
-	}	
+//	public int gotoAgreement(ActionContext ac){
+//		String subSiteOrg = request.getParameter(ZkgkConstants.SUB_SITE_ORG_KEY);
+//		ZkgkUtil.getStationByOrgcode(ac);
+//		ac.setStringValue(CONST_FORMNAME, "com/e9rj/zkgk/website/user/service_agreement.html");
+//		return CONST_RESULT_SUCCESS;
+//	}	
 	
 	/**
 	 * 用户注册信息保存
@@ -309,14 +309,14 @@ public class WuserRegisterService extends BusinessServices {
 				tsop.setTableName("TS_OP");
 				tsop.setKeyField(KEY_FIELD);
 				// 判断是否是zkxj用户
-				if (!courseDao.isExistSubSation(ac, SessionUtil.getOrgCode(ac))) {
-					tsop.set("DATASOURCE", "zkxj");
-				} else {
-					// 若不是zkxj用户且数据来源为空；则取组织机构；
-					if (null == tsop.get("DATASOURCE")) {
-						tsop.set("DATASOURCE", tsop.get("ORGCODE"));
-					}
-				}
+//				if (!courseDao.isExistSubSation(ac, SessionUtil.getOrgCode(ac))) {
+//					tsop.set("DATASOURCE", "zkxj");
+//				} else {
+//					// 若不是zkxj用户且数据来源为空；则取组织机构；
+//					if (null == tsop.get("DATASOURCE")) {
+//						tsop.set("DATASOURCE", tsop.get("ORGCODE"));
+//					}
+//				}
 				result = DBDYDao.update(ssoconn, tsop);
 				if (0 == result) {
 					jsonObj.put(CONST_BIZRESULT, false);
@@ -348,39 +348,39 @@ public class WuserRegisterService extends BusinessServices {
 			} 
 			
 			// 给帐户赠送优惠券
-			result = addMoney(conn,  personId);
-			if(0 == result) {
-				jsonObj.put(CONST_BIZRESULT, false);
-				jsonObj.put(MSG, "注册失败");
-				conn.rollback();
-				ssoconn.rollback();
-			} 
-			//添加赠送金额为0则不进行添加充值记录       ysp20141014
-			if(addMoney!=0){
-				saveMoneyRecord(ac,personId, addMoney);
-			}
-				
-			// personId没有创建积分信息，则为其创建积分帐户信息
-			DBDYPO integ = queryIntegral(personId);
-			
-			if(null == integ && StringUtils.isNotBlank(personId)) {
-								
-				integral.set(KEY_USER_INTEGRAL, super.genIdString("", idLen));
-				integral.set(KEY_FIELD, personId);
-				integral.set("INTEGRAL", Integer.valueOf("0"));
-				integral.set("ENT_ID", ZkgkConstants.SUB_SITECODE_E9RJ);
-				integral.set(CREATE_BY, personId);
-				integral.set(CREATE_TIME, new java.sql.Timestamp(System.currentTimeMillis()));
-				
-				result = DBDYDao.insert(conn, integral);
-				if(0 == result) {
-					jsonObj.put(CONST_BIZRESULT, false);
-					jsonObj.put(MSG, "注册失败");
-					conn.rollback();
-					ssoconn.rollback();
-					return jsonObj;
-				}
-			}
+//			result = addMoney(conn,  personId);
+//			if(0 == result) {
+//				jsonObj.put(CONST_BIZRESULT, false);
+//				jsonObj.put(MSG, "注册失败");
+//				conn.rollback();
+//				ssoconn.rollback();
+//			} 
+//			//添加赠送金额为0则不进行添加充值记录       ysp20141014
+//			if(addMoney!=0){
+//				saveMoneyRecord(ac,personId, addMoney);
+//			}
+//				
+//			// personId没有创建积分信息，则为其创建积分帐户信息
+//			DBDYPO integ = queryIntegral(personId);
+//			
+//			if(null == integ && StringUtils.isNotBlank(personId)) {
+//								
+//				integral.set(KEY_USER_INTEGRAL, super.genIdString("", idLen));
+//				integral.set(KEY_FIELD, personId);
+//				integral.set("INTEGRAL", Integer.valueOf("0"));
+//				integral.set("ENT_ID", ZkgkConstants.SUB_SITECODE_E9RJ);
+//				integral.set(CREATE_BY, personId);
+//				integral.set(CREATE_TIME, new java.sql.Timestamp(System.currentTimeMillis()));
+//				
+//				result = DBDYDao.insert(conn, integral);
+//				if(0 == result) {
+//					jsonObj.put(CONST_BIZRESULT, false);
+//					jsonObj.put(MSG, "注册失败");
+//					conn.rollback();
+//					ssoconn.rollback();
+//					return jsonObj;
+//				}
+//			}
 			
 			jsonObj.put(CONST_BIZRESULT, true);
 			ssoconn.commit();
@@ -511,27 +511,27 @@ public class WuserRegisterService extends BusinessServices {
 				return jsonObj;
 			} 
 			// 为平台用户赠送优惠券
-			rows = addMoney(conn, personId);
-			if(rows == zero) {
-				jsonObj.put(CONST_BIZRESULT, false);
-				jsonObj.put(MSG, registerFail);
-				ssoconn.rollback();
-				conn.rollback();
-				return jsonObj;
-			} 
-			// 创建用户积分信息
-			rows = DBDYDao.insert(conn, integral);
-			if(rows == zero) {
-				jsonObj.put(CONST_BIZRESULT, false);
-				jsonObj.put(MSG, registerFail);
-				ssoconn.rollback();
-				conn.rollback();
-				return jsonObj;
-			} 
-			//添加赠送金额为0则不进行添加充值记录       ysp20141014
-			if(addMoney!=0){
-				saveMoneyRecord(ac, personId, addMoney);
-			}
+//			rows = addMoney(conn, personId);
+//			if(rows == zero) {
+//				jsonObj.put(CONST_BIZRESULT, false);
+//				jsonObj.put(MSG, registerFail);
+//				ssoconn.rollback();
+//				conn.rollback();
+//				return jsonObj;
+//			} 
+//			// 创建用户积分信息
+//			rows = DBDYDao.insert(conn, integral);
+//			if(rows == zero) {
+//				jsonObj.put(CONST_BIZRESULT, false);
+//				jsonObj.put(MSG, registerFail);
+//				ssoconn.rollback();
+//				conn.rollback();
+//				return jsonObj;
+//			} 
+//			//添加赠送金额为0则不进行添加充值记录       ysp20141014
+//			if(addMoney!=0){
+//				saveMoneyRecord(ac, personId, addMoney);
+//			}
 			jsonObj.put(CONST_BIZRESULT, true);
 			jsonObj.put(KEY_FIELD, personId);
 			conn.commit();
@@ -911,23 +911,23 @@ public class WuserRegisterService extends BusinessServices {
 		return CONST_RESULT_AJAX;
 	}
 	
-	private void saveMoneyRecord(ActionContext ac, String personId,  double money) throws Exception {
-		DBDYPO rec = new DBDYPO();
-		String moneyTableName = "GO_MONEY_RECORD";
-		String moneyKeyField = "RECORD_ID";
-		String msg = null;
-		boolean  flag = moneyRecordDao.save4Coupon(ac.getConnection(), personId, money, rec);
-		
-		String keyVal = null == rec.get(moneyKeyField) ? " " : rec.get(moneyKeyField).toString() ;
-		
-		if(flag) {
-			msg = MessageService.getMessage("LOG_MONEY_SUCCESS", new String[] { personId, "赠送", String.valueOf(money), "" });
-			BusinessLogger.log(new BusinessLogBean(LOGLEVEL_I, "O01", moneyTableName, keyVal, INSERT, null, personId, " ", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), OperateIP.getIpAddress(ac.getHttpRequest()), msg + "，主键：【" + (StringUtils.isBlank(keyVal) ? "" : keyVal) + "】", null, null, null, "default"));
-		} else {
-			msg = MessageService.getMessage("LOG_MONEY_FAILURE", new String[] { personId, "赠送", String.valueOf(money), "" });
-			BusinessLogger.log(new BusinessLogBean(LOGLEVEL_W, "O01", moneyTableName, keyVal, INSERT, null, personId, " ", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), OperateIP.getIpAddress(ac.getHttpRequest()), msg + "，主键：【" + (StringUtils.isBlank(keyVal) ? "" : keyVal) + "】", null, null, null, "default"));
-		}
-	}
+//	private void saveMoneyRecord(ActionContext ac, String personId,  double money) throws Exception {
+//		DBDYPO rec = new DBDYPO();
+//		String moneyTableName = "GO_MONEY_RECORD";
+//		String moneyKeyField = "RECORD_ID";
+//		String msg = null;
+//		boolean  flag = moneyRecordDao.save4Coupon(ac.getConnection(), personId, money, rec);
+//		
+//		String keyVal = null == rec.get(moneyKeyField) ? " " : rec.get(moneyKeyField).toString() ;
+//		
+//		if(flag) {
+//			msg = MessageService.getMessage("LOG_MONEY_SUCCESS", new String[] { personId, "赠送", String.valueOf(money), "" });
+//			BusinessLogger.log(new BusinessLogBean(LOGLEVEL_I, "O01", moneyTableName, keyVal, INSERT, null, personId, " ", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), OperateIP.getIpAddress(ac.getHttpRequest()), msg + "，主键：【" + (StringUtils.isBlank(keyVal) ? "" : keyVal) + "】", null, null, null, "default"));
+//		} else {
+//			msg = MessageService.getMessage("LOG_MONEY_FAILURE", new String[] { personId, "赠送", String.valueOf(money), "" });
+//			BusinessLogger.log(new BusinessLogBean(LOGLEVEL_W, "O01", moneyTableName, keyVal, INSERT, null, personId, " ", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), OperateIP.getIpAddress(ac.getHttpRequest()), msg + "，主键：【" + (StringUtils.isBlank(keyVal) ? "" : keyVal) + "】", null, null, null, "default"));
+//		}
+//	}
 	
 	/**
 	 * 根据组织机构ID,查询机构信息
