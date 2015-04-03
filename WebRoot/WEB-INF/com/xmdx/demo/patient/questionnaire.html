@@ -2,45 +2,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>患者信息</title>
-<link href="css/css/bootstrap.min.css" rel="stylesheet" />
-<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
-<script type="text/javascript" src="js/ssocommon.js"></script>   
-<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script>
+<title>干眼筛查</title>
+
+<link type="text/css" href="css/style.css" media="all" rel="stylesheet" title="主样式" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script> 
+<script type="text/javascript" src="js/testxml.js"></script>
+ 
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row">
-			@foreach{q:Q}
-				<div>
-				 @{q.get("QUESTIONNAIRE_TITLE")}<br>
-				 	<div>
-				 	 @if{q.get("QUESTIONNAIRE_A")!=null}
-				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_A")}
-				 		@end{}
-				 	</div> 
-				 	<div>
-				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_B")}
-				 	</div>
-				 	<div>
-				 	@if{q.get("QUESTIONNAIRE_D")!=null}
-				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_C")}
-				 	@end{}
-				 	</div>
-				 	<div>
-				 	@if{q.get("QUESTIONNAIRE_D")!=null}
-				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_D")}
-				 	@end{}
-				 	</div>
-				 	<div>
-				 	@if{q.get("QUESTIONNAIRE_E")!=null}
-				 		<input type="radio" name="fldRadio@{q.get('QUESTIONNAIRE_ID')}">@{q.get("QUESTIONNAIRE_E")}
-				 	@end{}	
-				 	</div> <br>	
-				 </div>			 
-			@end{}
-		</div>
-		
-	</div>
+    <div class="main">
+      <div class="warp">
+      	<div class="issue" id="issue">
+           <div id="loader" class="loader"><img  src="image/loader.gif" title="loading.." alt="loading..." /> </div>          
+        </div>
+        
+        <div class="ctrl">
+        <div class="temp" id="temp">
+        	您的分数
+        </div>
+        	<div class="btns">
+            	<span title="Previous" class="prev" id="prev">Previous</span>
+                <span title="Next" class="next" id="next">Next</span>
+            </div>
+            <div class="prog" id="prog">
+            	<div class="ptip" id="tips"><span></span></div>
+            	<div class="ress" id="ress"></div>
+            </div>
+        </div>
+        <div class="war" id="war"></div>
+      </div>
+    </div>
 </body>
 </html>

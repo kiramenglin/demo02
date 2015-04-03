@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<questionlist>
+	<quesiton>
+		<title>1、阅读或近距离工作时您是否会感到疲劳或不适</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>2、视物时是否有存在复视（看东西为两个）</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>3、阅读或近距离工作时是否头痛</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>	
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>4、阅读或近距离工作时，你的注意力是否不集中</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>	
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>5、你是否对记住度过的东西感到困难</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>6、阅读或近距离工作时是否觉得困乏</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>7、阅读或近距离工作时你是否觉得文字移动、跳动、游动或在纸上漂浮</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>		
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>8、你是否觉得你的阅读速度慢</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>		
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>9、阅读或近距离工作时你是否觉得眼痛、眼酸</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>10、阅读或近距离工作时你是否有一种眼球牵拉感</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>11、阅读或近距离工作时你是否会出现失误模糊或聚焦不准确</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>		
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>12、阅读或近距离工作时，您是否会“串行”</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>	
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>13、阅读或近距离工作时，您是否不得不重复读同一行</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>	
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>14、您是否回避阅读或近距离工作</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>	
+		</answers>
+	</quesiton>
+	<quesiton>
+		<title>15、您是否从远视转到近视或从近视转到远视感到聚焦困难</title>
+		<answers>
+			<opt valume="0">从不</opt>
+			<opt valume="1">偶尔</opt>
+			<opt valume="2">经常</opt>
+			<opt valume="3">频繁</opt>
+			<opt valume="4">一直都是</opt>	
+		</answers>
+	</quesiton>
+</questionlist>
