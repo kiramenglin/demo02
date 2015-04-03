@@ -52,7 +52,7 @@
 
 	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/zkgk/website/header.html"/>
 	
-	<input type="hidden" id="COURSE_CODE" value="#{COURSE_CODE}" />
+	<!-- <input type="hidden" id="COURSE_CODE" value="#{COURSE_CODE}" /> -->
 	<div id="content" class="container  content-box">
 		
 		<div class="row">
@@ -75,8 +75,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div id="show" class="text-center" style="width: 100%; height: 100%;"></div>
-				<input type="hidden" id="forwordUrl" name="forwordUrl" value="/zkgk?org=@{sub_site_org}">
-				<input type="hidden" id="sub_site_org" value="@{sub_site_org}">
+				<!-- <input type="hidden" id="forwordUrl" name="forwordUrl" value="/zkgk?org=@{
+_org}"> -->
+				<!-- <input type="hidden" id="sub_site_org" value="@{sub_site_org}"> -->
 			</div>
 		</div>
 	</div>
@@ -94,7 +95,7 @@
 		<script src="/e9common/js/appcode.js"></script>
     	<script type="text/javascript">
     	
-	    	var t=3;//设定跳转的时间
+	    /*	var t=3;//设定跳转的时间
 			var timmerId="";
 			var casServerURL = '@{com.e9rj.platform.common.BaseConstants.getGlobalValue("5")}/login';  
 			var callbackUrl = "http://" + location.host + zkgkAppCode +'/logincallback.html';
@@ -120,7 +121,7 @@
     			
     		});
 	    	
-    		function refer(){
+    	/*	function refer(){
     			
 				if(t==0){
 					html ="正在跳转到" + (havePwd?"学习中心……":"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，稍候请重新登录……");
@@ -162,34 +163,34 @@
 						location.href = url;
 					}
     			}
-			}
+			}*/
     		
     		//加载子站首页链接
-    		function loadSubStationUrl() {
-    			var stationUrl = "";
+    	//	function loadSubStationUrl() {
+    	//		var stationUrl = "";
     			
-    			if($("#sub_site_org").val()) {
-	    			var url = 'HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.sub.station!getStationByOrgcode&sub_site_org=' + $("#sub_site_org").val();
-					$.webAjax( url, null, {
-					    error: function(request) {      // 设置表单提交出错
-					    	$.alert("友情提示", "请求获取子站异常，请稍候再试", null, null, true);
-					    },
-					    success: function(data) {
-					    	if(data.Rows.length == 0){
-					    		$.alert("友情提示", "无法获取到子站信息或者子站的URL路径", null, null, true);
-					    		return;
-					    	}
-					    	$.each(data.Rows, function(i, station){
-					    		stationUrl = station.STATION_URL;
-					    		
-					    	});
-					    },
-					    async : false
-					});
-    			}
-				return stationUrl;
+    	//		if($("#sub_site_org").val()) {
+	    //			var url = 'HttpChannel?action=WEBSITE_ACTION&BUSINESS_TYPE=w.sub.station!getStationByOrgcode&sub_site_org=' + $("#sub_site_org").val();
+		//			$.webAjax( url, null, {
+		//			    error: function(request) {      // 设置表单提交出错
+		//			    	$.alert("友情提示", "请求获取子站异常，请稍候再试", null, null, true);
+		//			    },
+		//			    success: function(data) {
+		//			    	if(data.Rows.length == 0){
+		//			    		$.alert("友情提示", "无法获取到子站信息或者子站的URL路径", null, null, true);
+		//			    		return;
+		//			    	}
+		//			    	$.each(data.Rows, function(i, station){
+		//			    		stationUrl = station.STATION_URL;
+		//			    		
+		//			    	});
+		//			    },
+		//			    async : false
+			//		});
+    		//	}
+			//	return stationUrl;
     			
-    		}
+    		//}
     	</script>
 	</body>
 </html>

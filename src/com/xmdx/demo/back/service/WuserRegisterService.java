@@ -41,6 +41,7 @@ import com.xmzy.framework.service.MessageService;
 @Service(name="w.user.register")
 public class WuserRegisterService extends BusinessServices {
 	
+	private static final String TABLE_DOCTOR = "DOCTOR";
 	private static final String TABLE_REGUSER = "GO_REGUSER";
 	private static final String TABLE_TSOP = "TS_OP";
 	private static final String KEY_FIELD = "PERSON_ID";
@@ -53,7 +54,7 @@ public class WuserRegisterService extends BusinessServices {
 	private static final String MSG = "msg";
 	
 //	private MoneyRecordDao moneyRecordDao = new MoneyRecordDao();
-	private final MessageSendDao messageSendDao = new MessageSendDao();
+//	private final MessageSendDao messageSendDao = new MessageSendDao();
 //	private final CourseDao courseDao = new CourseDao();
 
 	// 打开用户注册页面
@@ -76,7 +77,7 @@ public class WuserRegisterService extends BusinessServices {
 		Connection conn = null;
 		
 		try {
-			conn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
+			conn = DBConn.getConnection("SSOdbService");
 			if(StringUtils.isNotBlank(opNo)) {
 				po = queryOpByOpno(conn, opNo);
 			}
@@ -100,7 +101,7 @@ public class WuserRegisterService extends BusinessServices {
 		if(null == regUser) {
 			// 操作员注册为平台用户，直接打开注册页面
 			ac.setObjValue("OP_BEAN", po);
-			ac.setObjValue(ZkgkConstants.COURSE_CODE, request.getParameter(ZkgkConstants.COURSE_CODE));
+//			ac.setObjValue(ZkgkConstants.COURSE_CODE, request.getParameter(ZkgkConstants.COURSE_CODE));
 			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register.html");
 		} else {
 			
@@ -135,13 +136,13 @@ public class WuserRegisterService extends BusinessServices {
 		// 注册结果
 		JSONObject jsonObj = null;
 		
-		if(StringUtils.isNotBlank(personId)) {
-			// 己有准考证用户注册
-			jsonObj = updateRegister(ac);
-		} else {
-			// 新用户注册
+//		if(StringUtils.isNotBlank(personId)) {
+//			// 己有准考证用户注册
+//			jsonObj = updateRegister(ac);
+//		} else {
+//			// 新用户注册
 			jsonObj = newRegister(ac);
-		}
+//		}
 
 		/*
 		 * create by lhj 141020 beg
@@ -156,10 +157,10 @@ public class WuserRegisterService extends BusinessServices {
 				String param = BaseConstants.getGlobalValue("1335");
 				// 欢迎您开启金奖助学之旅，请点击查看
 				// |如何学习课程？;http://www.goldoar.com/goldoar/index.php?m=content&c=index&a=show&catid=85&id=31;|
-				int result = messageSendDao.addSystemMsg2(ac, new String[] { tsOp.get(ZkgkConstants.OPNO).toString() }, getContent(param), tsOp);
-				if (0 == result) {
-					return CONST_RESULT_ERROR;
-				}
+//				int result = messageSendDao.addSystemMsg2(ac, new String[] { tsOp.get(ZkgkConstants.OPNO).toString() }, getContent(param), tsOp);
+//				if (0 == result) {
+//					return CONST_RESULT_ERROR;
+//				}
 			}
 
 		}
@@ -220,24 +221,24 @@ public class WuserRegisterService extends BusinessServices {
 
 	// 跳转成功提示页
 	public int gosuccess(ActionContext ac) {
-		
-		String courseCode = request.getParameter(ZkgkConstants.COURSE_CODE);
+		System.out.println("enter gosuccess");
+//		String courseCode = request.getParameter(ZkgkConstants.COURSE_CODE);
 		String opno = request.getParameter("_username");
 		String pwd = request.getParameter("_passwrod");
-		String subSiteOrg = request.getParameter(ZkgkConstants.SUB_SITE_ORG_KEY);
+//		String subSiteOrg = request.getParameter(ZkgkConstants.SUB_SITE_ORG_KEY);
 		
 		String casUrl = BaseConstants.getGlobalValue("5");
 		if(!StringUtils.endsWith(casUrl, "/")) {
 			casUrl += "/";
 		}
 		casUrl += "login";
-		ZkgkUtil.getStationByOrgcode(ac);
+//		ZkgkUtil.getStationByOrgcode(ac);
 		ac.setStringValue("casLoginUrl", casUrl);
 		ac.setStringValue(KEY_OPNO, opno);
 		ac.setStringValue(KEY_PWD, pwd);
-		ac.setStringValue(ZkgkConstants.SUB_SITE_ORG_KEY, subSiteOrg);
-		ac.setStringValue(ZkgkConstants.COURSE_CODE, courseCode);
-		ac.setStringValue(CONST_FORMNAME, "com/e9rj/zkgk/website/user/register_success.html");
+//		ac.setStringValue(ZkgkConstants.SUB_SITE_ORG_KEY, subSiteOrg);
+//		ac.setStringValue(ZkgkConstants.COURSE_CODE, courseCode);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register_success.html");
 		return CONST_RESULT_SUCCESS;
 	}
 
@@ -271,81 +272,81 @@ public class WuserRegisterService extends BusinessServices {
 	 * @param ac
 	 * @return
 	 */
-	private JSONObject updateRegister(ActionContext ac) {
-		JSONObject jsonObj = null;
-		DBDYPO tsop = new DBDYPO("TS_OP", KEY_FIELD, ac.getHttpRequest());
-		DBDYPO user = new DBDYPO("GO_REGUSER", KEY_FIELD, ac.getHttpRequest());
-		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);
-		
-		String personId = "" + user.get(KEY_FIELD);
-		
-		int addMoney = getAddMoney(personId);
-		
-		int idLen = 20;
-		
-		// 更新操作用户信息appCode权限，没有该应用权限则进行授权。
-		Connection ssoconn = null;
-		Connection conn = null;
-		int result = 0;
-		try {
-			ssoconn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
-			conn = DBConn.getConnection();
-			ssoconn.setAutoCommit(false);
-			conn.setAutoCommit(false);
-			
-			jsonObj = updateApp(ac, ssoconn, personId);
-
-			if(!jsonObj.getBooleanValue(CONST_BIZRESULT)) {
-				return jsonObj;
-			}
-
-			/**
-			 * create by lhj 1020
-			 */
-			tsop.set(KEY_FIELD, personId);
-			DBDYPO[] tsopArr = DBDYDao.selectByID(ssoconn, tsop);
-			if (null != tsopArr) {
-				tsop = tsopArr[0];
-				tsop.setTableName("TS_OP");
-				tsop.setKeyField(KEY_FIELD);
-				// 判断是否是zkxj用户
-//				if (!courseDao.isExistSubSation(ac, SessionUtil.getOrgCode(ac))) {
-//					tsop.set("DATASOURCE", "zkxj");
-//				} else {
-//					// 若不是zkxj用户且数据来源为空；则取组织机构；
-//					if (null == tsop.get("DATASOURCE")) {
-//						tsop.set("DATASOURCE", tsop.get("ORGCODE"));
-//					}
+//	private JSONObject updateRegister(ActionContext ac) {
+//		JSONObject jsonObj = null;
+//		DBDYPO tsop = new DBDYPO("TS_OP", KEY_FIELD, ac.getHttpRequest());
+//		DBDYPO user = new DBDYPO("GO_REGUSER", KEY_FIELD, ac.getHttpRequest());
+//		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);
+//		
+//		String personId = "" + user.get(KEY_FIELD);
+//		
+//		int addMoney = getAddMoney(personId);
+//		
+//		int idLen = 20;
+//		
+//		// 更新操作用户信息appCode权限，没有该应用权限则进行授权。
+//		Connection ssoconn = null;
+//		Connection conn = null;
+//		int result = 0;
+//		try {
+//			ssoconn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
+//			conn = DBConn.getConnection();
+//			ssoconn.setAutoCommit(false);
+//			conn.setAutoCommit(false);
+//			
+//			jsonObj = updateApp(ac, ssoconn, personId);
+//
+//			if(!jsonObj.getBooleanValue(CONST_BIZRESULT)) {
+//				return jsonObj;
+//			}
+//
+//			/**
+//			 * create by lhj 1020
+//			 */
+//			tsop.set(KEY_FIELD, personId);
+//			DBDYPO[] tsopArr = DBDYDao.selectByID(ssoconn, tsop);
+//			if (null != tsopArr) {
+//				tsop = tsopArr[0];
+//				tsop.setTableName("TS_OP");
+//				tsop.setKeyField(KEY_FIELD);
+//				// 判断是否是zkxj用户
+////				if (!courseDao.isExistSubSation(ac, SessionUtil.getOrgCode(ac))) {
+////					tsop.set("DATASOURCE", "zkxj");
+////				} else {
+////					// 若不是zkxj用户且数据来源为空；则取组织机构；
+////					if (null == tsop.get("DATASOURCE")) {
+////						tsop.set("DATASOURCE", tsop.get("ORGCODE"));
+////					}
+////				}
+//				result = DBDYDao.update(ssoconn, tsop);
+//				if (0 == result) {
+//					jsonObj.put(CONST_BIZRESULT, false);
+//					jsonObj.put(MSG, "注册失败");
+//
+//					conn.rollback();
+//					ssoconn.rollback();
+//					return jsonObj;
 //				}
-				result = DBDYDao.update(ssoconn, tsop);
-				if (0 == result) {
-					jsonObj.put(CONST_BIZRESULT, false);
-					jsonObj.put(MSG, "注册失败");
-
-					conn.rollback();
-					ssoconn.rollback();
-					return jsonObj;
-				}
-			}
-			/**
-			 * create by lhj 1020
-			 */
-
-			String opNo =  SsoUtil.getSsoAttribute(ac, KEY_OPNO);
-			user.set("IS_EXPERIENCE", "1");
-			user.set(CREATE_BY, opNo);
-			user.set(CREATE_TIME, new java.sql.Timestamp(System.currentTimeMillis()));
-			// 增加平台用户信息
-			result = DBDYDao.insert(ssoconn, user);
-			
-			if(0 == result) {
-				jsonObj.put(CONST_BIZRESULT, false);
-				jsonObj.put(MSG, "注册失败");
-				
-				conn.rollback();
-				ssoconn.rollback();
-				return jsonObj;
-			} 
+//			}
+//			/**
+//			 * create by lhj 1020
+//			 */
+//
+//			String opNo =  SsoUtil.getSsoAttribute(ac, KEY_OPNO);
+//			user.set("IS_EXPERIENCE", "1");
+//			user.set(CREATE_BY, opNo);
+//			user.set(CREATE_TIME, new java.sql.Timestamp(System.currentTimeMillis()));
+//			// 增加平台用户信息
+//			result = DBDYDao.insert(ssoconn, user);
+//			
+//			if(0 == result) {
+//				jsonObj.put(CONST_BIZRESULT, false);
+//				jsonObj.put(MSG, "注册失败");
+//				
+//				conn.rollback();
+//				ssoconn.rollback();
+//				return jsonObj;
+//			} 
 			
 			// 给帐户赠送优惠券
 //			result = addMoney(conn,  personId);
@@ -382,25 +383,25 @@ public class WuserRegisterService extends BusinessServices {
 //				}
 //			}
 			
-			jsonObj.put(CONST_BIZRESULT, true);
-			ssoconn.commit();
-			conn.commit();
-			
-		} catch (Exception e) {
-			try {
-				conn.rollback();
-				ssoconn.rollback();
-			} catch (SQLException e1) {
-				MessageService.errString("", e1);
-			}
-			MessageService.errString("", e);
-		} finally {
-			DBConn.closeConnection(ssoconn);
-			DBConn.closeConnection(conn);
-		}
-		
-		return jsonObj;
-	} 
+//			jsonObj.put(CONST_BIZRESULT, true);
+//			ssoconn.commit();
+//			conn.commit();
+//			
+//		} catch (Exception e) {
+//			try {
+//				conn.rollback();
+//				ssoconn.rollback();
+//			} catch (SQLException e1) {
+//				MessageService.errString("", e1);
+//			}
+//			MessageService.errString("", e);
+//		} finally {
+//			DBConn.closeConnection(ssoconn);
+//			DBConn.closeConnection(conn);
+//		}
+//		
+//		return jsonObj;
+//	} 
 	
 	/**
 	 * 新用户名注册，
@@ -409,19 +410,23 @@ public class WuserRegisterService extends BusinessServices {
 	 * @throws Exception 
 	 */
 	private JSONObject newRegister(ActionContext ac) throws Exception {
-		
+		System.out.println("enter newRegister");
 		int rows = 0;
-		JSONObject jsonObj = registerValidate(ac);
+		JSONObject  jsonObj = new JSONObject();
 		
-		if(!jsonObj.getBooleanValue(CONST_BIZRESULT)) {
-			return jsonObj;
-		}
+		
+//		if(!jsonObj.getBooleanValue(CONST_BIZRESULT)) {
+//			System.out.println("enter input0");
+//			return jsonObj;
+//			
+//		}
 		// 平台用户信息
 		DBDYPO regUser = new DBDYPO("GO_REGUSER", KEY_FIELD, request);
 		DBDYPO tsop = new DBDYPO(TABLE_TSOP, KEY_FIELD, request);		
 		DBDYPO person = new DBDYPO("TB_PERSON", KEY_FIELD, request);
+		DBDYPO doctor = new DBDYPO(TABLE_DOCTOR, KEY_FIELD ,request);
 		// 积分信息
-		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);		
+//		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);		
 		
 		Connection conn = null;
 		Connection ssoconn = null;
@@ -430,21 +435,22 @@ public class WuserRegisterService extends BusinessServices {
 		int one = 1;
 		int zero = 0;
 		String personId = super.genIdString("", idLen);
-		String integralId = super.genIdString("", idLen);		
-		int addMoney = getAddMoney(personId);
+		String integralId = super.genIdString("", idLen);	
+		System.out.println("enter input1");
+//		int addMoney = getAddMoney(personId);
 		try {
 			conn = DBConn.getConnection();
-			ssoconn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
+			ssoconn = DBConn.getConnection("SSOdbService");
 			conn.setAutoCommit(false);
 			ssoconn.setAutoCommit(false);
 			
-			
+			doctor.set(KEY_FIELD,personId);
 			tsop.set(KEY_FIELD, personId);
 			regUser.set(KEY_FIELD, personId);			
 			person.set(KEY_FIELD, personId);
-			integral.set(KEY_USER_INTEGRAL, integralId);
+//			integral.set(KEY_USER_INTEGRAL, integralId);
 			
-			
+			System.out.println("enter input2");
 			String opno = "" + tsop.get(KEY_OPNO);
 			String creatorKey = CREATE_BY;
 			java.sql.Timestamp createTime = new java.sql.Timestamp(System.currentTimeMillis());
@@ -453,6 +459,7 @@ public class WuserRegisterService extends BusinessServices {
 			tsop.set("OPNAME", opno);
 			tsop.set("OPLIMIT", zero);
 			tsop.set("ENABLED", one);
+			tsop.set("ORGCODE", "e9rj");
 
 			String appcodestr = "";
 			// 用户访问其他系统而配置
@@ -462,7 +469,7 @@ public class WuserRegisterService extends BusinessServices {
 			}
 			tsop.set(KEY_APP_CODE, FrameworkConstant.getAppCode() + appcodestr);
 			// 来源于子站；
-			tsop.set("DATASOURCE", request.getParameter("ORGCODE"));
+			tsop.set("DATASOURCE", "e9rj");
 			tsop.set("CREATETIME", createTime);
 			
 			tsop.set(KEY_PWD, Encrypt.getMixMD5(opno, "" + tsop.get(KEY_PWD)));
@@ -477,11 +484,13 @@ public class WuserRegisterService extends BusinessServices {
 			regUser.set(creatorKey, personId);
 			regUser.set(CREATE_TIME, createTime);
 			
-			integral.set(KEY_FIELD, personId);
-			integral.set("INTEGRAL", Integer.valueOf("0"));
-			integral.set("ENT_ID", request.getParameter("ORGCODE"));
-			integral.set(creatorKey, personId);
-			integral.set(CREATE_TIME, createTime);
+			doctor.set("NAME","baihesong");
+			
+//			integral.set(KEY_FIELD, personId);
+//			integral.set("INTEGRAL", Integer.valueOf("0"));
+//			integral.set("ENT_ID", request.getParameter("ORGCODE"));
+//			integral.set(creatorKey, personId);
+//			integral.set(CREATE_TIME, createTime);
 			String registerFail = "注册失败！";
 			
 			// 操作操作员信息
@@ -542,10 +551,10 @@ public class WuserRegisterService extends BusinessServices {
 				conn.rollback();
 				ssoconn.rollback();
 			} catch (SQLException e1) {
-				MessageService.errString("用户注册失败，回滚异常！", e1);
+//				MessageService.errString("用户注册失败，回滚异常！", e1);
 			}
 			
-			MessageService.errString("注册用户异常", e);
+//			MessageService.errString("注册用户异常", e);
 			jsonObj.put(CONST_BIZRESULT, false);
 			jsonObj.put(MSG, "数据库链接异常，注册失败！");
 		} finally {
@@ -556,50 +565,50 @@ public class WuserRegisterService extends BusinessServices {
 		return jsonObj;
 	}
 	
-	private JSONObject registerValidate(ActionContext ac) {
-		
-		JSONObject  jsonObj = new JSONObject();
-		
-		String orgcode = request.getParameter("ORGCODE");
-		if(StringUtils.isBlank(orgcode)) {
-			jsonObj.put(CONST_BIZRESULT, false);
-			jsonObj.put(MSG, "没有设置子站ID(sub_site_org)参数值，注册失败！");
-			return jsonObj;
-		}
-		
-		DBDYPO org = queryOrgPo(orgcode);
-		if(null == org) {
-			jsonObj.put(CONST_BIZRESULT, false);
-			jsonObj.put(MSG, "子站(" + orgcode + ")信息不存在，不能注册为该子站会员！");
-			return jsonObj;
-		}
-		
-		if(!"1".equals("" + org.get("ENABLED"))) {
-			jsonObj.put(CONST_BIZRESULT, false);
-			jsonObj.put(MSG, org.get("orgname") + "子站未激活，注册失败！");
-			return jsonObj;
-		}
-		
-		
-		String jsonStr = opnoCheck();
-		JSONArray jsonArray = JSONArray.parseArray(jsonStr);
-		if(!(Boolean)jsonArray.get(0)) {
-			jsonObj.put(CONST_BIZRESULT, false);
-			jsonObj.put(MSG, jsonArray.get(1));
-			return jsonObj;
-		} 
-		
-		jsonStr = codeCheck(ac);
-		jsonArray = JSONArray.parseArray(jsonStr);
-		if((Boolean)jsonArray.get(0)) {
-			jsonObj.put(CONST_BIZRESULT, true);
-		} else {
-			jsonObj.put(CONST_BIZRESULT, false);
-			jsonObj.put(MSG, jsonArray.get(1));
-		}
-		
-		return jsonObj;
-	}
+//	private JSONObject registerValidate(ActionContext ac) {
+//		
+//		JSONObject  jsonObj = new JSONObject();
+//		
+//		String orgcode = "e9rj";
+//		if(StringUtils.isBlank(orgcode)) {
+//			jsonObj.put(CONST_BIZRESULT, false);
+////			jsonObj.put(MSG, "没有设置子站ID(sub_site_org)参数值，注册失败！");
+//			return jsonObj;
+//		}
+//		
+//		DBDYPO org = queryOrgPo(orgcode);
+//		if(null == org) {
+//			jsonObj.put(CONST_BIZRESULT, false);
+//			jsonObj.put(MSG, "子站(" + orgcode + ")信息不存在，不能注册为该子站会员！");
+//			return jsonObj;
+//		}
+//		
+//		if(!"1".equals("" + org.get("ENABLED"))) {
+//			jsonObj.put(CONST_BIZRESULT, false);
+//			jsonObj.put(MSG, org.get("orgname") + "子站未激活，注册失败！");
+//			return jsonObj;
+//		}
+//		
+//		
+//		String jsonStr = opnoCheck();
+//		JSONArray jsonArray = JSONArray.parseArray(jsonStr);
+//		if(!(Boolean)jsonArray.get(0)) {
+//			jsonObj.put(CONST_BIZRESULT, false);
+//			jsonObj.put(MSG, jsonArray.get(1));
+//			return jsonObj;
+//		} 
+//		
+//		jsonStr = codeCheck(ac);
+//		jsonArray = JSONArray.parseArray(jsonStr);
+//		if((Boolean)jsonArray.get(0)) {
+//			jsonObj.put(CONST_BIZRESULT, true);
+//		} else {
+//			jsonObj.put(CONST_BIZRESULT, false);
+//			jsonObj.put(MSG, jsonArray.get(1));
+//		}
+//		
+//		return jsonObj;
+//	}
 	
 
 	/**
@@ -657,7 +666,7 @@ public class WuserRegisterService extends BusinessServices {
 			DBDYPO[] pos = DBDYDao.selectByID(conn, po);
 			po = pos.length > 0 ? pos[0] : null;
 		} catch(Exception e) {
-			MessageService.errString("查询ts_op中" + personId + "用户信息时出错！", e);
+//			MessageService.errString("查询ts_op中" + personId + "用户信息时出错！", e);
 		} finally  {
 			DBConn.closeConnection(conn);
 		}
@@ -725,9 +734,9 @@ public class WuserRegisterService extends BusinessServices {
 			}
 
 			if(result == 0) {
-				logger.error(MessageService.getMessage("LOG_UPDATE_OP_FAILURE", personId, appCode));
+//				logger.error(MessageService.getMessage("LOG_UPDATE_OP_FAILURE", personId, appCode));
 				jsonObj.put(CONST_BIZRESULT, false);
-				jsonObj.put(MSG, MessageService.getMessage("MSG_UPDATE_OP_FAILURE"));
+//				jsonObj.put(MSG, MessageService.getMessage("MSG_UPDATE_OP_FAILURE"));
 			} else {
 				jsonObj.put(CONST_BIZRESULT, true);
 			}
@@ -737,41 +746,41 @@ public class WuserRegisterService extends BusinessServices {
 		return jsonObj;
 	}
 	
-	private int addMoney(Connection conn,String personId) {
-		DBDYPO po = new DBDYPO("GO_ACCOUNT_MANAGE", KEY_FIELD, request);
-		po.set(KEY_FIELD, personId);
-		
-		int rows = 0;
-		int addMoney = getAddMoney(personId);
-		BigDecimal money = new BigDecimal(addMoney); 
-		
-		String personMoney = "PRESENT_MONEY";
-		
-		
-		DBDYPO[] pos = DBDYDao.selectByID(conn, po);
-		
-		if(pos.length > 0) {
-			po = pos[0];
-			po.setKeyField(KEY_FIELD);
-			if(null !=po.get(personMoney)) {
-				money = money.add((BigDecimal)po.get(personMoney));
-			}
-			
-			po.set(personMoney, money);
-			po.set("RECHARGE_MONEY", 0);
-			rows = DBDYDao.update(conn, po);
-		} else {
-			po.set(personMoney, money);
-			po.set(CREATE_BY, personId);
-			po.set(CREATE_TIME, new java.sql.Timestamp(System.currentTimeMillis()));
-			po.set("UPDATE_BY", personId);
-			po.set("UPDATE_TIME", new java.sql.Timestamp(System.currentTimeMillis()));
-			
-			rows = DBDYDao.insert(conn, po);
-		}
-		
-		return rows ;
-	}
+//	private int addMoney(Connection conn,String personId) {
+//		DBDYPO po = new DBDYPO("GO_ACCOUNT_MANAGE", KEY_FIELD, request);
+//		po.set(KEY_FIELD, personId);
+//		
+//		int rows = 0;
+////		int addMoney = getAddMoney(personId);
+////		BigDecimal money = new BigDecimal(addMoney); 
+//		
+//		String personMoney = "PRESENT_MONEY";
+//		
+//		
+//		DBDYPO[] pos = DBDYDao.selectByID(conn, po);
+//		
+//		if(pos.length > 0) {
+//			po = pos[0];
+//			po.setKeyField(KEY_FIELD);
+//			if(null !=po.get(personMoney)) {
+//				money = money.add((BigDecimal)po.get(personMoney));
+//			}
+//			
+//			po.set(personMoney, money);
+//			po.set("RECHARGE_MONEY", 0);
+//			rows = DBDYDao.update(conn, po);
+//		} else {
+//			po.set(personMoney, money);
+//			po.set(CREATE_BY, personId);
+//			po.set(CREATE_TIME, new java.sql.Timestamp(System.currentTimeMillis()));
+//			po.set("UPDATE_BY", personId);
+//			po.set("UPDATE_TIME", new java.sql.Timestamp(System.currentTimeMillis()));
+//			
+//			rows = DBDYDao.insert(conn, po);
+//		}
+//		
+//		return rows ;
+//	}
 	
 	/**
 	 * 邮箱地址是否可用验证
@@ -823,7 +832,7 @@ public class WuserRegisterService extends BusinessServices {
 				conn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
 				exists = exists(conn, opno);
 			} catch (Exception e) {
-				MessageService.errString("", e);
+//				MessageService.errString("", e);
 			}finally {
 				DBConn.closeConnection(conn);
 			}
@@ -858,7 +867,7 @@ public class WuserRegisterService extends BusinessServices {
 		String fieldId = ac.getHttpRequest().getParameter("fieldId");
 		String fieldValue = ac.getHttpRequest().getParameter("fieldValue");
 		if(StringUtils.isBlank(fieldValue)) {
-			setMessage(ac, "true");
+//			setMessage(ac, "true");
 		}
 		
 		Connection conn = null;
@@ -872,7 +881,7 @@ public class WuserRegisterService extends BusinessServices {
 			conn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
 			exists = exists(conn, fieldValue);
 		} catch (Exception e) {
-			MessageService.errString("", e);
+//			MessageService.errString("", e);
 		}finally {
 			DBConn.closeConnection(conn);
 		}
@@ -934,26 +943,26 @@ public class WuserRegisterService extends BusinessServices {
 	 * @param orgCode 机构ID
 	 * @return
 	 */
-	private DBDYPO queryOrgPo(String orgCode) {
-		if(StringUtils.isBlank(orgCode)) {
-			return null;
-		}
-		
-		Connection conn = null;
-		DBDYPO org = null;
-		try {
-			conn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
-			DBDYPO[] pos = DBDYDao.selectBySQL(conn, "SELECT * FROM TS_ORG T WHERE T.ORGCODE='"+ orgCode + "'");
-			if(pos.length > 0 )	{
-				org = pos[0];
-			}
- 		} catch (Exception e) {
-			MessageService.errString("根据机构ID" + orgCode + "查询机构信息时发生异常！", e);
-		} finally {
-			DBConn.closeConnection(conn);
-		}
-		return org;
-	}
+//	private DBDYPO queryOrgPo(String orgCode) {
+//		if(StringUtils.isBlank(orgCode)) {
+//			return null;
+//		}
+//		
+//		Connection conn = null;
+//		DBDYPO org = null;
+//		try {
+//			conn = DBConn.getConnection(ZkgkConstants.ID_SSODBSERVICE);
+//			DBDYPO[] pos = DBDYDao.selectBySQL(conn, "SELECT * FROM TS_ORG T WHERE T.ORGCODE='"+ orgCode + "'");
+//			if(pos.length > 0 )	{
+//				org = pos[0];
+//			}
+// 		} catch (Exception e) {
+////			MessageService.errString("根据机构ID" + orgCode + "查询机构信息时发生异常！", e);
+//		} finally {
+//			DBConn.closeConnection(conn);
+//		}
+//		return org;
+//	}
 	
 	/**
 	 * 查询指定人员的积分帐户信息
@@ -974,7 +983,7 @@ public class WuserRegisterService extends BusinessServices {
 				integral = pos[0];
 			}
 		} catch (Exception e) {
-			MessageService.errString("根据人员ID（" + personId + "）查询该用户的积分信息时，发生异常！", e);
+//			MessageService.errString("根据人员ID（" + personId + "）查询该用户的积分信息时，发生异常！", e);
 		} finally {
 			DBConn.closeConnection(conn);
 		}
@@ -1001,20 +1010,20 @@ public class WuserRegisterService extends BusinessServices {
 
 	}
 	
-	private int getAddMoney(String personId) {
-		String moneyStr = BaseConstants.getGlobalValue("1319", "1");		
-		int addMoney  = 1;
-		if(StringUtils.isNumeric(moneyStr)) {			
-			 try {
-				addMoney = Integer.parseInt(moneyStr);
-			} catch (NumberFormatException e) {
-				
-				MessageService.errString("用户(" + personId + ")补充注册时，取赠送优惠券系统参数(1319),其值在转换为整数时发生异常!默认赠送金额1", e);
-			}
-		} else {
-			logger.debug("用户(" + personId + ")补充注册时，取赠送优惠券金额系统参数(1319)为空，默认赠送金额1");
-		}
-		return addMoney;
-	}
+//	private int getAddMoney(String personId) {
+//		String moneyStr = BaseConstants.getGlobalValue("1319", "1");		
+//		int addMoney  = 1;
+//		if(StringUtils.isNumeric(moneyStr)) {			
+//			 try {
+//				addMoney = Integer.parseInt(moneyStr);
+//			} catch (NumberFormatException e) {
+//				
+//				MessageService.errString("用户(" + personId + ")补充注册时，取赠送优惠券系统参数(1319),其值在转换为整数时发生异常!默认赠送金额1", e);
+//			}
+//		} else {
+//			logger.debug("用户(" + personId + ")补充注册时，取赠送优惠券金额系统参数(1319)为空，默认赠送金额1");
+//		}
+//		return addMoney;
+//	}
 
 }
