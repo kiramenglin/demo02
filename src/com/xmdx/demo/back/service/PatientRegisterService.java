@@ -38,11 +38,11 @@ import com.xmzy.framework.core.FrameworkConstant;
 import com.xmzy.framework.log.businesslog.BusinessLogBean;
 import com.xmzy.framework.log.businesslog.BusinessLogger;
 import com.xmzy.framework.service.MessageService;
-@Service(name="w.user.register")
-public class WuserRegisterService extends BusinessServices {
+@Service(name="patient.register")
+public class PatientRegisterService extends BusinessServices {
 	
-	private static final String tableName = "DOCTOR";
-	private static final String keyField = "DOCTOR_ID";
+	private static final String tableName = "PATIENT";
+	private static final String keyField = "PATIENT_ID";
 	
 	private static final String TABLE_REGUSER = "GO_REGUSER";
 	private static final String TABLE_TSOP = "TS_OP";
@@ -86,7 +86,7 @@ public class WuserRegisterService extends BusinessServices {
 	
 			// 操作员（ts_op）表为空，传向注册页面。注册为平台用户，及操作员。
 			if(null == po) {
-				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register.html");
+				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/pregister.html");
 				return CONST_RESULT_SUCCESS;
 			}
 			
@@ -104,7 +104,7 @@ public class WuserRegisterService extends BusinessServices {
 			// 操作员注册为平台用户，直接打开注册页面
 			ac.setObjValue("OP_BEAN", po);
 //			ac.setObjValue(ZkgkConstants.COURSE_CODE, request.getParameter(ZkgkConstants.COURSE_CODE));
-			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register.html");
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/pregister.html");
 		} else {
 			
 			String appCode = "" + po.get(KEY_APP_CODE);
@@ -113,7 +113,7 @@ public class WuserRegisterService extends BusinessServices {
 			}
 			
 			// 己经注册成为平台用户及操作员的，直接打开我的课程页面
-			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/registed.html");
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/pregisted.html");
 		}
 		
 		return CONST_RESULT_SUCCESS;
@@ -240,7 +240,7 @@ public class WuserRegisterService extends BusinessServices {
 		ac.setStringValue(KEY_PWD, pwd);
 //		ac.setStringValue(ZkgkConstants.SUB_SITE_ORG_KEY, subSiteOrg);
 //		ac.setStringValue(ZkgkConstants.COURSE_CODE, courseCode);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/register_success.html");
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/pregister_success.html");
 		return CONST_RESULT_SUCCESS;
 	}
 
@@ -426,7 +426,7 @@ public class WuserRegisterService extends BusinessServices {
 		DBDYPO regUser = new DBDYPO("GO_REGUSER", KEY_FIELD, request);
 		DBDYPO tsop = new DBDYPO(TABLE_TSOP, KEY_FIELD, request);		
 		DBDYPO person = new DBDYPO("TB_PERSON", KEY_FIELD, request);
-		DBDYPO doctor = new DBDYPO(tableName, keyField);
+		DBDYPO patient = new DBDYPO(tableName, keyField);
 		// 积分信息
 //		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);		
 		
@@ -446,7 +446,7 @@ public class WuserRegisterService extends BusinessServices {
 			conn.setAutoCommit(false);
 			ssoconn.setAutoCommit(false);
 			
-			doctor.set(keyField, personId);
+			patient.set(keyField, personId);
 			tsop.set(KEY_FIELD, personId);
 			regUser.set(KEY_FIELD, personId);			
 			person.set(KEY_FIELD, personId);
@@ -497,7 +497,7 @@ public class WuserRegisterService extends BusinessServices {
 			
 			// 操作操作员信息
 			rows = DBDYDao.insert(ssoconn, tsop);
-			result = DBDYDao.insert(ac.getConnection(), doctor);
+			result = DBDYDao.insert(ac.getConnection(), patient);
 			if(rows == zero) {
 				jsonObj.put(CONST_BIZRESULT, false);
 				jsonObj.put(MSG, registerFail);
