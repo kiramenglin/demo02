@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.e9rj.platform.common.BaseConstants;
 import com.e9rj.platform.common.Encrypt;
+import com.e9rj.platform.common.GenID;
 import com.e9rj.platform.common.OperateIP;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
@@ -43,7 +44,7 @@ public class PatientRegisterService extends BusinessServices {
 	
 	private static final String tableName = "PATIENT";
 	private static final String keyField = "PATIENT_ID";
-	
+	private static final String authFuncNo = "patient.register";
 	private static final String TABLE_REGUSER = "GO_REGUSER";
 	private static final String TABLE_TSOP = "TS_OP";
 	private static final String KEY_FIELD = "PERSON_ID";
@@ -54,6 +55,8 @@ public class PatientRegisterService extends BusinessServices {
 	private static final String CREATE_BY = "CREATE_BY";
 	private static final String CREATE_TIME = "CREATE_TIME";
 	private static final String MSG = "msg";
+	private static String UID = null;
+	
 	
 //	private MoneyRecordDao moneyRecordDao = new MoneyRecordDao();
 //	private final MessageSendDao messageSendDao = new MessageSendDao();
@@ -175,6 +178,7 @@ public class PatientRegisterService extends BusinessServices {
 		return CONST_RESULT_AJAX;
 	}
 
+	
 	// 获取注册成功后系统消息
 	public String getContent(String param) {
 		// 欢迎您开启金奖助学之旅，请点击查看
@@ -238,6 +242,7 @@ public class PatientRegisterService extends BusinessServices {
 		ac.setStringValue("casLoginUrl", casUrl);
 		ac.setStringValue(KEY_OPNO, opno);
 		ac.setStringValue(KEY_PWD, pwd);
+		ac.setStringValue("PATIENT_ID", UID);
 //		ac.setStringValue(ZkgkConstants.SUB_SITE_ORG_KEY, subSiteOrg);
 //		ac.setStringValue(ZkgkConstants.COURSE_CODE, courseCode);
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/back/pregister_success.html");
@@ -250,8 +255,39 @@ public class PatientRegisterService extends BusinessServices {
 	}
 
 	@Override
-	public int save(ActionContext ac) throws Exception {
-		return 0;
+public int save(ActionContext ac) throws Exception {
+		
+		DBDYPO user = new DBDYPO(tableName, keyField, request);
+		String uid = request.getParameter(keyField);
+		System.out.println("patient_id="+uid);
+		int result = 0;
+		boolean isAdd = false;
+		
+//		if (StringUtils.isNotBlank(uid)) {
+//			//修改
+//			checkAuth(ac, authFuncNo, RIGHT_FOUR);
+			result = DBDYDao.update(ac.getConnection(), user);
+//			
+//		} else {
+//			//新增
+//			checkAuth(ac, authFuncNo, RIGHT_TWO);
+//			
+//			uid = GenID.genIdString("U", 21);
+//			user.set(keyField, uid);
+//			isAdd = true;
+//			result = DBDYDao.insert(ac.getConnection(), user);
+//		}
+		if(0 == result) {
+//			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患失败!");
+			setMessage(ac, "保存病患失败!");
+		} else {
+//			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患成功!");
+			setMessage(ac, "保存病患成功!");
+		}
+		
+		return CONST_RESULT_AJAX;
+	
+	
 	}
 
 	@Override
@@ -261,7 +297,27 @@ public class PatientRegisterService extends BusinessServices {
 
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
-		return 0;
+		System.out.println("enter goto");
+		System.out.println("uid="+UID);
+		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
+//		String uid = ac.getHttpRequest().getParameter("PATIENT_ID");
+//		
+//				checkAuth(ac, authFuncNo, RIGHT_FOUR);
+//			
+//			
+			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
+//			
+//			if(pos.length == 0) {
+//				ac.setErrorContext("您所选择的病患已被删除！");
+//				return CONST_RESULT_ERROR;
+//			}
+//			DBDYPO old = pos[0];
+//			old.setCmd("U");
+//			ac.setObjValue("USER_BEAN", old);
+			System.out.println("uid="+UID);
+		ac.setStringValue("PATIENT_ID", UID);
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/back/patient_fullfill.html");
+		return CONST_RESULT_SUCCESS;
 	}
 
 	@Override
@@ -446,6 +502,7 @@ public class PatientRegisterService extends BusinessServices {
 			conn.setAutoCommit(false);
 			ssoconn.setAutoCommit(false);
 			
+			UID = personId;
 			patient.set(keyField, personId);
 			tsop.set(KEY_FIELD, personId);
 			regUser.set(KEY_FIELD, personId);			
@@ -1012,6 +1069,8 @@ public class PatientRegisterService extends BusinessServices {
 		return CONST_RESULT_AJAX;
 
 	}
+	
+	
 	
 //	private int getAddMoney(String personId) {
 //		String moneyStr = BaseConstants.getGlobalValue("1319", "1");		

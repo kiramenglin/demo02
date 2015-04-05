@@ -138,6 +138,7 @@ public class PatientService extends BusinessServices {
 		
 		DBDYPO user = new DBDYPO(tableName, keyField, request);
 		String uid = request.getParameter(keyField);
+		System.out.println("patient_id="+uid);
 		int result = 0;
 		boolean isAdd = false;
 		
