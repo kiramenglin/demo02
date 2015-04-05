@@ -34,6 +34,28 @@
     function saveInfo(){
     	$('#infoForm').submit();
     }
+    var defLoginURL = 'http://localhost:8080/demo02';//这样配置有问题，应该到一个静态选择页面来跳转
+    function redirect(){
+        var _window = top.location != self.location? window.parent.window : window;
+        var serviceURL = getParam('service', _window);
+        if(!serviceURL){
+            //serviceURL = defLoginURL;
+            alert("请从应用系统登录！");
+            return;
+        }
+        
+        _window.location.href = 'login?service='+serviceURL;
+    }
+    function getParam(name, _window) {
+        _window ? _window : window;
+        var queryString = _window.location.search;
+        var param = queryString.substr(1, queryString.length - 1).split("&");
+        for (var i = 0; i < param.length; i++) {
+            var keyValue = param[i].split("=");
+            if (keyValue[0] == name) return keyValue[1];
+        }
+        return null;
+    }
 	</script>
 </head>
 <body class="ui-widget-content" style="border: 0">
@@ -144,7 +166,7 @@
 	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
 		<span id="buttonset">
 			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
-			<button id="cancelBtn" onclick="cancel()"><span class="ui-icon ui-icon-close" style="float: left;"></span>首页</button>		
+			<button id="cancelBtn" onclick="redirect()"><span class="ui-icon ui-icon-close" style="float: left;"></span>首页</button>		
 		</span>
 	</div>
 </body>
