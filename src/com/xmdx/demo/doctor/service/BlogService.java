@@ -11,11 +11,11 @@ import com.xmzy.framework.context.ActionContext;
 @Service(name="doctor.blog")
 public class BlogService extends BusinessServices {
 	//功能号
-	private static final String authFuncNo = "doctor.list";
+	private static final String authFuncNo = "doctor.blog";
 	//表名
-	private static final String tableName = "DOCTOR";
+	private static final String tableName = "BLOG";
 	//主键名
-	private static final String keyField = "DOCTOR_ID";
+	private static final String keyField = "ID";
 	@Override
 	public int delete(ActionContext arg0) throws Exception {
 		// TODO Auto-generated method stub
