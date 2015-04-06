@@ -54,6 +54,7 @@ public class WuserRegisterService extends BusinessServices {
 	private static final String CREATE_BY = "CREATE_BY";
 	private static final String CREATE_TIME = "CREATE_TIME";
 	private static final String MSG = "msg";
+	private static String UID = null;
 	
 //	private MoneyRecordDao moneyRecordDao = new MoneyRecordDao();
 //	private final MessageSendDao messageSendDao = new MessageSendDao();
@@ -251,7 +252,36 @@ public class WuserRegisterService extends BusinessServices {
 
 	@Override
 	public int save(ActionContext ac) throws Exception {
-		return 0;
+
+		DBDYPO user = new DBDYPO(tableName, keyField, request);
+		String uid = request.getParameter(keyField);
+		System.out.println("doctor_id="+uid);
+		int result = 0;
+		boolean isAdd = false;
+		
+//		if (StringUtils.isNotBlank(uid)) {
+//			//修改
+//			checkAuth(ac, authFuncNo, RIGHT_FOUR);
+			result = DBDYDao.update(ac.getConnection(), user);
+//			
+//		} else {
+//			//新增
+//			checkAuth(ac, authFuncNo, RIGHT_TWO);
+//			
+//			uid = GenID.genIdString("U", 21);
+//			user.set(keyField, uid);
+//			isAdd = true;
+//			result = DBDYDao.insert(ac.getConnection(), user);
+//		}
+		if(0 == result) {
+//			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患失败!");
+			setMessage(ac, "保存医生失败!");
+		} else {
+//			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患成功!");
+			setMessage(ac, "保存医生成功!");
+		}
+		
+		return CONST_RESULT_AJAX;
 	}
 
 	@Override
@@ -261,7 +291,27 @@ public class WuserRegisterService extends BusinessServices {
 
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
-		return 0;
+		System.out.println("enter goto");
+		System.out.println("doctor_id="+UID);
+		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
+//		String uid = ac.getHttpRequest().getParameter("PATIENT_ID");
+//		
+//				checkAuth(ac, authFuncNo, RIGHT_FOUR);
+//			
+//			
+			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
+//			
+//			if(pos.length == 0) {
+//				ac.setErrorContext("您所选择的病患已被删除！");
+//				return CONST_RESULT_ERROR;
+//			}
+//			DBDYPO old = pos[0];
+//			old.setCmd("U");
+//			ac.setObjValue("USER_BEAN", old);
+			System.out.println("uid="+UID);
+		ac.setStringValue("PATIENT_ID", UID);
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/back/doctor_fullfill.html");
+		return CONST_RESULT_SUCCESS;
 	}
 
 	@Override
@@ -438,6 +488,7 @@ public class WuserRegisterService extends BusinessServices {
 		int zero = 0;
 		String personId = super.genIdString("", idLen);
 		String integralId = super.genIdString("", idLen);	
+		UID = personId;
 		System.out.println("enter input1");
 //		int addMoney = getAddMoney(personId);
 		try {
