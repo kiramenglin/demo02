@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import com.e9rj.platform.common.action.IPlatformExtend;
+import com.xmzy.framework.actions.ActionImp;
+import com.xmzy.framework.context.ActionContext;
+import com.xmzy.framework.service.MessageService;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -16,6 +20,7 @@ import com.e9rj.platform.common.BaseConstants;
 import com.e9rj.platform.common.Encrypt;
 import com.e9rj.platform.common.OperateIP;
 import com.e9rj.platform.common.services.BusinessServices;
+import com.e9rj.platform.system.action.UserLoginUtil;
 import com.e9rj.platform.util.SessionUtil;
 import com.e9rj.platform.util.SsoUtil;
 import com.xmdx.demo.back.dao.CourseDao;
@@ -55,7 +60,7 @@ public class WuserRegisterService extends BusinessServices {
 	private static final String CREATE_TIME = "CREATE_TIME";
 	private static final String MSG = "msg";
 	private static String UID = null;
-	
+	public static String SYSTEM_EXTEND_LOGIN_CLASS_PROPERTY = "platform.platformextend";
 //	private MoneyRecordDao moneyRecordDao = new MoneyRecordDao();
 //	private final MessageSendDao messageSendDao = new MessageSendDao();
 //	private final CourseDao courseDao = new CourseDao();
@@ -63,7 +68,7 @@ public class WuserRegisterService extends BusinessServices {
 	// 打开用户注册页面
 	@Override
 	public int init(ActionContext ac) throws Exception {
-		
+		System.out.println("enter init");
 		String opNo = request.getParameter("opNo");		
 		DBDYPO regUser = null;
 		DBDYPO po = null;
@@ -133,7 +138,7 @@ public class WuserRegisterService extends BusinessServices {
 	 * @throws Exception 
 	 */
 	public int register(ActionContext ac) throws Exception {
-		
+		System.out.println("enter register");
 		String personId = request.getParameter(KEY_FIELD);
 		
 		// 注册结果
@@ -252,7 +257,7 @@ public class WuserRegisterService extends BusinessServices {
 
 	@Override
 	public int save(ActionContext ac) throws Exception {
-
+		System.out.println("enter save");
 		DBDYPO user = new DBDYPO(tableName, keyField, request);
 		String uid = request.getParameter(keyField);
 		System.out.println("doctor_id="+uid);
@@ -263,7 +268,7 @@ public class WuserRegisterService extends BusinessServices {
 //			//修改
 //			checkAuth(ac, authFuncNo, RIGHT_FOUR);
 			result = DBDYDao.update(ac.getConnection(), user);
-//			
+			System.out.println("result="+result);
 //		} else {
 //			//新增
 //			checkAuth(ac, authFuncNo, RIGHT_TWO);
@@ -294,12 +299,25 @@ public class WuserRegisterService extends BusinessServices {
 		System.out.println("enter goto");
 		System.out.println("doctor_id="+UID);
 		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
+		  ac.setObjValue("LoginUrlIndex", (new StringBuilder(String.valueOf(UserLoginUtil.getLoginUrlIndex(ac)))).toString());
+	        int result = (new UserLoginUtil()).checkUserLogin(ac);
+	        if(result == 0)
+	            return 0;
+	        else
+	        {
+	        	
+	        	ac.setStringValue("PATIENT_ID", UID);
+	    		ac.setStringValue("FORMNAME", "com/xmdx/demo/back/doctor_fullfill.html");
+	    		return CONST_RESULT_SUCCESS;
+	        }
+//	            return extendLogin(ac);
+
 //		String uid = ac.getHttpRequest().getParameter("PATIENT_ID");
 //		
 //				checkAuth(ac, authFuncNo, RIGHT_FOUR);
 //			
 //			
-			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
+//			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
 //			
 //			if(pos.length == 0) {
 //				ac.setErrorContext("您所选择的病患已被删除！");
@@ -308,10 +326,8 @@ public class WuserRegisterService extends BusinessServices {
 //			DBDYPO old = pos[0];
 //			old.setCmd("U");
 //			ac.setObjValue("USER_BEAN", old);
-			System.out.println("uid="+UID);
-		ac.setStringValue("PATIENT_ID", UID);
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/back/doctor_fullfill.html");
-		return CONST_RESULT_SUCCESS;
+//			System.out.println("uid="+UID);
+		
 	}
 
 	@Override
@@ -1079,5 +1095,19 @@ public class WuserRegisterService extends BusinessServices {
 //		}
 //		return addMoney;
 //	}
+
+	private int extendLogin(ActionContext ac)
+	        throws Exception
+	    {
+	        String pe = MessageService.getMessage(SYSTEM_EXTEND_LOGIN_CLASS_PROPERTY);
+	        if(pe != null && !pe.equals(""))
+	        {
+	            IPlatformExtend extendPlatform = (IPlatformExtend)Class.forName(pe).newInstance();
+	            int result = extendPlatform.loginSuccess(ac);
+	            if(result == 0)
+	                return 0;
+	        }
+	        return 1;
+	    }
 
 }
