@@ -257,36 +257,7 @@ public class WuserRegisterService extends BusinessServices {
 
 	@Override
 	public int save(ActionContext ac) throws Exception {
-		System.out.println("enter save");
-		DBDYPO user = new DBDYPO(tableName, keyField, request);
-		String uid = request.getParameter(keyField);
-		System.out.println("doctor_id="+uid);
-		int result = 0;
-		boolean isAdd = false;
-		
-//		if (StringUtils.isNotBlank(uid)) {
-//			//修改
-//			checkAuth(ac, authFuncNo, RIGHT_FOUR);
-			result = DBDYDao.update(ac.getConnection(), user);
-			System.out.println("result="+result);
-//		} else {
-//			//新增
-//			checkAuth(ac, authFuncNo, RIGHT_TWO);
-//			
-//			uid = GenID.genIdString("U", 21);
-//			user.set(keyField, uid);
-//			isAdd = true;
-//			result = DBDYDao.insert(ac.getConnection(), user);
-//		}
-		if(0 == result) {
-//			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患失败!");
-			setMessage(ac, "保存医生失败!");
-		} else {
-//			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患成功!");
-			setMessage(ac, "保存医生成功!");
-		}
-		
-		return CONST_RESULT_AJAX;
+		return 0;
 	}
 
 	@Override
@@ -296,38 +267,7 @@ public class WuserRegisterService extends BusinessServices {
 
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
-		System.out.println("enter goto");
-		System.out.println("doctor_id="+UID);
-		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
-		  ac.setObjValue("LoginUrlIndex", (new StringBuilder(String.valueOf(UserLoginUtil.getLoginUrlIndex(ac)))).toString());
-	        int result = (new UserLoginUtil()).checkUserLogin(ac);
-	        if(result == 0)
-	            return 0;
-	        else
-	        {
-	        	
-	        	ac.setStringValue("PATIENT_ID", UID);
-	    		ac.setStringValue("FORMNAME", "com/xmdx/demo/back/doctor_fullfill.html");
-	    		return CONST_RESULT_SUCCESS;
-	        }
-//	            return extendLogin(ac);
-
-//		String uid = ac.getHttpRequest().getParameter("PATIENT_ID");
-//		
-//				checkAuth(ac, authFuncNo, RIGHT_FOUR);
-//			
-//			
-//			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
-//			
-//			if(pos.length == 0) {
-//				ac.setErrorContext("您所选择的病患已被删除！");
-//				return CONST_RESULT_ERROR;
-//			}
-//			DBDYPO old = pos[0];
-//			old.setCmd("U");
-//			ac.setObjValue("USER_BEAN", old);
-//			System.out.println("uid="+UID);
-		
+		return 0;
 	}
 
 	@Override
@@ -1096,18 +1036,6 @@ public class WuserRegisterService extends BusinessServices {
 //		return addMoney;
 //	}
 
-	private int extendLogin(ActionContext ac)
-	        throws Exception
-	    {
-	        String pe = MessageService.getMessage(SYSTEM_EXTEND_LOGIN_CLASS_PROPERTY);
-	        if(pe != null && !pe.equals(""))
-	        {
-	            IPlatformExtend extendPlatform = (IPlatformExtend)Class.forName(pe).newInstance();
-	            int result = extendPlatform.loginSuccess(ac);
-	            if(result == 0)
-	                return 0;
-	        }
-	        return 1;
-	    }
+	
 
 }

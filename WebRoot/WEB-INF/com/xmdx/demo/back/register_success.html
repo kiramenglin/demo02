@@ -3,12 +3,11 @@
 	<head>
 	    <meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <meta name="description" content="">
 	    <meta name="author" content="">
 	    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 	
-	    <title>过考平台用户注册</title>
+	    <title>医疗平台医生注册</title>
 		
 		<!-- Bootstrap core CSS -->
 	    <link href="/e9common/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -73,21 +72,20 @@
 				<div id="contentDiv" style="padding:0;width:100%;height:100%;margin-top: 2px;margin-left: 2px;" tabLogo="#{tabLogo}">
 			<table id="gridTable" class="ui-pg-table"></table>  
 	        <div id="gridPager" style="height: 36px"></div>
-	        <div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;">
+	      <!--  <div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;">
 				
 	                
 					<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=w.user.register" class="btn btn-info btn-lg " role="button">完善个人资料</a>
 					
 				
-	        </div>
+	        </div>  -->
 		</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div id="show" class="text-center" style="width: 100%; height: 100%;"></div>
-				<!-- <input type="hidden" id="forwordUrl" name="forwordUrl" value="/zkgk?org=@{
-_org}"> -->
+				 <input type="hidden" id="forwordUrl" name="forwordUrl" value="http://localhost:8080/demo02/index.jsp">
 				<!-- <input type="hidden" id="sub_site_org" value="@{sub_site_org}"> -->
 			</div>
 		</div>
@@ -106,15 +104,15 @@ _org}"> -->
 		<script src="/e9common/js/appcode.js"></script>
     	<script type="text/javascript">
     	
-	    /*	var t=3;//设定跳转的时间
+	    	var t=3;//设定跳转的时间
 			var timmerId="";
-			var casServerURL = '@{com.e9rj.platform.common.BaseConstants.getGlobalValue("5")}/login';  
-			var callbackUrl = "http://" + location.host + zkgkAppCode +'/logincallback.html';
+			var casServerURL ='@{com.e9rj.platform.common.BaseConstants.getGlobalValue("5")}/login';  
+			var callbackUrl = "http://" + location.host + '/demo02' +'/logincallback.html';
 			var loginURL = callbackUrl+"&_username=@{OPNO}&_password=@{PWD}";
  			var url = casServerURL+"?service=" + loginURL;
  			var havePwd = "@{PWD}" ? true :　false;
- 			var html ="秒后跳转到" + (havePwd ? "学习中心" :"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，请重新登录" ) + "<a id='linkBtn' href='#' style='font-weight : bold;' onclick='nowforward();'>马上跳转</a></div>";
-
+ 			var html ="秒后跳转到" + (havePwd ? "首页" :"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，请重新登录" ) + "<a id='linkBtn' href='#' style='font-weight : bold;' onclick='nowforward();'>马上跳转</a></div>";
+ 			
     		$(function(){
     			
     			if(!havePwd) {
@@ -125,31 +123,35 @@ _org}"> -->
     				
     				var stationUrl = loadSubStationUrl();
     				
-    				url = "HttpChannel?action=USER_LOGOUT&STATION_URL=" + stationUrl;
+    				url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=w.user.register";
     			}
-
+    			
     			timmerId = setInterval("refer()",1000); //启动1秒定时 
     			
     		});
 	    	
-    	/*	function refer(){
+    		function refer(){
     			
 				if(t==0){
-					html ="正在跳转到" + (havePwd?"学习中心……":"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，稍候请重新登录……");
+					html ="正在跳转到" + (havePwd?"首页……":"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，稍候请重新登录……");
 					$('#show').html( html); //显示倒计时
 					if(havePwd) {
+						
 						$("#cas_serverFrame").attr("src", url);
+						
 						clearInterval(timmerId);
+						location.href="http://localhost:8080/demo02/index.jsp";
 					} else {
-						var courseCode = $("#COURSE_CODE").val();
-						if(courseCode != ""){
+						//var courseCode = $("#COURSE_CODE").val();
+						//if(courseCode != ""){
 							//COURSE_CODE 有值，表示是从zkxj->学生平台->已报课程->在线学习 发起的申请，所以要跳到课程明细页下
-							location.href = "HttpChannel?action=COURSE_LIST_ACTION&COURSE_CODE=" + courseCode;
-						}else{
-							location.href = url;
-						}
+							location.href = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=w.user.register";
+						//}else{
+							//location.href = url;
+						//}
 					}
 				} else {
+					
 					$('#show').html( "<div id='timmer'>" + t+html); //显示倒计时
 				}
 				
@@ -161,20 +163,21 @@ _org}"> -->
     			if(timmerId) {
     				clearInterval(timmerId);
     			}  
-    			html ="正在跳转到" + (havePwd?"学习中心……":"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，稍候请重新登录……");
+    			html ="正在跳转到" + (havePwd?"首页……":"@{com.xmzy.framework.service.MessageService.getMessage('TITLE')}，稍候请重新登录……");
     			$('#show').html(html);
     			if(havePwd) {
     				$("#cas_serverFrame").attr("src", url);
+    				location.href="http://localhost:8080/demo02/index.jsp";
     			} else {
-    				var courseCode = $("#COURSE_CODE").val();
-					if(courseCode != ""){
+    				//var courseCode = $("#COURSE_CODE").val();
+					//if(courseCode != ""){
 						//COURSE_CODE 有值，表示是从zkxj->学生平台->已报课程->在线学习 发起的申请，所以要跳到课程明细页下
-						location.href = "HttpChannel?action=COURSE_LIST_ACTION&COURSE_CODE=" + courseCode;
-					}else{
-						location.href = url;
-					}
+						location.href = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=w.user.register";
+					//}else{
+					//	location.href = url;
+					//}
     			}
-			}*/
+			}
     		
     		//加载子站首页链接
     	//	function loadSubStationUrl() {
