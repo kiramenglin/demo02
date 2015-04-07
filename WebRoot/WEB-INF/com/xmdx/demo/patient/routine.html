@@ -3,35 +3,144 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	<link href="css/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
-	<script type="text/javascript" src="js/ssocommon.js"></script>    
- 
+	
+	<link href="css/css/metro-bootstrap.css" rel="stylesheet" />
+	<link href="css/css/metro-bootstrap-responsive.css" rel="stylesheet" />
+	<link href="css/css/iconFont.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/ssocommon.js"></script>
+	<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="js/js/metro.min.js"></script>    
+	<script>
+	$(document).ready(function() {    
+	    $(".row>div").click(function(){  
+	        window.location=$(this).find("a").attr("href"); 
+	        return false;  
+	    }); 
+	});
+	</script>
 </head>
 <body>
-<div class="row">
-	<div class="col-xs-12 col-md-12">
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.general" class="btn btn-link btn-lg" role="button">一般信息</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.head" class="btn btn-link btn-lg" role="button">头部</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.eye" class="btn btn-link btn-lg" role="button">眼</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.ear" class="btn btn-link btn-lg" role="button">耳</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.nose" class="btn btn-link btn-lg" role="button">鼻</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.mouth" class="btn btn-link btn-lg" role="button">口</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.chest" class="btn btn-link btn-lg" role="button">胸</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.lung" class="btn btn-link btn-lg" role="button">肺</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.neck" class="btn btn-link btn-lg" role="button">颈</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.heart" class="btn btn-link btn-lg" role="button">心</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.spine" class="btn btn-link btn-lg" role="button">脊柱四肢</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.abd" class="btn btn-link btn-lg" role="button">腹</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.liver" class="btn btn-link btn-lg" role="button">肝</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.lym" class="btn btn-link btn-lg" role="button">淋巴结</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.nervous" class="btn btn-link btn-lg" role="button">神经</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.vein" class="btn btn-link btn-lg" role="button">血管</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.anus" class="btn btn-link btn-lg" role="button">肛门</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.skin" class="btn btn-link btn-lg" role="button">皮肤</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.blood" class="btn btn-link btn-lg" role="button">血常规</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.urine" class="btn btn-link btn-lg" role="button">尿常规</a>
-		<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.shit" class="btn btn-link btn-lg" role="button">粪便常规</a>
+<div class="metro">
+	<div class="grid">
+		<div class="row">
+			<div class="offset1"><p1 class="header">一般检查</p1></div>
+			<div class="tile quadro bg-orange" data-click="transform">
+				<div class="tile-content">
+					<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.general" class="btn btn-link btn-lg" role="button">一般信息</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="header"><p1 class="header">五官科</p1></div>
+			<div class="tile bg-transparent">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.head" class="btn btn-link btn-lg" role="button"><img src="image/head.png"/></a>
+				</div>
+				<div class="brand">
+					<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.head"></a>
+					<div class="name">头</div>
+				</div>
+			</div>
+			<div class="tile bg-green">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.eye" class="btn btn-link btn-lg" role="button">眼</a>
+				</div>
+			</div>
+			<div class="tile icon bg-cyan">
+				<div class="tile-content">
+					<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.ear"><img src="image/listen.png"/></a>
+				</div>
+				<div class="brand">
+					<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.ear"></a>
+					<div class="name">耳</div>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.nose" class="btn btn-link btn-lg" role="button">鼻</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.mouth" class="btn btn-link btn-lg" role="button">口</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.chest" class="btn btn-link btn-lg" role="button">胸</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.lung" class="btn btn-link btn-lg" role="button">肺</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.neck" class="btn btn-link btn-lg" role="button">颈</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.heart" class="btn btn-link btn-lg" role="button">心</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.spine" class="btn btn-link btn-lg" role="button">脊柱四肢</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.abd" class="btn btn-link btn-lg" role="button">腹</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.liver" class="btn btn-link btn-lg" role="button">肝</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.lym" class="btn btn-link btn-lg" role="button">淋巴结</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.nervous" class="btn btn-link btn-lg" role="button">神经</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.vein" class="btn btn-link btn-lg" role="button">血管</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.anus" class="btn btn-link btn-lg" role="button">肛门</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.skin" class="btn btn-link btn-lg" role="button">皮肤</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.blood" class="btn btn-link btn-lg" role="button">血常规</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.urine" class="btn btn-link btn-lg" role="button">尿常规</a>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-content">
+				<a href="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=patient.shit" class="btn btn-link btn-lg" role="button">粪便常规</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 </body>
