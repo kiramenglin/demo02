@@ -17,9 +17,9 @@ public class PatientInfoService extends BusinessServices {
 	//功能号
 	private static final String authFuncNo = "back.patient";
 	//表名
-	private static final String tableName = "PATIENT";
+	private static final String tableName = "TS_OP";
 	//主键名
-	private static final String keyField = "PATIENT_ID";
+	private static final String keyField = "PERSON_ID";
 	@Override
 	public int delete(ActionContext arg0) throws Exception {
 		// TODO Auto-generated method stub
@@ -35,17 +35,21 @@ public class PatientInfoService extends BusinessServices {
 	@Override
 	public int init(ActionContext ac) throws Exception {
 		String userName=SessionUtil.getOpno(ac);
-		
 		System.out.println(userName+"这个是sessionid哦");
-		StringBuilder sql = new StringBuilder("SELECT * FROM PATIENT U ");
-		
+		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
 		
 		if(StringUtils.isNotBlank(userName)) {
-			sql.append(" WHERE U.NAME LIKE '%").append(userName).append("%' ");
+			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
 		}
-		DBDYPO[] po =DBDYDao.selectBySQL(ac.getConnection(), sql.toString());
+		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+		String id =po[0].getString("PERSON_ID");
 		
-		ac.setObjValue("USER", po[0]);
+		StringBuilder sqlp = new StringBuilder("SELECT * FROM PATIENT U ");
+		if(StringUtils.isNotBlank(id)) {
+			sqlp.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), sqlp.toString());
+		ac.setObjValue("USER", pop[0]);
 		
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		
