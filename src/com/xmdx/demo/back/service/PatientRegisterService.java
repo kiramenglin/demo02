@@ -43,6 +43,7 @@ import com.xmzy.framework.service.MessageService;
 public class PatientRegisterService extends BusinessServices {
 	
 	private static final String tableName = "PATIENT";
+	private static final String TABLE_OP_ROLE = "TS_OPROLE";
 	private static final String keyField = "PATIENT_ID";
 	private static final String authFuncNo = "patient.register";
 	private static final String TABLE_REGUSER = "GO_REGUSER";
@@ -257,35 +258,7 @@ public class PatientRegisterService extends BusinessServices {
 	@Override
 public int save(ActionContext ac) throws Exception {
 		
-		DBDYPO user = new DBDYPO(tableName, keyField, request);
-		String uid = request.getParameter(keyField);
-		System.out.println("patient_id="+uid);
-		int result = 0;
-		boolean isAdd = false;
-		
-//		if (StringUtils.isNotBlank(uid)) {
-//			//修改
-//			checkAuth(ac, authFuncNo, RIGHT_FOUR);
-			result = DBDYDao.update(ac.getConnection(), user);
-//			
-//		} else {
-//			//新增
-//			checkAuth(ac, authFuncNo, RIGHT_TWO);
-//			
-//			uid = GenID.genIdString("U", 21);
-//			user.set(keyField, uid);
-//			isAdd = true;
-//			result = DBDYDao.insert(ac.getConnection(), user);
-//		}
-		if(0 == result) {
-//			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患失败!");
-			setMessage(ac, "保存病患失败!");
-		} else {
-//			log(ac, LOGLEVEL_I, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存病患成功!");
-			setMessage(ac, "保存病患成功!");
-		}
-		
-		return CONST_RESULT_AJAX;
+		return 0;
 	
 	
 	}
@@ -297,27 +270,7 @@ public int save(ActionContext ac) throws Exception {
 
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
-		System.out.println("enter goto");
-		System.out.println("uid="+UID);
-		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
-//		String uid = ac.getHttpRequest().getParameter("PATIENT_ID");
-//		
-//				checkAuth(ac, authFuncNo, RIGHT_FOUR);
-//			
-//			
-			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
-//			
-//			if(pos.length == 0) {
-//				ac.setErrorContext("您所选择的病患已被删除！");
-//				return CONST_RESULT_ERROR;
-//			}
-//			DBDYPO old = pos[0];
-//			old.setCmd("U");
-//			ac.setObjValue("USER_BEAN", old);
-			System.out.println("uid="+UID);
-		ac.setStringValue("PATIENT_ID", UID);
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/back/patient_fullfill.html");
-		return CONST_RESULT_SUCCESS;
+		return 0;
 	}
 
 	@Override
@@ -483,6 +436,7 @@ public int save(ActionContext ac) throws Exception {
 		DBDYPO tsop = new DBDYPO(TABLE_TSOP, KEY_FIELD, request);		
 		DBDYPO person = new DBDYPO("TB_PERSON", KEY_FIELD, request);
 		DBDYPO patient = new DBDYPO(tableName, keyField);
+		DBDYPO oprole = new DBDYPO(TABLE_OP_ROLE,"OPNO,ROLEID");
 		// 积分信息
 //		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);		
 		
@@ -544,6 +498,11 @@ public int save(ActionContext ac) throws Exception {
 			regUser.set(CREATE_TIME, createTime);
 			
 			
+			oprole.set("OPNO", opno);
+			oprole.set("ROLEID", "RL150408150956193001");
+			oprole.set("OPTIME", createTime);
+			oprole.set("OPNO_", "admin");
+			
 			
 //			integral.set(KEY_FIELD, personId);
 //			integral.set("INTEGRAL", Integer.valueOf("0"));
@@ -572,6 +531,14 @@ public int save(ActionContext ac) throws Exception {
 			}
 			// 创建平台用户信息
 			rows = DBDYDao.insert(ssoconn, regUser);
+			if(rows == zero) {
+				jsonObj.put(CONST_BIZRESULT, false);
+				jsonObj.put(MSG, registerFail);
+				ssoconn.rollback();
+				conn.rollback();
+				return jsonObj;
+			} 
+			rows = DBDYDao.insert(ssoconn,oprole);
 			if(rows == zero) {
 				jsonObj.put(CONST_BIZRESULT, false);
 				jsonObj.put(MSG, registerFail);
