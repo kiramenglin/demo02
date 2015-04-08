@@ -48,7 +48,7 @@ public class WuserRegisterService extends BusinessServices {
 	
 	private static final String tableName = "DOCTOR";
 	private static final String keyField = "DOCTOR_ID";
-	
+	private static final String TABLE_OP_ROLE = "TS_OPROLE";
 	private static final String TABLE_REGUSER = "GO_REGUSER";
 	private static final String TABLE_TSOP = "TS_OP";
 	private static final String KEY_FIELD = "PERSON_ID";
@@ -433,6 +433,7 @@ public class WuserRegisterService extends BusinessServices {
 		DBDYPO tsop = new DBDYPO(TABLE_TSOP, KEY_FIELD, request);		
 		DBDYPO person = new DBDYPO("TB_PERSON", KEY_FIELD, request);
 		DBDYPO doctor = new DBDYPO(tableName, keyField);
+		DBDYPO oprole = new DBDYPO(TABLE_OP_ROLE,"OPNO,ROLEID");
 		// 积分信息
 //		DBDYPO integral = new DBDYPO("TB_USER_INTEGRAL", KEY_USER_INTEGRAL, request);		
 		
@@ -469,7 +470,8 @@ public class WuserRegisterService extends BusinessServices {
 			tsop.set("OPLIMIT", zero);
 			tsop.set("ENABLED", one);
 			tsop.set("ORGCODE", "e9rj");
-
+			
+			
 			String appcodestr = "";
 			// 用户访问其他系统而配置
 			String appcode = BaseConstants.getGlobalValue("1338");
@@ -493,8 +495,11 @@ public class WuserRegisterService extends BusinessServices {
 			regUser.set(creatorKey, personId);
 			regUser.set(CREATE_TIME, createTime);
 			
-			
-			
+			System.out.println("opno="+opno);
+			oprole.set("OPNO", opno);
+			oprole.set("ROLEID", "RL150407161203539001");
+			oprole.set("OPTIME", createTime);
+			oprole.set("OPNO_", "admin");
 //			integral.set(KEY_FIELD, personId);
 //			integral.set("INTEGRAL", Integer.valueOf("0"));
 //			integral.set("ENT_ID", request.getParameter("ORGCODE"));
@@ -529,6 +534,14 @@ public class WuserRegisterService extends BusinessServices {
 				conn.rollback();
 				return jsonObj;
 			} 
+			rows = DBDYDao.insert(ssoconn,oprole);
+			if(rows == zero) {
+				jsonObj.put(CONST_BIZRESULT, false);
+				jsonObj.put(MSG, registerFail);
+				ssoconn.rollback();
+				conn.rollback();
+				return jsonObj;
+			} 
 			// 为平台用户赠送优惠券
 //			rows = addMoney(conn, personId);
 //			if(rows == zero) {
@@ -553,6 +566,7 @@ public class WuserRegisterService extends BusinessServices {
 //			}
 			jsonObj.put(CONST_BIZRESULT, true);
 			jsonObj.put(KEY_FIELD, personId);
+			
 			conn.commit();
 			ssoconn.commit();
 				

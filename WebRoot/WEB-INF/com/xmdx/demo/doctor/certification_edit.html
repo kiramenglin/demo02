@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+	<script type="text/javascript" src="js/ssocommon.js"></script>    
+    <script type="text/javascript">
+    //验证变量
+    var validateForm = false;
+    $(function(){
+    	//重置表单（防止IE缓存）
+    	//$("#infoForm")[0].reset();
+    	//主题切换
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		//表格样式
+		$("#infoTableShort").styleTable();
+		//按钮样式
+		$( "input:button, a, button", "div" ).button();
+    	//验证表单
+    	commonValidate("infoForm");
+		//绑定表单提交事件
+		submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=certification.list");
+		//按钮
+		$( "#buttonset" ).buttonset();
+		
+		//$("#ORGNAME").click(popOrg);//不需要弹出选择组织机构了，职员信息已经包含了组织机构，如果一个职员有多个组织机构，则采用下拉框选择
+		
+		getOrgInfo($("#EMPLOYEE_ID").val())
+    });
+    
+    //表单提交
+    function saveInfo(){
+    	$('#infoForm').submit();
+    }
+	</script>
+</head>
+<body class="ui-widget-content" style="border: 0">
+	<form method="post" name="infoForm" id="infoForm" action="/">
+		<input type="text" style="display: none;" name="CMD" id="CMD">
+		<input type="hidden" style="width:90%" name="CERTIFICATION_ID" id="CERTIFICATION_ID" />
+		<table style="width: 100%; " cellpadding="0" cellspacing="0" id="infoTableShort" class="full" >
+			<!-- 为了样式协调必需要 -->
+			<tr style="height: 1px;">
+				<td style="height: 0px;font-size: 0px;border-top-style: none;border-left-style: none;border-right-style: none; " colspan="4"><img src="/e9common/images/empty.gif" style="height: 1px;"></td>
+			</tr>
+			<!-- ***end*** -->
+			<tr>
+				<td height="20" width="200" align="right" >编码：</td>
+				<td align="left" >
+				    <input type="text" name="CODE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >发证机关：</td>
+				<td align="left" >
+				    <input type="text" name="RELEASE_AUTHORITY" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >签发人：</td>
+				<td align="left" >
+				    <input type="text" name="RELEASE_PERSON" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >发证日期：</td>
+				<td align="left" >
+				    <input type="text" id="RELEASE_DATE" name="RELEASE_DATE" datepiker="DATE"/>
+				</td>
+			</tr>
+			
+			<tr>
+				<td height="20" width="200" align="right" >姓名：</td>
+				<td align="left" >
+				    <input type="text" name="NAME" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >性别：</td>
+				<td align="left" >
+				   <select name="GENDER">
+				   <option value ="男">男</option>
+  				   <option value ="女">女</option>
+  				  </select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td height="20" width="200" align="right" >出生日期：</td>
+				<td align="left" >
+				    <input type="text" id="BIRTHDATE" name="BIRTHDATE" datepiker="DATE"/>
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >医师资格：</td>
+				<td align="left" >
+				    <input type="text" name="CERTIFICATION_NUMBER" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >证书编码：</td>
+				<td align="left" >
+				    <input type="text" name="CERTIFICATION_CODE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >执业地点：</td>
+				<td align="left" >
+				    <input type="text" name="VALID_PLACE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >执业类别：</td>
+				<td align="left" >
+				    <input type="text" name="VALID_TYPE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >执业范围：</td>
+				<td align="left" >
+				    <input type="text" name="VALID_RANGE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="20" width="200" align="right" >身份证号：</td>
+				<td align="left" >
+				    <input type="text" name="ID_NUMBER" >
+				</td>
+			</tr>
+			
+			
+        </table>
+	</form>
+	<!-- 以下是按钮区域 -->
+	<div style="position:absolute;width: 100%;border-bottom:0px;border-left:0px;border-right:0px;bottom:40px;font-size: 0px;" class="ui-widget-content"></div>
+	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
+		<span id="buttonset">
+			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
+			<button id="cancelBtn" onclick="cancel()"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
+		</span>
+	</div>
+</body>
+</html>
+<!--Form Setting Start-->
+	<var name="CMD" value="USER_BEAN.getCmd()"/>
+	<var name="CERTIFICATION_ID" value="USER_BEAN.get('CERTIFICATION_ID')" required="true"/><!-- 用户ID -->
+	<var name="CODE" value="USER_BEAN.get('CODE')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="RELEASE_AUTHORITY" value="USER_BEAN.get('RELEASE_AUTHORITY')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="RELEASE_PERSON" value="USER_BEAN.get('RELEASE_PERSON')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="RELEASE_DATE" value="USER_BEAN.get('RELEASE_DATE')"/><!-- 出生日期 -->
+	<var name="NAME" value="USER_BEAN.get('NAME')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="GENDER" value="USER_BEAN.get('GENDER')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="BIRTHDATE" value="USER_BEAN.get('BIRTHDATE')"  /><!-- 用户名称  -->
+	<var name="CERTIFICATION_NUMBER" value="CERTIFICATION_NUMBER"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="CERTIFICATION_CODE" value="CERTIFICATION_CODE"  validate=",maxSize[30]"/><!-- 用户名称  -->
+	<var name="VALID_PLACE" value="USER_BEAN.get('VALID_PLACE')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="VALID_TYPE" value="USER_BEAN.get('VALID_TYPE')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="VALID_RANGE" value="USER_BEAN.get('VALID_RANGE')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	<var name="ID_NUMBER" value="USER_BEAN.get('ID_NUMBER')"  validate="maxSize[30]"/><!-- 用户名称  -->
+	
+<!--Form Setting End-->
