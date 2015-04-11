@@ -497,7 +497,7 @@ public class WuserRegisterService extends BusinessServices {
 			
 			System.out.println("opno="+opno);
 			oprole.set("OPNO", opno);
-			oprole.set("ROLEID", "RL150407161203539001");
+			oprole.set("ROLEID", "RL150411151250652001");
 			oprole.set("OPTIME", createTime);
 			oprole.set("OPNO_", "admin");
 //			integral.set(KEY_FIELD, personId);

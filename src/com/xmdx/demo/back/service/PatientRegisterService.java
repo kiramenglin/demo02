@@ -499,7 +499,7 @@ public int save(ActionContext ac) throws Exception {
 			
 			
 			oprole.set("OPNO", opno);
-			oprole.set("ROLEID", "RL150408150956193001");
+			oprole.set("ROLEID", "RL150411151257140001");
 			oprole.set("OPTIME", createTime);
 			oprole.set("OPNO_", "admin");
 			
