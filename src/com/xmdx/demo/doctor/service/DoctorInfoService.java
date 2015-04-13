@@ -101,9 +101,16 @@ public class DoctorInfoService extends BusinessServices {
 		String id =po[0].getString("PERSON_ID");
 		int result = 0;
 		String message = ac.getHttpRequest().getParameter("MESSAGE");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM PATIENT U ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+		String patient_name = pop[0].getString("NAME");
 		System.out.println("patient_id ="+id);
 		System.out.println("doctor_id ="+uid);
 		System.out.println("message ="+message);
+		System.out.println("patient_name ="+patient_name);
 		
 		java.sql.Timestamp createTime = new java.sql.Timestamp(System.currentTimeMillis());
 		
@@ -115,6 +122,7 @@ public class DoctorInfoService extends BusinessServices {
 			user.set("DOCTOR_ID", uid);
 			user.set("STATE", 0);
 			user.set("MESSAGE", message);
+			user.set("PATIENT_NAME", patient_name);
 			System.out.println("message="+message);
 			user.set("CREATE_TIME", createTime);
 			result = DBDYDao.insert(ac.getConnection(), user);
