@@ -106,7 +106,7 @@
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
 			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.info" + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
+			var url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.info1" + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
 			window.location.href=url;
 		});
 		

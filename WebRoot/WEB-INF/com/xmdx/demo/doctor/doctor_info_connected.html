@@ -75,8 +75,8 @@ window.load=validate();
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">申请私人医生</h4>
 			      </div>
-			      <form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.info">
-					
+			      <form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.info1">
+					<input type="hidden" style="width:90%" name="DOCTOR_NAME" id="DOCTOR_NAME" value = "@{USER.get("NAME")}"/>
 					<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">申请信息</textarea>
 					<input type="submit" value="提交申请">
 				   </form>

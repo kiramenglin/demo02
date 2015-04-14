@@ -13,10 +13,10 @@ import com.xmzy.frameext.simpledb.DBConn;
 import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
-@Service(name="doctor.info")
-public class DoctorInfoService extends BusinessServices {
+@Service(name="doctor.info1")
+public class DoctorPatientService extends BusinessServices {
 	//功能号
-	private static final String authFuncNo = "doctor.info";
+	private static final String authFuncNo = "doctor.info1";
 	//表名
 	private static final String tableName = "FRIEND_APPLY";
 	//主键名
@@ -47,7 +47,7 @@ public class DoctorInfoService extends BusinessServices {
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		
 		ac.setStringValue("tabLogo", authFuncNo);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_info.html");		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_info_connected.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 
@@ -73,7 +73,7 @@ public class DoctorInfoService extends BusinessServices {
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		
 		ac.setStringValue("tabLogo", authFuncNo);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_info.html");		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_info_connected.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 
