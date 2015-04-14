@@ -50,12 +50,14 @@ public class ApplyService extends BusinessServices {
 		int result = 0;
 		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
 		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
-//		
+		String message = ac.getHttpRequest().getParameter("MESSAGE");
+		
 		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
 		pop.set("DOCTOR_ID", did);
 		pop.set("PATIENT_ID", pid);
 		DBDYDao.selectByID(ac.getConnection(), pop);
 		pop.set("STATE","2");
+		pop.set("REJECT_MESSAGE", message);
 		result = DBDYDao.update(ac.getConnection(), pop);
 		if(0 == result) {
 			

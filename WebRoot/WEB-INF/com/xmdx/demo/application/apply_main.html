@@ -61,11 +61,30 @@
                                         	<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
 											<input type="submit" value="同意">
 				   							</form>
-											<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
-											<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        	<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-											<input type="submit" value="拒绝">
-				   							</form>
+				   							<div class="col-xs-6 col-sm-4">
+											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">拒绝</button>
+				
+										    </div>
+				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  									<div class="modal-dialog">
+			    								<div class="modal-content">
+			     								<div class="modal-header">
+			        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        							<h4 class="modal-title" id="myModalLabel">申请私人医生</h4>
+			      								</div>
+			     
+				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
+												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+                                        		<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">拒绝理由</textarea>
+												<input type="submit" value="拒绝">
+				   								</form>
+			   
+			    
+			    								</div>
+			  									</div>
+												</div>
+											
 											@else{}
 											<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.info">
 											<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
