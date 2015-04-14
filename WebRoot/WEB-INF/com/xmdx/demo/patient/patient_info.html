@@ -5,8 +5,23 @@
 <title>患者信息</title>
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+<link href="css/swfupload-default.css" rel="stylesheet" />
 <script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
-<script type="text/javascript" src="js/js/bootstrap.min.js"></script>    
+<script type="text/javascript" src="swfupload/vendor/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="swfupload/src/handlers.js"></script>
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script>
+<script type="text/javascript">   
+function startLoad(){  
+    var url="http://127.0.0.1:8080/demo02/HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=patient.info"; //处理上传的servlet  
+    var sizeLimit="1 MB";// 文件的大小  注意: 中间要有空格  
+    var types="*.jpg;*.jpeg;*.gif"; //注意是 " ; " 分割   
+    var typesdesc="web iamge file"; //这里可以自定义  
+    var uploadLimit=1;  //上传文件的 个数  
+    
+    initSwfupload(url,sizeLimit,types,typesdesc,uploadLimit); 
+    alert("hehe1");
+}  
+</script>    
 </head>
 <body>
 	<div class="container-fluid">
@@ -19,6 +34,9 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4">
+			<div id="swfupload-control">
+				<center><input type="button" onclick="startLoad()" value="批量图片上传"/></center>  
+			</div>
 			 	<div class="text-center profile-pic">
 				    <img src="image/1.png" alt="">
 				</div>

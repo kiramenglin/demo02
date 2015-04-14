@@ -44,7 +44,7 @@ $(document).ready(function(){
 				i=(i<0)? 0:i;
 				checkbtn();
 				if(!$("#info").is(":animated")){			
-					$("#tips span").html((i+1>len?len:i+1)+"\/"+len+"��");		
+					$("#tips span").html((i+1>len?len:i+1)+"\/"+len+"题");		
 					var wh=$("#tips").get(0).offsetWidth;		
 					var ress=Math.round(i*prog/len);		
 					$("#ress").css({"width": ress+"px"});		

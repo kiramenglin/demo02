@@ -1,9 +1,19 @@
 package com.xmdx.demo.patient.service;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
+import java.util.List;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang.StringUtils;
 
+import com.e9rj.platform.common.ImgUtil;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
 import com.xmdx.demo.back.dao.ZkgkConstants;
@@ -20,6 +30,13 @@ public class PatientInfoService extends BusinessServices {
 	private static final String tableName = "TS_OP";
 	//主键名
 	private static final String keyField = "PERSON_ID";
+	
+	private static final int UPLOAD_SUCCSSS=0;    // "上传文件成功！",   
+    private static final int UPLOAD_FAILURE=1;    // "上传文件失败！"),   
+    private static final int UPLOAD_TYPE_ERROR=2; // "上传文件类型错误！"),   
+    private static final int UPLOAD_OVERSIZE=3;   // "上传文件过大！"),  
+    private static final int UPLOAD_ZEROSIZE=4;   // "上传文件为空！"),  
+    private static final int UPLOAD_NOTFOUND=5;   // "上传文件路径错误！")  
 	@Override
 	public int delete(ActionContext arg0) throws Exception {
 		// TODO Auto-generated method stub
@@ -71,9 +88,79 @@ public class PatientInfoService extends BusinessServices {
 	}
 
 	@Override
-	public int save(ActionContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int save(ActionContext ac) throws Exception {
+		System.out.println("a");
+		PrintWriter out=ac.getHttpResponse().getWriter();
+		String rootPath = "http://127.0.0.1:8080/demo02";    
+        
+        
+        FileItemFactory factory = new DiskFileItemFactory();    
+        ServletFileUpload upload = new ServletFileUpload(factory);    
+        upload.setHeaderEncoding("UTF-8");    
+        try{    
+            List items = upload.parseRequest(ac.getHttpRequest());    
+            if(null != items){    
+                Iterator itr = items.iterator();    
+                while(itr.hasNext()){    
+                    FileItem item = (FileItem)itr.next();
+                    
+                    if(item.isFormField()){    
+                       continue;    
+                    }else{    
+                         //以当前精确到秒的日期为上传的文件的文件名    
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddkkmmss");   
+                        String path="/image";  
+                        File savedFile = new File(rootPath+path,item.getName());    
+                        item.write(savedFile);   
+                        ImgUtil.img2Base64Code(rootPath+path);
+                        out.print("{status:"+this.UPLOAD_SUCCSSS+",message:'"+path+"/"+item.getName()+"'}");  
+                    }    
+                }    
+            }    
+        }catch(Exception e){    
+            e.printStackTrace();    
+        }  
+        return CONST_RESULT_AJAX;
 	}
 
+	public int saveImg(ActionContext ac) throws Exception{
+		
+		PrintWriter out=ac.getHttpResponse().getWriter();
+		String rootPath = ac.getHttpRequest().getParameter("rootPath");    
+	     
+        String param = ac.getHttpRequest().getParameter("param"); 
+        if(rootPath == null) rootPath = "";   
+        
+        rootPath = rootPath.trim();    
+        ImgUtil.img2Base64Code(rootPath);
+        
+        FileItemFactory factory = new DiskFileItemFactory();    
+        ServletFileUpload upload = new ServletFileUpload(factory);    
+        upload.setHeaderEncoding("UTF-8");    
+        try{    
+            List items = upload.parseRequest(ac.getHttpRequest());    
+            if(null != items){    
+                Iterator itr = items.iterator();    
+                while(itr.hasNext()){    
+                    FileItem item = (FileItem)itr.next();
+                    
+                    if(item.isFormField()){    
+                       continue;    
+                    }else{    
+                         //以当前精确到秒的日期为上传的文件的文件名    
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddkkmmss");   
+                        String path="/image";  
+                        File savedFile = new File(rootPath+path,item.getName());    
+                        item.write(savedFile);   
+                          
+                        out.print("{status:"+this.UPLOAD_SUCCSSS+",message:'"+path+"/"+item.getName()+"'}");  
+                    }    
+                }    
+            }    
+        }catch(Exception e){    
+            e.printStackTrace();    
+        }  
+		return CONST_RESULT_SUCCESS;
+		
+	}
 }

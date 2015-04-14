@@ -1,47 +1,58 @@
 //21*25
-var nHNumber=21;
-var nVNumber=25;
-var nSizeWidth = 10;
-var nSizeHeigth = 6;
-var nMaxCom = 7;
-var nScore = 0;
-var nGameLevel = 500;
-var GameCanvas = document.getElementById("Game-Canvas");
+var nHNumber=21;//横向21格
+var nVNumber=25;//纵向25格
+var nSizeWidth = 10;//每格宽度
+var nSizeHeigth = 6;//每格高度
+var nMaxCom = 7;//部件数
+var nScore = 0;//游戏分数
+var nGameLevel = 500;//游戏难度
+var GameCanvas = document.getElementById("Game-Canvas");//游戏区域画布
 var GameCanvasContext = GameCanvas.getContext("2d");
-var BackgroundAudioPlayer = document.getElementById("Background-AudioPlayer");
-var ScoreAudioPlayer = document.getElementById("Score-AudioPlayer");
-var GameOverAudioPlayer = document.getElementById("GameOver-AudioPlayer");
+var BackgroundAudioPlayer = document.getElementById("Background-AudioPlayer");//背景音乐
+var ScoreAudioPlayer = document.getElementById("Score-AudioPlayer");//得分特效音
+var GameOverAudioPlayer = document.getElementById("GameOver-AudioPlayer");//游戏结束特效音
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext("2d");
 var rushBlock = new RusBlock();
-var nGameStatus = 1;
+var nGameStatus = 1;//游戏处于开始状态
+
 var WINDOW_WIDTH =800;
 var WINDOW_HEIGHT=50;
 var RADIUS=1;
 var MARGIN_TOP=0;
-var MARGIN_LEFT=30;
+var MARGIN_LEFT=50;
 
 const endTime = new Date();
+endTime.setTime(endTime.getTime()+60000);
 
 var currentTime=0
 
 var balls = [];
 var colors=["#33B5E5","#0099CC","#9933CC","#AA66CC","#99CC00","#669900","#FFBB33","#FF8800","#FF4444","#CC0000"];
+
+var ret = 0;
 function GameStart() {
-	endTime.setTime(endTime.getTime() + 60000);
     GameCanvasContext.clearRect(0, 0, nHNumber * nSizeWidth, nVNumber * nSizeHeigth);
     nGameStatus = 1;
     rushBlock.NewNextCom();
     rushBlock.NextComToCurrentCom();
     rushBlock.NewNextCom();
-    nGameLevel = document.getElementById("Select-Game-Level").value;//��ȡ��Ϸ�Ѷ�
+    nGameLevel = document.getElementById("Select-Game-Level").value;//获取游戏难度
     BackgroundAudioPlayer.load();
     GameOverAudioPlayer.pause();
     BackgroundAudioPlayer.play();
     GameTimer();
+    currentTime = getCurrentTime()
+	setInterval(function(){
+			render(context);
+			update();
+		}, 100);
 }
 
 
 
 function GameEnd() {
+	ret = 0;
     BackgroundAudioPlayer.pause();
     GameOverAudioPlayer.load();
     GameOverAudioPlayer.play();
@@ -53,17 +64,18 @@ function GameEnd() {
 			rushBlock.aState[i][j]=0;
 		}
 	}
+	
 }
 
 
 function GameTimer() {
     var nDimension = rushBlock.CurrentCom.nDimesion;
     if (rushBlock.CanDown(1)) {
-        
+        //擦除
         rushBlock.InvalidateRect(rushBlock.ptIndex, nDimension);
-        
+        //下落
         rushBlock.ptIndex.Y++;
-        
+        //显示新位置上的部件
     }
     else {
         for (var i = 0; i < nDimension * nDimension; i++) {
@@ -74,14 +86,14 @@ function GameTimer() {
             }
         }
         rushBlock.InvalidateRect();
-        rushBlock.Disappear();
-        if (rushBlock.CheckFail()) {
+        rushBlock.Disappear();//消去行
+        if (rushBlock.CheckFail()) {//游戏结束
             rushBlock.nCurrentComID = -1;
-            GameEnd();
+            GameEnd();//游戏结束
         }
         else {
             rushBlock.NextComToCurrentCom();
-            rushBlock.NewNextCom();
+            rushBlock.NewNextCom();//产生新部件
         }
     }
     DrawGame();
@@ -90,23 +102,23 @@ function GameTimer() {
 }
 
 function DrawGame() {
-    
+    //画分界线
     GameCanvasContext.moveTo(nHNumber*nSizeWidth,0);
     GameCanvasContext.lineTo(nHNumber*nSizeWidth,nVNumber*nSizeHeigth);
     GameCanvasContext.stroke();
 
 
-    
+    //画不能移动的部分
     GameCanvasContext.fillStyle = "blue";
     for (var i = 0; i < nHNumber; i++) {
-        for (var j = 0; j < nVNumber; j++) {
+        for (var j = 0; j < nVNumber; j++) {///////////
             if (rushBlock.aState[i][j] == 1) {
                 GameCanvasContext.fillRect(i * nSizeWidth, j * nSizeHeigth, nSizeWidth, nSizeHeigth);
             }
         }
     }
     GameCanvasContext.fillStyle = colors[Math.floor(Math.random()*colors.length)];
-    
+    //画当前下落部分
     if (rushBlock.CurrentCom.nComID >= 0) {
         var nDimension = rushBlock.CurrentCom.nDimesion;
         for (var i = 0; i < nDimension * nDimension; i++) {
@@ -118,7 +130,7 @@ function DrawGame() {
             }
         }
     }
-    
+    //画下一个部件
     var nNextComDimenion = rushBlock.NextCom.nDimesion;
     GameCanvasContext.clearRect((nHNumber+3)*nSizeWidth,10*nSizeHeigth,4*nSizeWidth,4*nSizeHeigth);
     for (var i = 0; i < nNextComDimenion * nNextComDimenion; i++) {
@@ -131,9 +143,9 @@ function DrawGame() {
 }
 
 function tagComponet() {
-    this.nComID = null;
-    this.nDimesion = null;
-    this.ptrArray = null;
+    this.nComID = null;//部件的ID号
+    this.nDimesion = null;//存储该部件所需的数组维数
+    this.ptrArray = null;//指向存储该部件的数组
 }
 
 function RusBlock() {
@@ -146,12 +158,12 @@ function RusBlock() {
             this.aState[i][j] = 0;
     }
 
-    
+    //所以部件的内部表示
     this.aComponets = new Array(nMaxCom);
     for (var i = 0; i < nMaxCom; i++)
         this.aComponets[i] = new tagComponet();
-    
-    
+    //初始化 7个部件
+    //0:方块
     this.aComponets[0].nComID=0;
     this.aComponets[0].nDimesion=2;
     this.aComponets[0].ptrArray=new Array(4);
@@ -275,15 +287,15 @@ function RusBlock() {
     //0 0 0 1 
     //0 0 0 1
     //0 0 0 1
-    this.CurrentCom = new tagComponet();
+    this.CurrentCom = new tagComponet();//当前的部件
     this.NextCom = new tagComponet();
-    this.ptIndex = new Point(0,0);
+    this.ptIndex = new Point(0,0);//部件数组在全局数组中的索引
     
 
 
-    
+    //产生一个新部件到NextCom
     this.NewNextCom = function () {
-        var nComID = Math.round(Math.random() * 6);
+        var nComID = Math.round(Math.random() * 6);//产生随机数
         this.NextCom.nComID = nComID;
         var nDimension = this.aComponets[nComID].nDimesion;
         this.NextCom.nDimesion = nDimension;
@@ -305,20 +317,20 @@ function RusBlock() {
         }
         this.ptIndex.X = 9;
         this.ptIndex.Y = -1;
-        
+        //检查是否有足够的空位置显示新的部件，否则游戏结束
         if (this.CanNew()==false) {
             this.nCurrentComID = -1;
             GameEnd();
         }
     }
-    
+    //是否可以下落
     this.CanDown = function (nNumber) {
         var bDown = true;
         var ptNewIndex = new Point(this.ptIndex.X, this.ptIndex.Y);
         ptNewIndex.Y+=nNumber;
         var nDimension = this.CurrentCom.nDimesion;
         for (var i = 0; i < nDimension * nDimension; i++) {
-            if (this.CurrentCom.ptrArray[i] == 1) {
+            if (this.CurrentCom.ptrArray[i] == 1) {//找出部件对应的整体数组中的位置
                 var xCoordinate = ptNewIndex.X + i % nDimension;
                 var yCoordinate = ptNewIndex.Y + (i - (i % nDimension)) / nDimension;
                 if (yCoordinate >= nVNumber || this.aState[xCoordinate][yCoordinate] == 1) {
@@ -329,7 +341,7 @@ function RusBlock() {
         ptNewIndex = null;
         return bDown;
     }
-    
+    //是否可以左移
     this.Left = function () {
         var bLeft = true;
         var nDimension = this.CurrentCom.nDimesion;
@@ -348,7 +360,7 @@ function RusBlock() {
         if (bLeft)
             this.ptIndex.X--;
     }
-    
+    //是否可以右移
     this.Right = function () {
         var bRight = true;
         var nDimension = this.CurrentCom.nDimesion;
@@ -368,7 +380,7 @@ function RusBlock() {
             this.ptIndex.X++;
         }
     }
-    
+    //是否可以旋转
     this.Rotate = function () {
         var bRotate = true;
         var nDimension = this.CurrentCom.nDimesion;
@@ -376,10 +388,10 @@ function RusBlock() {
         var ptrNewCom = new Array(nDimension * nDimension);
         for(var i=0;i<nDimension*nDimension;i++)
         {
-            var row = (i-i%nDimension) / nDimension;//��
-            var column = i % nDimension;//��
+            var row = (i-i%nDimension) / nDimension;//行
+            var column = i % nDimension;//列
             var newIndex=column * nDimension + (nDimension - row - 1);
-            ptrNewCom[newIndex] = rushBlock.CurrentCom.ptrArray[i];//����:Ŀ��[��][ά��-��-1]=Դ[��][��]
+            ptrNewCom[newIndex] = rushBlock.CurrentCom.ptrArray[i];//方法:目标[列][维数-行-1]=源[行][列]
             if (ptrNewCom[newIndex] == 1) {
                 var xCoordinate = ptNewIndex .X+ newIndex % nDimension;
                 var yCoordinate = ptNewIndex.Y +( newIndex - newIndex % nDimension )/ nDimension;
@@ -403,7 +415,7 @@ function RusBlock() {
             this.ptIndex.Y += 3;
         }
     }
-    
+    //检查是否有足够的空位显示新的部件，否则游戏结束
     this.CanNew = function () {
         var bNew = true;
         var nDimension = this.CurrentCom.nDimesion;
@@ -412,7 +424,7 @@ function RusBlock() {
             if (this.CurrentCom.ptrArray[i] == 1) {
                 var xCoordinate = ptNewIndex.X + i % nDimension;
                 var yCoordinate = ptNewIndex.Y +( i - i % nDimension) / nDimension;
-                if (this.aState[xCoordinate][yCoordinate] == 1) {//����ס
+                if (this.aState[xCoordinate][yCoordinate] == 1) {//被挡住
                     bNew = false;
                 }
             }
@@ -420,7 +432,7 @@ function RusBlock() {
         ptNewIndex = null;
         return bNew;
     }
-    
+    //消去行
     this.Disappear = function () {
         var nLine = 0;
         for (var i = nVNumber - 1; i >= 0; i--) {
@@ -430,7 +442,7 @@ function RusBlock() {
                     bLine = false;
             }
 
-            if (bLine) {
+            if (bLine) {//行可以消去
                 nLine++;
                 for (var j = i; j > 0; j--) {
                     for (var k = 0; k < nHNumber; k++) {
@@ -450,13 +462,14 @@ function RusBlock() {
             document.getElementById("Game-Score").innerText=nScore;
         }
 
-       
+        //显示得分
     }
-    
+    //刷新游戏界面
+    //删除部件旧区域
     this.InvalidateRect = function () {
         GameCanvasContext.clearRect(this.ptIndex.X*nSizeWidth-1,this.ptIndex.Y*nSizeHeigth-1,(this.CurrentCom.nDimesion)*nSizeWidth+1.5,(this.CurrentCom.nDimesion)*nSizeWidth+1);
     }
-    
+    //判断游戏是否结束
     this.CheckFail = function () {
         var bEnd = false;
         
@@ -467,7 +480,8 @@ function RusBlock() {
         }
         return bEnd;
     }
-    
+    //向下加速
+
 }
 
 
@@ -484,7 +498,7 @@ function Action(event) {
         case 37://left
             rushBlock.Left();
             break;
-        case 38://up->rotate 
+        case 38://up->rotate 顺时针旋转
             rushBlock.Rotate();
             break;
         case 39://right
@@ -495,7 +509,7 @@ function Action(event) {
             break;
     }
     GameCanvasContext.fillStyle = colors[Math.floor(Math.random()*colors.length)];
-  
+    //显示新位置
     for (var i = 0; i < nDimension * nDimension; i++) {
         if (rushBlock.CurrentCom.ptrArray[i] == 1) {
             var xCoordinate = rushBlock.ptIndex.X + i % nDimension;
@@ -510,7 +524,7 @@ function Action(event) {
 
 function getCurrentTime(){
 	 var curTime = new Date();
-	 var ret = endTime.getTime()-curTime.getTime()
+	 ret=endTime.getTime()-curTime.getTime();
 	 ret =Math.round(ret/1000)
 	 return ret >= 0 ? ret: 0;
 }
@@ -625,3 +639,4 @@ function renderDigit(x, y, num, cxt){
 		}
 	}
 }
+
