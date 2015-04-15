@@ -73,7 +73,7 @@ function drawScreen(){
      
     ctx.font = "20px serif"
  
-    ctx.fillStyle = "#ff0000";
+    ctx.fillStyle = "#ffffff";
     ctx.fillText("你的得分:"+score,450,50);
     for(i=0;i<3;i++){
         for(j=0; j<3; j++){
