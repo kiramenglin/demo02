@@ -12,7 +12,7 @@ import com.e9rj.platform.common.BaseConstants;
 import com.e9rj.platform.common.GenID;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
-import com.xmdx.demo.back.dao.HtmlRemoveUtil;
+
 import com.xmzy.frameext.business.service.annotate.Service;
 import com.xmzy.frameext.json.FastJsonUtil;
 import com.xmzy.frameext.simpledb.DBConn;
@@ -70,7 +70,7 @@ public class BlogService extends BusinessServices {
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 		System.out.println(pageNumber);
 		System.out.println(pageSize);
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);	
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 20);	
 		System.out.println("a");
 		List<DBDYPO> polist = page.getThisPageList();
 		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
@@ -139,7 +139,7 @@ public class BlogService extends BusinessServices {
 			id = GenID.genIdString("B", 21);
 			blog.set(keyField, id);
 			blog.set("TITLE", title);
-			blog.set("MODIFYDATE", new java.sql.Date(System.currentTimeMillis()));
+			blog.set("MODIFYTIME", new java.sql.Date(System.currentTimeMillis()));
 			blog.set("CONTENT", content);
 			isAdd = true;
 			
