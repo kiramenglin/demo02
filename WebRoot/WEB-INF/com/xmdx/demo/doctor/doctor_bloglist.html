@@ -3,31 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <title>个人博客</title>
+<style type="text/css">
+
+</style>
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+<link href="css/pagination.css" rel="stylesheet" />
 <script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
 <script type="text/javascript" src="js/js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/jquery.pagination.js"></script> 
 <script type="text/javascript">
 var data = {
 		CurrentPage :"@{PAGE_BEAN.get('CurrentPage')}",	
 		TotalPage : "@{PAGE_BEAN.get('TotalPage')}",
 		TotalRows : "@{PAGE_BEAN.get('TotalRows')}"
 	};
-$(function(){
-	
+$(document).ready(function(){
+	alert("haha");
 	initPager("pageBar", data, function(pageNumber, pageSize){
 		 myProject({
 			rows :  pageSize,
 			page : pageNumber
 		}); 
 	}, {
-		pageSize :10,
+		pageSize :2,
 		showHeadAndTail : 1,
 		hidePaperOnOnePage:0
 	});
-	
+	alert("hehe");
 });
-
 
 
 </script>
@@ -46,21 +50,23 @@ $(function(){
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">博客列表</h4>
 			</div>
+			@if{BLOGS.size() > 0}   
 			@foreach{BLOG: BLOGS}
 			<div class="modal-body">
-				<h6>@{BLOG.get("TITLE")}</h6>
-				<textarea rows="3" cols="">@{BLOG.get("CONTENT")}</textarea>
-				<a>查看全文</a>
+				<a><h3>@{BLOG.get("TITLE")}</h3></a>
+				<div>@{BLOG.get("CONTENT")}</div>
+				
 			</div>
 			@end{}
-							
+			@end{}			
 		</div>
 		<div class="btn-group">
 
-			<button type="button" class="btn btn-primary" id="addBtn">新增</button>
+			<a href="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!initBlog"
+				class="btn btn-primary" role="button">新增</a>
 			<button type="button" class="btn btn-primary" id="mdfBtn">修改</button>
 			<button type="button" class="btn btn-primary" id="delBtn">删除</button>
-			<button type="button" class="btn btn-primary" id="authBtn">授权</button>
+			
 		</div>
 		<div class="text-center" >
 			<ul id="pageBar" class="pagination pagination-lg">
@@ -68,4 +74,4 @@ $(function(){
 	</div>
 	</div>
 </body>
-</html>>
+</html>

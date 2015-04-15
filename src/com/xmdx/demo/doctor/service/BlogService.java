@@ -12,6 +12,7 @@ import com.e9rj.platform.common.BaseConstants;
 import com.e9rj.platform.common.GenID;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
+import com.xmdx.demo.back.dao.HtmlRemoveUtil;
 import com.xmzy.frameext.business.service.annotate.Service;
 import com.xmzy.frameext.json.FastJsonUtil;
 import com.xmzy.frameext.simpledb.DBConn;
@@ -67,8 +68,9 @@ public class BlogService extends BusinessServices {
 		
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
-					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, pageSize);	
+		System.out.println(pageNumber);
+		System.out.println(pageSize);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);	
 		System.out.println("a");
 		List<DBDYPO> polist = page.getThisPageList();
 		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
@@ -84,7 +86,7 @@ public class BlogService extends BusinessServices {
 		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
 		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
 		ac.setObjValue("PAGE_BEAN", jsonObject);
-		
+		System.out.println(jsonObject.get("TotalPage")+"!@#!@$@#%%^");
 		ac.setStringValue("tabLogo", authFuncNo);
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_bloglist.html");		
 		return CONST_RESULT_SUCCESS;
@@ -104,11 +106,22 @@ public class BlogService extends BusinessServices {
 
 	@Override
 	public int save(ActionContext ac) throws Exception {
+		String userName=SessionUtil.getOpno(ac);
+		
+		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
+		
+		if(StringUtils.isNotBlank(userName)) {
+			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
+		}
+		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+		String pid =po[0].getString("PERSON_ID");
+		
+		
 		DBDYPO blog = new DBDYPO(tableName, keyField);
 		String id = request.getParameter(keyField);
 		String title = ac.getHttpRequest().getParameter("TITLE");
 		String content = ac.getHttpRequest().getParameter("CONTENT");
-		
+		//content = HtmlRemoveUtil.htmlRemoveTag(content);
 		
 		int result = 0;
 		
@@ -130,11 +143,11 @@ public class BlogService extends BusinessServices {
 			blog.set("CONTENT", content);
 			isAdd = true;
 			
-			DBDYPO con = new DBDYPO("BLOG_DOCTOR", "DOCTOR_ID,ID");
-			con.set("ID", id);
-			con.set("DOCTOR_ID", uid);
+//			DBDYPO con = new DBDYPO("BLOG_DOCTOR", "DOCTOR_ID,ID");
+//			con.set("ID", id);
+//			con.set("DOCTOR_ID", pid);
 			result = DBDYDao.insert(ac.getConnection(), blog);
-			result = DBDYDao.insert(ac.getConnection(), con);
+			//result = DBDYDao.insert(ac.getConnection(), con);
 		}
 		if(0 == result) {
 			//log(ac, LOGLEVEL_W, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户失败!");
@@ -147,4 +160,10 @@ public class BlogService extends BusinessServices {
 		return CONST_RESULT_AJAX;
 	}
 
+	public int initBlog(ActionContext ac) throws Exception {
+		
+		checkAuth(ac, authFuncNo, RIGHT_ONE);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_blog.html");		
+		return CONST_RESULT_SUCCESS;
+	}
 }
