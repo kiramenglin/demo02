@@ -10,7 +10,8 @@
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
 <link href="css/pagination.css" rel="stylesheet" />
 <script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
-<script type="text/javascript" src="js/js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="js/websiteCommon.js"></script>  
 <script type="text/javascript" src="js/jquery.pagination.js"></script> 
 <script type="text/javascript">
 var data = {
@@ -19,6 +20,7 @@ var data = {
 		TotalRows : "@{PAGE_BEAN.get('TotalRows')}"
 	};
 $(document).ready(function(){
+	/* myProject(); */
 	alert("haha");
 	initPager("pageBar", data, function(pageNumber, pageSize){
 		 myProject({
@@ -26,13 +28,24 @@ $(document).ready(function(){
 			page : pageNumber
 		}); 
 	}, {
-		pageSize :2,
+		pageSize :10,
 		showHeadAndTail : 1,
 		hidePaperOnOnePage:0
 	});
 	alert("hehe");
 });
 
+function myProject(option){
+	var params = $.extend({rows:10},option);
+	$.webAjax("HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=doctor.blog&TMP=" + new Date(),params,{
+		dataType:"html",
+		success:function(data){
+			
+			$('#modal_body').html(data);
+		}
+	
+	});
+}
 
 </script>
 </head>
@@ -52,12 +65,16 @@ $(document).ready(function(){
 			</div>
 			@if{BLOGS.size() > 0}   
 			@foreach{BLOG: BLOGS}
-			<div class="modal-body">
-				<a><h3>@{BLOG.get("TITLE")}</h3></a>
+			<div class="modal-body" id="modal-body">
+				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
+				<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog"><h3 id = @{BLOG.get("ID")}>@{BLOG.get("TITLE")}</h3></a>
 				<div>@{BLOG.get("CONTENT")}</div>
 				
 			</div>
 			@end{}
+			@else{}
+			<div class="modal-body">
+			</div>
 			@end{}			
 		</div>
 		<div class="btn-group">

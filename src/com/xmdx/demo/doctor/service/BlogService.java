@@ -12,7 +12,6 @@ import com.e9rj.platform.common.BaseConstants;
 import com.e9rj.platform.common.GenID;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
-
 import com.xmzy.frameext.business.service.annotate.Service;
 import com.xmzy.frameext.json.FastJsonUtil;
 import com.xmzy.frameext.simpledb.DBConn;
@@ -31,15 +30,54 @@ public class BlogService extends BusinessServices {
 	
 	private static String uid = null;
 	@Override
-	public int delete(ActionContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(ActionContext ac) throws Exception {
+		checkAuth(ac, authFuncNo, RIGHT_EIGHT);
+		
+		String uidStr = ac.getHttpRequest().getParameter("ID");
+		
+		if(StringUtils.isNotBlank(uidStr)) {
+			String[] uids = uidStr.split(",");
+			int result = 0;
+			for (String uid : uids) {
+				if(StringUtils.isNotBlank(uid)) {
+					DBDYPO po = new DBDYPO(tableName, keyField);
+					po.set(keyField, uid);
+					
+					result = DBDYDao.delete(ac.getConnection(), po);
+					
+					if(result == 0) {
+						super.log(ac, LOGLEVEL_W, "SYS01", po.getTableName(), uid, "delete", "删除用户失败!");
+					} else {
+						super.log(ac, LOGLEVEL_I, "SYS01", po.getTableName(), uid, "delete", "删除用户成功!");
+					}
+				}
+			}
+		}
+		setMessage(ac, "true");
+		return CONST_RESULT_AJAX;
 	}
 
 	@Override
-	public int goTo(ActionContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int goTo(ActionContext ac) throws Exception {
+		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
+		String uid = ac.getHttpRequest().getParameter("ID");
+		System.out.println(uid + "uid");
+		if (StringUtils.isNotEmpty(uid)) {
+			
+			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
+			
+			if(pos.length == 0) {
+				ac.setErrorContext("您所选择文章已被删除！");
+				return CONST_RESULT_ERROR;
+			}
+			DBDYPO old = pos[0];
+			old.setCmd("U");
+			
+			System.out.println(old.get("TITLE")+" title here");
+			ac.setObjValue("BLOG", old);
+		} 
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/doctor/doctor_blogview.html");
+		return CONST_RESULT_SUCCESS;
 	}
 
 	@Override
