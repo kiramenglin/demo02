@@ -88,7 +88,9 @@ public class DoctorInfoService extends BusinessServices {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	/**好友apply的insert方法
+	 * 
+	 */
 	@Override
 	public int save(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
