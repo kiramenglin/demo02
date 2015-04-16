@@ -36,7 +36,7 @@ window.load=validate();
 				</ul>
 			</div>
 			<div class="col-md-8">
-				<h4>@{USER.get("NAME")}<br><small>@{USER.get("WORKPLACE")}</small></h4>
+				<h4>@{USER.get("NAME")}<br><small>@{USER.get("PLACE")}</small></h4>
 				<table class="table table-borderless">
 				    <tbody>
 				    <tr>
@@ -46,11 +46,36 @@ window.load=validate();
 				        </td>
 				    </tr>
 				    <tr>
-				        <td class="span2">出生日期 :</td>
+				        <td class="span2">职称 :</td>
 				        <td>
-				        	@{USER.get("BIRTHDAY")}
+				        	@{USER.get("TITLE")}
 				        </td>
 				    </tr>
+				    <tr>
+				        <td class="span2">医院:</td>
+				        <td>
+				        	@{USER.get("HOSPITAL")}
+				        </td>
+				    </tr>
+				    <tr>
+				        <td class="span2">科室:</td>
+				        <td>
+				        	@{USER.get("SECTION")}
+				        </td>
+				    </tr>
+				    <tr>
+				        <td class="span2">擅长领域:</td>
+				        <td>
+				        	@{USER.get("MAJOR")}
+				        </td>
+				    </tr>
+				    <tr>
+				        <td class="span2">个人信息:</td>
+				        <td>
+				        	@{USER.get("INFORMATION")}
+				        </td>
+				    </tr>
+				    
 				    
 				    
 				    
