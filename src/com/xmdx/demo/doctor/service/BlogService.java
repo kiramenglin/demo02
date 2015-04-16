@@ -59,6 +59,7 @@ public class BlogService extends BusinessServices {
 
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
+		System.out.println("aaaaaaaa");
 		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
 		String uid = ac.getHttpRequest().getParameter("ID");
 		System.out.println(uid + "uid");
@@ -76,7 +77,7 @@ public class BlogService extends BusinessServices {
 			System.out.println(old.get("TITLE")+" title here");
 			ac.setObjValue("BLOG", old);
 		} 
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/doctor/doctor_blogview.html");
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/doctor/doctor_blog.html");
 		return CONST_RESULT_SUCCESS;
 	}
 
@@ -108,7 +109,7 @@ public class BlogService extends BusinessServices {
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 		System.out.println(pageNumber);
 		System.out.println(pageSize);
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 20);	
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);	
 		System.out.println("a");
 		List<DBDYPO> polist = page.getThisPageList();
 		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
@@ -181,11 +182,11 @@ public class BlogService extends BusinessServices {
 			blog.set("CONTENT", content);
 			isAdd = true;
 			
-//			DBDYPO con = new DBDYPO("BLOG_DOCTOR", "DOCTOR_ID,ID");
-//			con.set("ID", id);
-//			con.set("DOCTOR_ID", pid);
+			DBDYPO con = new DBDYPO("BLOG_DOCTOR", "DOCTOR_ID,BLOG_ID");
+			con.set("BLOG_ID", id);
+			con.set("DOCTOR_ID", pid);
 			result = DBDYDao.insert(ac.getConnection(), blog);
-			//result = DBDYDao.insert(ac.getConnection(), con);
+			result = DBDYDao.insert(ac.getConnection(), con);
 		}
 		if(0 == result) {
 			//log(ac, LOGLEVEL_W, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户失败!");

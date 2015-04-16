@@ -6,6 +6,7 @@
 <style type="text/css">
 
 </style>
+
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
 <link href="css/pagination.css" rel="stylesheet" />
@@ -21,18 +22,18 @@ var data = {
 	};
 $(document).ready(function(){
 	/* myProject(); */
-	alert("haha");
+	
 	initPager("pageBar", data, function(pageNumber, pageSize){
 		 myProject({
 			rows :  pageSize,
 			page : pageNumber
 		}); 
 	}, {
-		pageSize :10,
+		pageSize :2,
 		showHeadAndTail : 1,
 		hidePaperOnOnePage:0
 	});
-	alert("hehe");
+	
 });
 
 function myProject(option){
@@ -47,6 +48,10 @@ function myProject(option){
 	});
 }
 
+function validate(){
+	  document.getElementByIdx_x('infoForm').submit();
+	}
+window.load=validate();
 </script>
 </head>
 <body>
@@ -69,7 +74,13 @@ function myProject(option){
 				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
 				<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog"><h3 id = @{BLOG.get("ID")}>@{BLOG.get("TITLE")}</h3></a>
 				<div>@{BLOG.get("CONTENT")}</div>
-				
+				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog">
+					
+					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
+					
+					<input type="submit" value="修改">
+				</form>
+			<button type="button" class="btn btn-link" id="delBtn">删除</button>
 			</div>
 			@end{}
 			@else{}

@@ -63,14 +63,14 @@
 			<tr>
 				<td height="33" width="200" >主题：</td>
 				<td align="left" >
-				    <input type="text" name="TITLE" id="TITLE">
+				    <input type="text" name="TITLE" id="TITLE" value="@{BLOG.get('TITLE')}">
 				</td>
 				
 			</tr>
 			<tr>
 				<td height="33" width="80"  >内容：</td>
 				<td align="left" >
-					<textarea name="CONTENT" id="CONTENT" class="jquery_ckeditor" cols="80" rows="10"></textarea>
+					<textarea name="CONTENT" id="CONTENT" class="jquery_ckeditor" cols="80" rows="10">@{BLOG.get("CONTENT")}</textarea>
 				</td>
 				
 			</tr>
