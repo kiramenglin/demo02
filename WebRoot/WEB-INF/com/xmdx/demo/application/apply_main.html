@@ -6,24 +6,23 @@
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
 <script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="js/websiteCommon.js"></script> 
 <script type="text/javascript" src="js/js/bootstrap.min.js"></script>  
  <script type="text/javascript" src="js/jquery/jquery.pagination.js"></script> 
 <script type="text/javascript">
 
 var data = {
-		
 		CurrentPage :"@{PAGE_BEAN.get('CurrentPage')}",	
 		TotalPage : "@{PAGE_BEAN.get('TotalPage')}",
 		TotalRows : "@{PAGE_BEAN.get('TotalRows')}"
-		alert("haha");
 	};
-$(function(){
-	alert("pagebar init");
+$(document).ready(function(){
+	/* myProject(); */
+	
 	initPager("pageBar", data, function(pageNumber, pageSize){
 		 myProject({
 			rows :  pageSize,
 			page : pageNumber
-		
 		}); 
 	}, {
 		pageSize :10,
@@ -32,6 +31,18 @@ $(function(){
 	});
 	
 });
+
+function myProject(option){
+	var params = $.extend({rows:10},option);
+	$.webAjax("HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=doctor.blog&TMP=" + new Date(),params,{
+		dataType:"html",
+		success:function(data){
+			
+			$('#modal_body').html(data);
+		}
+	
+	});
+}
 
 </script>
 </head>
@@ -128,14 +139,7 @@ $(function(){
 		</div>
 		
 	</div>
-	<div class="btn-group">
-		<button type="button" class="btn btn-primary" id="readBtn">查看项目</button>
-		<button type="button" class="btn btn-primary" id="readAuthBtn">查看授权</button>
-		<button type="button" class="btn btn-primary" id="addBtn">新增</button>
-		<button type="button" class="btn btn-primary" id="mdfBtn">修改</button>
-		<button type="button" class="btn btn-primary" id="delBtn">删除</button>
-		<button type="button" class="btn btn-primary" id="authBtn">授权</button>
-	</div>
+	
 	<div class="text-center" >
 			<ul id="pageBar" class="pagination pagination-lg">
 		</ul>

@@ -59,8 +59,8 @@ public class DoctorPasswordService extends BusinessServices {
 		System.out.println("enter save");
 		String oldpwd = ac.getHttpRequest().getParameter("OLD_PASSWORD");
 		String newpwd = ac.getHttpRequest().getParameter("NEW_PASSWORD");
-		System.out.println("oldpwd="+oldpwd);
-		System.out.println("newpwd"+newpwd);
+		String newpwd1 = ac.getHttpRequest().getParameter("NEW_PASSWORD1");
+	
 		
 		String userName=SessionUtil.getOpno(ac);
 		
@@ -74,11 +74,11 @@ public class DoctorPasswordService extends BusinessServices {
 		String id =po[0].getString("PERSON_ID");
 		
 		String validpwd = Encrypt.getMixMD5(userName, "" + oldpwd);
-		System.out.println("pwd = "+pwd);
-		System.out.println("validpwd = "+validpwd);
 		
 		if(pwd.equals(validpwd))
 		{
+			if(newpwd.equals(newpwd1))
+			{
 			
 			DBDYPO pop = new DBDYPO(tableName,"PERSON_ID");
 			pop.set("PERSON_ID", id);
@@ -93,7 +93,11 @@ public class DoctorPasswordService extends BusinessServices {
 				setMessage(ac, "修改成功!");
 			}
 			return CONST_RESULT_AJAX;
-			
+			}
+			else{
+				setMessage(ac, "两次输入的新密码不同!");
+				return CONST_RESULT_AJAX;
+			}
 			
 		}
 		else{

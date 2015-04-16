@@ -59,6 +59,7 @@ public class PatientPasswordService extends BusinessServices {
 		System.out.println("enter save");
 		String oldpwd = ac.getHttpRequest().getParameter("OLD_PASSWORD");
 		String newpwd = ac.getHttpRequest().getParameter("NEW_PASSWORD");
+		String newpwd1 = ac.getHttpRequest().getParameter("NEW_PASSWORD1");
 		System.out.println("oldpwd="+oldpwd);
 		System.out.println("newpwd"+newpwd);
 		
@@ -80,6 +81,9 @@ public class PatientPasswordService extends BusinessServices {
 		if(pwd.equals(validpwd))
 		{
 			
+			if(newpwd.equals(newpwd1))
+			{
+			
 			DBDYPO pop = new DBDYPO(tableName,"PERSON_ID");
 			pop.set("PERSON_ID", id);
 			DBDYDao.selectByID(DBConn.getConnection("SSOdbService"), pop);
@@ -93,6 +97,11 @@ public class PatientPasswordService extends BusinessServices {
 				setMessage(ac, "修改成功!");
 			}
 			return CONST_RESULT_AJAX;
+			}
+			else{
+				setMessage(ac, "两次输入的新密码不同!");
+				return CONST_RESULT_AJAX;
+			}
 			
 			
 		}
