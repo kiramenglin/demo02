@@ -30,6 +30,7 @@
                                            
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">医生姓名</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">申请理由</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">拒绝理由</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">申请时间</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">审核状态</span></th>
                                            
@@ -45,6 +46,7 @@
 											
                                         	<td>@{APPS.get("DOCTOR_NAME")}</td>
                                         	<td>@{APPS.get("MESSAGE")}</td>
+                                        	<td>@{APPS.get("REJECT_MESSAGE")}</td>
                                         	<td>@{APPS.get("CREATE_TIME")}</td>
                                         	<td>@if{APPS.get("STATE")=="0"}
                                         		待审查
