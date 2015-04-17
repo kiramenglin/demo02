@@ -1,10 +1,14 @@
 package com.xmdx.demo.doctor.service;
 
+import java.io.File;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.e9rj.platform.common.GenID;
+import com.e9rj.platform.common.StringUtil;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
 import com.xmdx.demo.back.dao.ZkgkConstants;
@@ -12,6 +16,7 @@ import com.xmzy.frameext.business.service.annotate.Service;
 import com.xmzy.frameext.simpledb.DBConn;
 import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
+import com.xmzy.frameext.simpledb.DBOperate;
 import com.xmzy.framework.context.ActionContext;
 @Service(name="doctor.modify")
 public class DoctorModifyService extends BusinessServices {
@@ -21,8 +26,12 @@ public class DoctorModifyService extends BusinessServices {
 	private static final String tableName = "DOCTOR";
 	//主键名
 	private static final String keyField = "DOCTOR_ID";
-	
+	//病患id
 	private static String uid = null;
+	//医生id
+	private static String id = null;
+	//图片base64码
+	private static String code = null;
 	@Override
 	public int delete(ActionContext arg0) throws Exception {
 		// TODO Auto-generated method stub
@@ -44,7 +53,7 @@ public class DoctorModifyService extends BusinessServices {
 			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
 		}
 		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
-		String id =po[0].getString("PERSON_ID");
+		id =po[0].getString("PERSON_ID");
 		
 		StringBuilder sqlp = new StringBuilder("SELECT * FROM DOCTOR U ");
 		if(StringUtils.isNotBlank(id)) {
@@ -77,16 +86,9 @@ public class DoctorModifyService extends BusinessServices {
 	@Override
 	public int save(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
-		String userName=SessionUtil.getOpno(ac);
-		System.out.println(userName+"这个是sessionid哦");
-		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
 		
-		if(StringUtils.isNotBlank(userName)) {
-			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
-		}
-		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
-		String id =po[0].getString("PERSON_ID");
 		int result = 0;
+		int result1 = 0;
 		String name = ac.getHttpRequest().getParameter("NAME");
 		String gender = ac.getHttpRequest().getParameter("GENDER");
 		String title = ac.getHttpRequest().getParameter("TITLE");
@@ -96,16 +98,9 @@ public class DoctorModifyService extends BusinessServices {
 		String information = ac.getHttpRequest().getParameter("INFORMATION");
 		String place = ac.getHttpRequest().getParameter("PLACE");
 		
-		
-		
-		System.out.println("patient_id ="+id);
-		
-		System.out.println("message ="+section);
-	
-		
 		DBDYPO user = new DBDYPO(tableName, keyField);
 		
-			user.set("DOCTOR_ID", id);
+		user.set("DOCTOR_ID", id);
 		DBDYDao.selectByID(ac.getConnection(), user);
 			user.set("NAME", name);
 			user.set("GENDER", gender);
@@ -115,7 +110,10 @@ public class DoctorModifyService extends BusinessServices {
 			user.set("MAJOR", major);
 			user.set("INFORMATION", information);
 			user.set("PLACE", place);
+			user.set("IMAGE",code);
 		result = DBDYDao.update(ac.getConnection(), user);
+		
+		
 		
 		if(0 == result) {
 			
@@ -128,6 +126,44 @@ public class DoctorModifyService extends BusinessServices {
 		return CONST_RESULT_AJAX;
 		
 		
+	}
+	
+	/**
+	 * 将图片文件转化为Base64编码
+	 * 
+	 * @param ac
+	 * @return
+	 * @throws Exception
+	 */
+	public int convertToBase64(ActionContext ac) throws Exception {
+		System.out.println("enter converttobase64");
+		int result = 0;
+		String filename = ac.getHttpRequest().getParameter("FILENAME");
+		String imgFilePath = ac.getHttpSession().getServletContext().getRealPath("tmpfiles");
+		imgFilePath = imgFilePath + File.separator + filename;
+		code = StringUtil.convertToBase64(imgFilePath);
+		
+		// 处理头像
+
+//			DBDYPO doctor = new DBDYPO("DOCTOR", "DOCTOR_ID");
+//			doctor.set("DOCTOR_ID", id);
+//			DBDYDao.selectByID(ac.getConnection(),doctor);
+//			if(!StringIsNullOrEmpty(code))
+//			{
+//			
+//				doctor.set("IMAGE", code);
+//				result = DBDYDao.update(ac.getConnection(), doctor);
+//				if(1==result)
+//				{System.out.println("头像上传成功！");}
+//				else
+//				{System.out.println("头像上传失败！");}
+//			    return CONST_RESULT_SUCCESS;
+//			}
+//			
+			
+		
+		ac.setObjValue("CODE", code);
+		return CONST_RESULT_SUCCESS;
 	}
 
 }
