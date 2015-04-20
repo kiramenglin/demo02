@@ -1,4 +1,4 @@
-package com.xmdx.demo.apply.service;
+package com.xmdx.demo.message.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,10 +18,10 @@ import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.frameext.simpledb.page.JdbcPage;
 import com.xmzy.framework.context.ActionContext;
 
-@Service(name="apply.info")
-public class ApplyService extends BusinessServices {
+@Service(name="doctor.message")
+public class DoctorMessageService extends BusinessServices {
 	//功能号
-		private static final String authFuncNo = "apply.info";
+		private static final String authFuncNo = "doctor.message";
 		//表名
 		private static final String tableName = "FRIEND_APPLY";
 		
@@ -90,7 +90,7 @@ public class ApplyService extends BusinessServices {
 		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
 		String id =po[0].getString("PERSON_ID");
 		System.out.println("id="+id);
-		StringBuilder ssql = new StringBuilder("SELECT * FROM FRIEND_APPLY U ");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM MESSAGE U ");
 		if(StringUtils.isNotBlank(id)) {
 			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
 		}
@@ -104,7 +104,7 @@ public class ApplyService extends BusinessServices {
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();
@@ -112,9 +112,15 @@ public class ApplyService extends BusinessServices {
 		for(int i = 0; i< polist.size();i++){
 			DBDYPO po1 = polist.get(i);
 			po1.set("PATIENT_NAME", pop[i].get("PATIENT_NAME").toString());
-			po1.set("MESSAGE", pop[i].get("MESSAGE").toString());
-			po1.set("CREATE_TIME", pop[i].get("CREATE_TIME").toString());
-			po1.set("STATE", pop[i].get("STATE").toString());
+			po1.set("CONTENT", pop[i].get("CONTENT").toString());
+			po1.set("IS_REPLY", pop[i].get("IS_REPLY").toString());
+			po1.set("IS_READ", pop[i].get("IS_READ").toString());
+			po1.set("IS_NEW", pop[i].get("IS_NEW").toString());
+			po1.set("DOCTOR_ID", pop[i].get("DOCTOR_ID").toString());
+			po1.set("PATIENT_ID", pop[i].get("PATIENT_ID").toString());
+			po1.set("IMAGE", pop[i].get("IMAGE").toString());
+			po1.set("DOCTOR_NAME", pop[i].get("DOCTOR_NAME").toString());
+			po1.set("TIME", pop[i].get("TIME").toString());
 			projects.add(po1);
 		}
 		

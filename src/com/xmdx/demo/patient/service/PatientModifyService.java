@@ -141,25 +141,6 @@ public class PatientModifyService extends BusinessServices {
 		imgFilePath = imgFilePath + File.separator + filename;
 		code = StringUtil.convertToBase64(imgFilePath);
 		
-		// 处理头像
-
-//			DBDYPO doctor = new DBDYPO("DOCTOR", "DOCTOR_ID");
-//			doctor.set("DOCTOR_ID", id);
-//			DBDYDao.selectByID(ac.getConnection(),doctor);
-//			if(!StringIsNullOrEmpty(code))
-//			{
-//			
-//				doctor.set("IMAGE", code);
-//				result = DBDYDao.update(ac.getConnection(), doctor);
-//				if(1==result)
-//				{System.out.println("头像上传成功！");}
-//				else
-//				{System.out.println("头像上传失败！");}
-//			    return CONST_RESULT_SUCCESS;
-//			}
-//			
-			
-		
 		ac.setObjValue("CODE", code);
 		return CONST_RESULT_SUCCESS;
 	}
