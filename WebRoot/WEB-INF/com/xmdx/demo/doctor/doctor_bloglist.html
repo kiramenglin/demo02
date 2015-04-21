@@ -70,6 +70,8 @@ window.load=validate();
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel">博客列表</h4>
 			</div>
+			<a href="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!initBlog"
+				class="btn btn-primary" role="button">新增</a>
 			@if{BLOGS.size() > 0}   
 			
 			<div class="modal-body" id="modal_body">
@@ -81,23 +83,21 @@ window.load=validate();
 					
 					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
 					
-					<input type="submit" value="修改">
+					<input type="submit" class="btn btn-link" value="修改">
+				</form>
+				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DELETE_ACTION&BUSINESS_TYPE=doctor.blog">
+					
+					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
+					
+					<input type="submit" class="btn btn-link" value="删除">
 				</form>
 				@end{}
-			<button type="button" class="btn btn-link" id="delBtn">删除</button>
+			
 			</div>
 			
 			@else{}
 			
 			@end{}			
-		</div>
-		<div class="btn-group">
-
-			<a href="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!initBlog"
-				class="btn btn-primary" role="button">新增</a>
-			<button type="button" class="btn btn-primary" id="mdfBtn">修改</button>
-			<button type="button" class="btn btn-primary" id="delBtn">删除</button>
-			
 		</div>
 		
 	</div>

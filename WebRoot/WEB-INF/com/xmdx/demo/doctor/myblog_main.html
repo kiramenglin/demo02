@@ -1,6 +1,10 @@
 
 <script type="text/javascript">
-
+var data = {
+		CurrentPage :"@{PAGE_BEAN.get('CurrentPage')}",	
+		TotalPage : "@{PAGE_BEAN.get('TotalPage')}",
+		TotalRows : "@{PAGE_BEAN.get('TotalRows')}"
+	};
 
 $(document).ready(function(){
 	/* myProject(); */
@@ -39,8 +43,9 @@ function myProject(option){
 		<div class="row">
 			
 			@if{BLOGS.size() > 0}   
-			@foreach{BLOG: BLOGS}
+			
 			<div class="modal-body" id="modal_body">
+			@foreach{BLOG: BLOGS}
 				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
 				<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog"><h3 id = @{BLOG.get("ID")}>@{BLOG.get("TITLE")}</h3></a>
 				<div>@{BLOG.get("CONTENT")}</div>
@@ -48,11 +53,17 @@ function myProject(option){
 					
 					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
 					
-					<input type="submit" value="修改">
+					<input type="submit" class="btn btn-link" value="修改">
 				</form>
-			<button type="button" class="btn btn-link" id="delBtn">删除</button>
-			</div>
+				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DELETE_ACTION&BUSINESS_TYPE=doctor.blog">
+					
+					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
+					
+					<input type="submit" class="btn btn-link" value="删除">
+				</form>
 			@end{}
+			</div>
+			
 			@else{}
 			
 			@end{}			
