@@ -71,8 +71,9 @@ window.load=validate();
 				<h4 class="modal-title" id="myModalLabel">博客列表</h4>
 			</div>
 			@if{BLOGS.size() > 0}   
-			@foreach{BLOG: BLOGS}
+			
 			<div class="modal-body" id="modal_body">
+			@foreach{BLOG: BLOGS}
 				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
 				<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog"><h3 id = @{BLOG.get("ID")}>@{BLOG.get("TITLE")}</h3></a>
 				<div>@{BLOG.get("CONTENT")}</div>
@@ -82,9 +83,10 @@ window.load=validate();
 					
 					<input type="submit" value="修改">
 				</form>
+				@end{}
 			<button type="button" class="btn btn-link" id="delBtn">删除</button>
 			</div>
-			@end{}
+			
 			@else{}
 			
 			@end{}			
