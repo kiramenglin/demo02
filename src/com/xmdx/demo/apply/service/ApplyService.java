@@ -95,11 +95,7 @@ public class ApplyService extends BusinessServices {
 			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
-//		
-//		ac.setObjValue("APP", pop);
-//		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");		
-//		return CONST_RESULT_SUCCESS;
-		
+
 		
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
@@ -123,6 +119,8 @@ public class ApplyService extends BusinessServices {
 		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
 		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
 		ac.setObjValue("PAGE_BEAN", jsonObject);
+		String currentpage = jsonObject.getString("CurrentPage");
+		System.out.println("currentpage = "+currentpage);
 		
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");
 	
@@ -166,4 +164,65 @@ public class ApplyService extends BusinessServices {
 		return CONST_RESULT_AJAX;
 	}
 
+	public int myapply(ActionContext ac) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("enter my apply" +
+				"");
+		String userName=SessionUtil.getOpno(ac);
+//		
+		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
+//		
+		if(StringUtils.isNotBlank(userName)) {
+			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
+		}
+		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+		String id =po[0].getString("PERSON_ID");
+		System.out.println("id="+id);
+		StringBuilder ssql = new StringBuilder("SELECT * FROM FRIEND_APPLY U ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+//		
+//		ac.setObjValue("APP", pop);
+//		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");		
+//		return CONST_RESULT_SUCCESS;
+		
+		
+		int pageNumber = BaseConstants.getQueryPageNumber(ac);
+		int pageSize = BaseConstants.getQueryPageSize(ac);
+					
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		
+		
+		List<DBDYPO> polist = page.getThisPageList();
+		List<DBDYPO> projects = new ArrayList<DBDYPO>();
+		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
+		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+		ac.setObjValue("PAGE_BEAN", jsonObject);
+		String currentpage = jsonObject.getString("CurrentPage");
+		int c = Integer.parseInt(currentpage);
+		System.out.println("currentpage="+currentpage);
+		int n = (c-1)*2;
+		
+		for(int i = 0; i< polist.size();i++,n++){
+			System.out.println("enter if");
+			DBDYPO po1 = polist.get(i);
+			po1.set("PATIENT_NAME", pop[n].get("PATIENT_NAME").toString());
+			po1.set("MESSAGE", pop[n].get("MESSAGE").toString());
+			po1.set("CREATE_TIME", pop[n].get("CREATE_TIME").toString());
+			po1.set("STATE", pop[n].get("STATE").toString());
+			projects.add(po1);
+		}
+		
+		ac.setObjValue("APP", projects);
+		
+		
+		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/myapply_main.html");
+	
+	return CONST_RESULT_SUCCESS;
+		
+		
+	}
 }

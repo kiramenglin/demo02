@@ -1,0 +1,63 @@
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+	/* myProject(); */
+	
+	initPager("pageBar", data, function(pageNumber, pageSize){
+		 myProject({
+			rows :  pageSize,
+			page : pageNumber
+		}); 
+	}, {
+		pageSize :2,
+		showHeadAndTail : 1,
+		hidePaperOnOnePage:0
+	});
+	
+});
+
+function myProject(option){
+	var params = $.extend({rows:10},option);
+	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!myblog&TMP=" + new Date(),params,{
+		dataType:"html",
+		success:function(data){
+			
+			$('#modal_body').html(data);
+		}
+	
+	});
+}
+
+
+</script>
+
+
+	<div class="container-fluid">
+		
+		<div class="row">
+			
+			@if{BLOGS.size() > 0}   
+			@foreach{BLOG: BLOGS}
+			<div class="modal-body" id="modal_body">
+				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
+				<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog"><h3 id = @{BLOG.get("ID")}>@{BLOG.get("TITLE")}</h3></a>
+				<div>@{BLOG.get("CONTENT")}</div>
+				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog">
+					
+					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
+					
+					<input type="submit" value="修改">
+				</form>
+			<button type="button" class="btn btn-link" id="delBtn">删除</button>
+			</div>
+			@end{}
+			@else{}
+			
+			@end{}			
+		</div>
+		
+		
+	</div>
+

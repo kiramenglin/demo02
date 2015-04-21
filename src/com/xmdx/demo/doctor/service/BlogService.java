@@ -83,41 +83,66 @@ public class BlogService extends BusinessServices {
 
 	@Override
 	public int init(ActionContext ac) throws Exception {
-		checkAuth(ac, authFuncNo, RIGHT_ONE);
-		
+//		checkAuth(ac, authFuncNo, RIGHT_ONE);
+//		
+//		String userName=SessionUtil.getOpno(ac);
+//		
+//		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
+//		
+//		if(StringUtils.isNotBlank(userName)) {
+//			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
+//		}
+//		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+//		String id =po[0].getString("PERSON_ID");
+//		uid = id;
+//		System.out.println("id="+id);
+//		
+//		StringBuilder ssql = new StringBuilder("SELECT * FROM BLOG B ");
+//		if(StringUtils.isNotBlank(id)) {
+//			ssql.append(" WHERE B.ID IN(SELECT BLOG_ID from BLOG_DOCTOR where DOCTOR_ID LIKE '%").append(id).append("%') ");
+//		}
+//		DBDYPO[] o =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+//		System.out.println(o[0].getString("ID"));
+//		
+//		
+//		int pageNumber = BaseConstants.getQueryPageNumber(ac);
+//		int pageSize = BaseConstants.getQueryPageSize(ac);
+//		System.out.println(pageNumber);
+//		System.out.println(pageSize);
+//		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);	
+//		System.out.println("a");
+//		List<DBDYPO> polist = page.getThisPageList();
+//		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
 		String userName=SessionUtil.getOpno(ac);
-		
+//		
 		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
-		
+//		
 		if(StringUtils.isNotBlank(userName)) {
 			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
 		}
 		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
 		String id =po[0].getString("PERSON_ID");
-		uid = id;
 		System.out.println("id="+id);
-		
 		StringBuilder ssql = new StringBuilder("SELECT * FROM BLOG B ");
 		if(StringUtils.isNotBlank(id)) {
 			ssql.append(" WHERE B.ID IN(SELECT BLOG_ID from BLOG_DOCTOR where DOCTOR_ID LIKE '%").append(id).append("%') ");
 		}
-		DBDYPO[] o =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
-		System.out.println(o[0].getString("ID"));
-		
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+
 		
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
-		System.out.println(pageNumber);
-		System.out.println(pageSize);
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);	
-		System.out.println("a");
+					
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		
+		
 		List<DBDYPO> polist = page.getThisPageList();
 		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
 		for(int i = 0; i< polist.size();i++){
-			DBDYPO pop = polist.get(i);	
-			pop.set("TITLE", o[i].get("TITLE").toString());
-			pop.set("CONTENT", o[i].get("CONTENT").toString());
-			blogs.add(pop);
+			DBDYPO po1 = polist.get(i);	
+			po1.set("TITLE", pop[i].get("TITLE").toString());
+			po1.set("CONTENT", pop[i].get("CONTENT").toString());
+			blogs.add(po1);
 		}
 		System.out.println("b");
 		ac.setObjValue("BLOGS", blogs);
@@ -203,6 +228,57 @@ public class BlogService extends BusinessServices {
 		
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_blog.html");		
+		return CONST_RESULT_SUCCESS;
+	}
+	
+	public int myblog(ActionContext ac) throws Exception {
+		String userName=SessionUtil.getOpno(ac);
+//		
+		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
+//		
+		if(StringUtils.isNotBlank(userName)) {
+			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
+		}
+		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+		String id =po[0].getString("PERSON_ID");
+		System.out.println("id="+id);
+		StringBuilder ssql = new StringBuilder("SELECT * FROM BLOG B ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE B.ID IN(SELECT BLOG_ID from BLOG_DOCTOR where DOCTOR_ID LIKE '%").append(id).append("%') ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+
+		
+		int pageNumber = BaseConstants.getQueryPageNumber(ac);
+		int pageSize = BaseConstants.getQueryPageSize(ac);
+					
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		
+		
+		List<DBDYPO> polist = page.getThisPageList();
+		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
+		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
+		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+		String currentpage = jsonObject.getString("CurrentPage");
+		int c = Integer.parseInt(currentpage);
+		System.out.println("currentpage="+c);
+		System.out.println("polistsize="+polist.size());
+		int n = (c-1)*2;
+		for(int i = 0; i< polist.size();i++,n++){
+			System.out.println("enter if");
+			DBDYPO po1 = polist.get(i);	
+			po1.set("TITLE", pop[n].get("TITLE").toString());
+			po1.set("CONTENT", pop[n].get("CONTENT").toString());
+			blogs.add(po1);
+		}
+		System.out.println("b");
+		ac.setObjValue("BLOGS", blogs);
+		
+		
+		ac.setObjValue("PAGE_BEAN", jsonObject);
+		System.out.println(jsonObject.get("TotalPage")+"!@#!@$@#%%^");
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/myblog_main.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 }
