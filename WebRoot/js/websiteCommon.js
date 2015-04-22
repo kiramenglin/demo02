@@ -457,6 +457,7 @@ function delPopWindow(dialogId){
  * @param options 参数设置
  */
 function initPager(paperId, data, afterSuccess, options,isnonedata){
+	
 	initPagerWithData(paperId, data.CurrentPage, data.TotalPage, data.TotalRows, afterSuccess, options,isnonedata);
 }
 
@@ -470,6 +471,7 @@ function initPager(paperId, data, afterSuccess, options,isnonedata){
  * @param options 参数设置
  */
 function initPagerWithData(paperId, currPage, totalPage, totalRows, afterSuccess, options,isnonedata){
+	
 	//分页栏起始页码的判定：1、总页数 <= pageBtnNum，那么下标从 1 到 总页数； 2、总页数 > pageBtnNum && 当前页 <= pageBtnNum/2，那么下标从 1 到 pageBtnNum
 	//3、否则 从当前页开始，昨天显示 pageBtnNum/2 个按钮，余下的算右边
 	//属性含义：每页记录数，第几页，分页栏中共显示多少个按钮，是否显示首尾、上下页的按钮('1':显示)，是否显示“益玖为您找到 X 条记录”('1':显示)，当只有一页时是否显示分页栏
@@ -551,6 +553,7 @@ function initPagerWithData(paperId, currPage, totalPage, totalRows, afterSuccess
 	}
 
 	$("#" + paperId).html( html).find("li").not(".active,.disabled").click(function(){
+		
 		var dataIndex = $(this).attr("data-index");
 		if(afterSuccess && dataIndex){
 			afterSuccess.call(this, $(this).attr("data-index"), pagerJson.pageSize);

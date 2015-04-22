@@ -60,6 +60,7 @@ function myProject(option){
 			<div class="col-md-8">
 			</div>
 		</div>
+		 @if{SIZE!="0"}
 		<div class="row" id = "modal_body">
 			
 			<table class="table table-striped table-bordered table-advance table-hover">
@@ -73,9 +74,10 @@ function myProject(option){
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">审核状态</span></th>
                                            
                                             
-                                            <th>操作</th>
+                                            <th>操作#{SIZE}</th>
                                         </tr>
                                         </thead>
+                                       
                                         <tbody>
                                         
                                        		 <tr>@foreach{APPS: APP}
@@ -139,6 +141,7 @@ function myProject(option){
                                         
                                         
                                         </tbody>
+                                       
                                     </table>
 				
 		</div>
@@ -149,5 +152,10 @@ function myProject(option){
 			<ul id="pageBar" class="pagination pagination-lg">
 		</ul>
 	</div>
+	 @else{}
+                                        <div class="col-md-4">
+										<h3 align="center">您目前没有申请</h3>
+										</div>
+										@end{}
 </body>
 </html>

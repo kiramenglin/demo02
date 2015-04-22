@@ -96,6 +96,13 @@ public class ApplyService extends BusinessServices {
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 
+		if(pop.length==0)
+		{
+			ac.setStringValue("SIZE", String.valueOf(pop.length));
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");		
+			return CONST_RESULT_SUCCESS;
+		}
+		else{
 		
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
@@ -121,12 +128,12 @@ public class ApplyService extends BusinessServices {
 		ac.setObjValue("PAGE_BEAN", jsonObject);
 		String currentpage = jsonObject.getString("CurrentPage");
 		System.out.println("currentpage = "+currentpage);
-		
+		ac.setStringValue("SIZE", String.valueOf(pop.length));
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");
 	
-	return CONST_RESULT_SUCCESS;
+		return CONST_RESULT_SUCCESS;
 		
-		
+		}
 	}
 
 	@Override
@@ -187,7 +194,13 @@ public class ApplyService extends BusinessServices {
 //		ac.setObjValue("APP", pop);
 //		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");		
 //		return CONST_RESULT_SUCCESS;
-		
+		if(pop.length==0)
+		{
+			ac.setStringValue("SIZE", String.valueOf(pop.length));
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/myapply_main.html");		
+			return CONST_RESULT_SUCCESS;
+		}
+		else{
 		
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
@@ -218,11 +231,11 @@ public class ApplyService extends BusinessServices {
 		ac.setObjValue("APP", projects);
 		
 		
-		
+		ac.setStringValue("SIZE", String.valueOf(pop.length));
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/myapply_main.html");
 	
-	return CONST_RESULT_SUCCESS;
+		return CONST_RESULT_SUCCESS;
 		
-		
+		}
 	}
 }
