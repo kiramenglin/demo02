@@ -72,7 +72,7 @@ window.load=validate();
 			</div>
 			<a href="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!initBlog"
 				class="btn btn-primary" role="button">新增</a>
-			@if{BLOGS.size() > 0}   
+			@if{SIZE!="0"}   
 			
 			<div class="modal-body" id="modal_body">
 			@foreach{BLOG: BLOGS}
@@ -85,7 +85,7 @@ window.load=validate();
 					
 					<input type="submit" class="btn btn-link" value="修改">
 				</form>
-				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DELETE_ACTION&BUSINESS_TYPE=doctor.blog">
+				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=doctor.blog">
 					
 					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
 					

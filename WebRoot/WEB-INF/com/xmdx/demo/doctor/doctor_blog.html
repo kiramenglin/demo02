@@ -54,7 +54,7 @@
 		<div class="row">
 		<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.blog">
 		<input type="text" style="display: none;" name="CMD" id="CMD">
-		<input type="hidden" style="width:90%" name="ID" />
+		<input type="hidden" style="width:90%" name="ID" id = "ID" value="@{BLOG.get("ID")}"/>
 		
 		<table style="width: 100% " id="infoTableShort" class="full">
 			<tr style="height: 1px;">

@@ -1,5 +1,6 @@
 package com.xmdx.demo.doctor.service;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,34 +35,32 @@ public class BlogService extends BusinessServices {
 		checkAuth(ac, authFuncNo, RIGHT_EIGHT);
 		
 		String uidStr = ac.getHttpRequest().getParameter("ID");
-		
+		System.out.println("del_id = "+uidStr);
 		if(StringUtils.isNotBlank(uidStr)) {
-			String[] uids = uidStr.split(",");
-			int result = 0;
-			for (String uid : uids) {
-				if(StringUtils.isNotBlank(uid)) {
+					int result = 0;
 					DBDYPO po = new DBDYPO(tableName, keyField);
-					po.set(keyField, uid);
-					
+					po.set(keyField, uidStr);
+					DBDYDao.selectByID(ac.getConnection(), po);
 					result = DBDYDao.delete(ac.getConnection(), po);
 					
 					if(result == 0) {
-						super.log(ac, LOGLEVEL_W, "SYS01", po.getTableName(), uid, "delete", "删除用户失败!");
+						setMessage(ac,"删除失败");
 					} else {
-						super.log(ac, LOGLEVEL_I, "SYS01", po.getTableName(), uid, "delete", "删除用户成功!");
+						setMessage(ac,"删除成功");
 					}
 				}
-			}
-		}
-		setMessage(ac, "true");
 		return CONST_RESULT_AJAX;
 	}
+		
+		
+	
 
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
 		System.out.println("aaaaaaaa");
 		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
 		String uid = ac.getHttpRequest().getParameter("ID");
+		System.out.println("blog_id="+uid);
 		System.out.println(uid + "uid");
 		if (StringUtils.isNotEmpty(uid)) {
 			
@@ -130,6 +129,14 @@ public class BlogService extends BusinessServices {
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 
 		
+		System.out.println("size = "+String.valueOf(pop.length));
+		if(pop.length==0)
+		{
+			ac.setStringValue("SIZE", String.valueOf(pop.length));
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_bloglist.html");		
+			return CONST_RESULT_SUCCESS;
+		}
+		else{
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
@@ -152,8 +159,10 @@ public class BlogService extends BusinessServices {
 		ac.setObjValue("PAGE_BEAN", jsonObject);
 		System.out.println(jsonObject.get("TotalPage")+"!@#!@$@#%%^");
 		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue("SIZE", String.valueOf(pop.length));
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_bloglist.html");		
 		return CONST_RESULT_SUCCESS;
+		}
 	}
 
 	@Override
@@ -183,19 +192,31 @@ public class BlogService extends BusinessServices {
 		
 		DBDYPO blog = new DBDYPO(tableName, keyField);
 		String id = request.getParameter(keyField);
+		System.out.println("modify_blog_id="+id);
 		String title = ac.getHttpRequest().getParameter("TITLE");
 		String content = ac.getHttpRequest().getParameter("CONTENT");
 		//content = HtmlRemoveUtil.htmlRemoveTag(content);
+		System.out.println("title="+title);
+		System.out.println("content="+content);
 		
 		int result = 0;
-		
+		int result1 = 0;
 		boolean isAdd = false;
 		
 		if (StringUtils.isNotBlank(id)) {
 			//修改
+			System.out.println("enter if");
 			checkAuth(ac, authFuncNo, RIGHT_FOUR);
+			blog.set("ID", id);
+			DBDYDao.selectByID(ac.getConnection(), blog);
+			blog.set("CONTENT", content);
+			blog.set("TITLE", title);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			 Timestamp nowdate1 = new Timestamp(System.currentTimeMillis());
+			 String datestr = sdf.format(nowdate1);
+			 blog.set("MODIFYTIME",datestr);
 			result = DBDYDao.update(ac.getConnection(), blog);
-			
+			result1 = 1;
 		} else {
 			//新增
 			checkAuth(ac, authFuncNo, RIGHT_TWO);
@@ -211,9 +232,9 @@ public class BlogService extends BusinessServices {
 			con.set("BLOG_ID", id);
 			con.set("DOCTOR_ID", pid);
 			result = DBDYDao.insert(ac.getConnection(), blog);
-			result = DBDYDao.insert(ac.getConnection(), con);
+			result1 = DBDYDao.insert(ac.getConnection(), con);
 		}
-		if(0 == result) {
+		if((0 == result)||(0==result1)) {
 			//log(ac, LOGLEVEL_W, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户失败!");
 			setMessage(ac, "保存失败!");
 		} else {
