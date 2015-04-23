@@ -18,6 +18,12 @@ import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
 @Service(name="patient.message")
+/**
+ * 
+ * @author Jinghui Lu
+ * 病患端消息服务
+ *
+ */
 public class PatientMessageService extends BusinessServices {
 	/**
 	 * 病患向医生咨询服务
@@ -103,6 +109,7 @@ public class PatientMessageService extends BusinessServices {
 		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
 		String pid =po[0].getString("PERSON_ID");
 		String message = ac.getHttpRequest().getParameter("MESSAGE");
+		String title = ac.getHttpRequest().getParameter("TITLE");
 		StringBuilder psql = new StringBuilder("SELECT * FROM PATIENT U ");
 		if(StringUtils.isNotBlank(pid)) {
 			psql.append(" WHERE U.PATIENT_ID LIKE '%").append(pid).append("%' ");
@@ -135,6 +142,7 @@ public class PatientMessageService extends BusinessServices {
 		newMessage.set("IS_NEW", state);
 		newMessage.set("IS_READ", state);
 		newMessage.set("IMAGE", code);
+		newMessage.set("TITLE", title);
 		
 		result = DBDYDao.insert(ac.getConnection(),newMessage);
 		

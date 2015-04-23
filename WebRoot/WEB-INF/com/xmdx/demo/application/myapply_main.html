@@ -41,7 +41,7 @@ function myProject(option){
 
 <div class="row" id = "modal_body">
 			
-			<table class="table table-striped table-bordered table-advance table-hover">
+			<table class="table table-striped table-bordered table-advance table-hover" style="table-layout:fixed;">
                                         <thead>
                                         <tr>
                                           
@@ -63,7 +63,7 @@ function myProject(option){
 			                                     
 											
                                         	<td>@{APPS.get("PATIENT_NAME")}</td>
-                                        	<td>@{APPS.get("MESSAGE")}</td>
+                                        	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
                                         	<td>@{APPS.get("CREATE_TIME")}</td>
                                         	<td>@if{APPS.get("STATE")=="0"}
                                         		待审查

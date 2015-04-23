@@ -14,7 +14,14 @@ import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
 @Service(name="doctor.info1")
+/**
+ * 
+ * @author Jinghui Lu
+ * 病患通过找医生页面查看医生个人信息
+ *
+ */
 public class DoctorPatientService extends BusinessServices {
+	
 	//功能号
 	private static final String authFuncNo = "doctor.info1";
 	//表名
@@ -30,6 +37,9 @@ public class DoctorPatientService extends BusinessServices {
 	}
 
 	@Override
+	/**
+	 * 病患通过我的找医生界面查看医生信息
+	 */
 	public int goTo(ActionContext ac) throws Exception {
 		System.out.println("enter goto");
 		uid = ac.getHttpRequest().getParameter("DOCTOR_ID");

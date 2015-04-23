@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!--我的私人医生页面  -->
+<!--我的私人医生医生列表页面  -->
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Insert title here</title>
 	<!-- 引入系统常用资源 -->
@@ -111,7 +111,7 @@
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
 			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.info1" + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.connected!doctorInfo" + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
 			window.location.href=url;
 		});
 		

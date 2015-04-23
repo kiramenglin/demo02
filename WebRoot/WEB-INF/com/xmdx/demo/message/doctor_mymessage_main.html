@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 医生查看消息分页页面 -->
+<meta charset="UTF-8">
+<title>咨询消息</title>
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="js/websiteCommon.js"></script>  
+ 
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script>  
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	/* myProject(); */
+	var data = {
+		CurrentPage :"@{PAGE_BEAN.get('CurrentPage')}",	
+		TotalPage : "@{PAGE_BEAN.get('TotalPage')}",
+		TotalRows : "@{PAGE_BEAN.get('TotalRows')}"
+	};
+	
+	initPager("pageBar", data, function(pageNumber, pageSize){
+		 myProject({
+			rows :  pageSize,
+			page : pageNumber
+		}); 
+	}, {
+		pageSize :10,
+		showHeadAndTail : 1,
+		hidePaperOnOnePage:0
+	});
+	
+});
+
+function myProject(option){
+
+	
+	var params = $.extend({rows:10},option);
+	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!mymessage&TMP=" + new Date(),params,{
+		dataType:"html",
+		success:function(data){
+			
+			$('#modal_body').html(data);
+		}
+	
+	});
+	
+}
+
+</script>
+</head>
+
+	<div class="container-fluid">
+		
+		<div class="row" id = "modal_body">
+			
+			<table class="table table-striped table-bordered table-advance table-hover" style="table-layout:fixed;">
+                                        <thead>
+                                        <tr>
+                                          
+                                          
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">病患姓名</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">标题</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">时间</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">状态</span></th>
+                                           
+                                            
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                       
+                                        <tbody>
+                                        
+                                       		 <tr>@foreach{APPS: APP}
+												 
+			                                     @if{APPS.get("IS_NEW")=="0"}
+											
+                                        	<td style="font-weight:bold;">@{APPS.get("PATIENT_NAME")}</td>
+                                        	<td style="font-weight:bold;">@{APPS.get("TITLE")}</td>
+                                        	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;font-weight:bold;">@{APPS.get("CONTENT")}</td>
+                                        	<td style="font-weight:bold;">@{APPS.get("TIME")}</td>
+                                        	<td style="font-weight:bold;">@if{APPS.get("IS_REPLY")=="0"}
+                                        		未回复
+                                        		@else{}
+                                        		已回复
+                                        		@end{}
+                                        		
+                                        	</td>
+                                        	<td>
+				   							<div class="col-xs-6 col-sm-4">
+											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">查看</button>
+				
+										    </div>
+				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  									<div class="modal-dialog">
+			    								<div class="modal-content">
+			     								<div class="modal-header">
+			        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        							<h4 class="modal-title" id="myModalLabel">健康咨询</h4>
+			      								</div>
+			     
+				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
+												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+                                        		<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
+                                        		<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">回复内容</textarea>
+												<input type="submit" value="回复">
+				   								</form>
+			   
+			    
+			    								</div>
+			  									</div>
+												</div>
+											
+											
+                                        	</td>
+                                        	@else{}
+                                          	<td >@{APPS.get("PATIENT_NAME")}</td>
+                                        	<td >@{APPS.get("TITLE")}</td>
+                                        	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("CONTENT")}</td>
+                                        	<td >@{APPS.get("TIME")}</td>
+                                        	<td >@if{APPS.get("IS_REPLY")=="0"}
+                                        		未回复
+                                        		@else{}
+                                        		已回复
+                                        		@end{}
+                                        		
+                                        	</td>
+                                        	<td>
+				   							<div class="col-xs-6 col-sm-4">
+											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">查看</button>
+				
+										    </div>
+				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  									<div class="modal-dialog">
+			    								<div class="modal-content">
+			     								<div class="modal-header">
+			        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        							<h4 class="modal-title" id="myModalLabel">健康咨询</h4>
+			      								</div>
+			     
+				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
+												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+                                        		<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
+                                        		<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">回复内容</textarea>
+												<input type="submit" value="回复">
+				   								</form>
+			   
+			    
+			    								</div>
+			  									</div>
+												</div>
+											
+											
+                                        	</td>
+                                        	@end{}
+                                        	
+                                        	</tr> 
+										
+                                      @end{}
+                                                                                   
+                                        
+                                        
+                                        </tbody>
+                                       
+                                    </table>
+				
+		</div>
+		
+	</div>
+	
+	
+	 									
+</body>
+</html>

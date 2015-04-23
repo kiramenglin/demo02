@@ -95,6 +95,7 @@ public class PatientModifyService extends BusinessServices {
 		String nation = ac.getHttpRequest().getParameter("NATION");
 		String marriage = ac.getHttpRequest().getParameter("MARRIAGE");
 		String workplace = ac.getHttpRequest().getParameter("WORKPLACE");
+		String occupation = ac.getHttpRequest().getParameter("OCCUPATION");
 		
 		
 		DBDYPO user = new DBDYPO(tableName, keyField);
@@ -107,6 +108,7 @@ public class PatientModifyService extends BusinessServices {
 			user.set("NATION", nation);
 			user.set("MARRIAGE", marriage);
 			user.set("WORKPLACE", workplace);
+			user.set("OCCUPATION", occupation);
 			
 			user.set("IMAGE",code);
 		result = DBDYDao.update(ac.getConnection(), user);

@@ -19,6 +19,12 @@ import com.xmzy.frameext.simpledb.page.JdbcPage;
 import com.xmzy.framework.context.ActionContext;
 
 @Service(name="doctor.message")
+/**
+ * 
+ * @author Jinghui Lu
+ * 医生端消息服务
+ *
+ */
 public class DoctorMessageService extends BusinessServices {
 	//功能号
 		private static final String authFuncNo = "doctor.message";
@@ -95,16 +101,21 @@ public class DoctorMessageService extends BusinessServices {
 			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
-//		
+		if(pop.length==0)
+		{
+			ac.setStringValue("SIZE", String.valueOf(pop.length));
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/doctor_message_main.html");		
+			return CONST_RESULT_SUCCESS;
+		}
 //		ac.setObjValue("APP", pop);
 //		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");		
 //		return CONST_RESULT_SUCCESS;
 		
-		
+		else{
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();
@@ -129,10 +140,11 @@ public class DoctorMessageService extends BusinessServices {
 		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
 		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
 		ac.setObjValue("PAGE_BEAN", jsonObject);
-		
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");
+		ac.setStringValue("SIZE", String.valueOf(pop.length));
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/doctor_message_main.html");
 	
-	return CONST_RESULT_SUCCESS;
+		return CONST_RESULT_SUCCESS;
+		}
 		
 		
 	}
@@ -170,6 +182,85 @@ public class DoctorMessageService extends BusinessServices {
 			setMessage(ac, "通过成功!");
 		}
 		return CONST_RESULT_AJAX;
+	}
+	
+	/**
+	 * message分页
+	 * @param ac
+	 * @return
+	 * @throws Exception
+	 */
+	public int mymessage(ActionContext ac) throws Exception {
+		// TODO Auto-generated method stub
+		
+		String userName=SessionUtil.getOpno(ac);
+//		
+		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
+//		
+		if(StringUtils.isNotBlank(userName)) {
+			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
+		}
+		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+		String id =po[0].getString("PERSON_ID");
+		System.out.println("id="+id);
+		StringBuilder ssql = new StringBuilder("SELECT * FROM MESSAGE U ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+//		
+//		ac.setObjValue("APP", pop);
+//		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/application/apply_main.html");		
+//		return CONST_RESULT_SUCCESS;
+		if(pop.length==0)
+		{
+			ac.setStringValue("SIZE", String.valueOf(pop.length));
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/doctor_mymessage_main.html");		
+			return CONST_RESULT_SUCCESS;
+		}
+		else{
+		
+		int pageNumber = BaseConstants.getQueryPageNumber(ac);
+		int pageSize = BaseConstants.getQueryPageSize(ac);
+					
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		
+		
+		List<DBDYPO> polist = page.getThisPageList();
+		List<DBDYPO> projects = new ArrayList<DBDYPO>();
+		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
+		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+		ac.setObjValue("PAGE_BEAN", jsonObject);
+		String currentpage = jsonObject.getString("CurrentPage");
+		int c = Integer.parseInt(currentpage);
+		System.out.println("currentpage="+currentpage);
+		int n = (c-1)*2;
+		
+		for(int i = 0; i< polist.size();i++,n++){
+			System.out.println("enter if");
+			DBDYPO po1 = polist.get(i);
+			po1.set("PATIENT_NAME", pop[n].get("PATIENT_NAME").toString());
+			po1.set("CONTENT", pop[n].get("CONTENT").toString());
+			po1.set("IS_REPLY", pop[n].get("IS_REPLY").toString());
+			po1.set("IS_READ", pop[n].get("IS_READ").toString());
+			po1.set("IS_NEW", pop[n].get("IS_NEW").toString());
+			po1.set("DOCTOR_ID", pop[n].get("DOCTOR_ID").toString());
+			po1.set("PATIENT_ID", pop[n].get("PATIENT_ID").toString());
+			po1.set("IMAGE", pop[n].get("IMAGE").toString());
+			po1.set("DOCTOR_NAME", pop[n].get("DOCTOR_NAME").toString());
+			po1.set("TIME", pop[n].get("TIME").toString());
+			projects.add(po1);
+		}
+		
+		ac.setObjValue("APP", projects);
+		
+		
+		ac.setStringValue("SIZE", String.valueOf(pop.length));
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/doctor_mymessage_main.html");
+	
+		return CONST_RESULT_SUCCESS;
+		
+		}
 	}
 
 }

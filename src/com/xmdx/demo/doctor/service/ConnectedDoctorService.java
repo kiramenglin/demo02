@@ -13,6 +13,12 @@ import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
 
 @Service(name="doctor.connected")
+/**
+ * 
+ * @author Jinghui lu
+ * 我的私人医生
+ *
+ */
 public class ConnectedDoctorService extends BusinessServices {
 
 	//功能号
@@ -181,6 +187,27 @@ public class ConnectedDoctorService extends BusinessServices {
 		}
 		
 		return CONST_RESULT_AJAX;
+	}
+	
+	public int doctorInfo(ActionContext ac) throws Exception {
+		System.out.println("enter goto");
+		String uid = ac.getHttpRequest().getParameter("DOCTOR_ID");
+		System.out.println("doctor id = "+uid);
+		// TODO Auto-generated method stub
+
+		
+		StringBuilder sqlp = new StringBuilder("SELECT * FROM DOCTOR U ");
+		if(StringUtils.isNotBlank(uid)) {
+			sqlp.append(" WHERE U.DOCTOR_ID LIKE '%").append(uid).append("%' ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), sqlp.toString());
+		ac.setObjValue("USER", pop[0]);
+		
+		checkAuth(ac, authFuncNo, RIGHT_ONE);
+		
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_patient_connected.html");		
+		return CONST_RESULT_SUCCESS;
 	}
 
 }
