@@ -1,5 +1,7 @@
 package com.xmdx.demo.message.service;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,9 @@ public class DoctorMessageService extends BusinessServices {
 	//功能号
 		private static final String authFuncNo = "doctor.message";
 		//表名
-		private static final String tableName = "FRIEND_APPLY";
+		private static final String tableName = "MESSAGE";
+		
+		private static final String keyField = "MESSAGE_ID";
 		
 
 	@Override
@@ -81,6 +85,39 @@ public class DoctorMessageService extends BusinessServices {
 			setMessage(ac, "拒绝成功!");
 		}
 		return CONST_RESULT_AJAX;
+	}
+	
+	/**
+	 * 
+	 * @param ac
+	 * @return
+	 * @throws 医生查看消息详细信息
+	 */
+	public int read(ActionContext ac) throws Exception {
+		System.out.println("enter read message");
+		int state = 1;
+		String messageid = ac.getHttpRequest().getParameter("MESSAGE_ID");
+		System.out.println("message id = "+messageid);
+		StringBuilder sql = new StringBuilder("SELECT * FROM MESSAGE U ");
+//		
+		if(StringUtils.isNotBlank(messageid)) {
+			sql.append(" WHERE U.MESSAGE_ID LIKE '%").append(messageid).append("%' ");
+		}
+		DBDYPO[] po =DBDYDao.selectBySQL(ac.getConnection(), sql.toString());
+
+		DBDYPO pop = new DBDYPO(tableName,keyField);
+		pop.set("MESSAGE_ID", messageid);
+		DBDYDao.selectByID(ac.getConnection(), pop);
+		pop.set("IS_NEW", state);
+		DBDYDao.update(ac.getConnection(), pop);
+		
+		System.out.println("title = "+po[0].getString("TITLE"));
+		ac.setObjValue("MESSAGE", po[0]);
+		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/doctor_message_read.html");
+		
+		return CONST_RESULT_SUCCESS;
+	
 	}
 
 	@Override
@@ -164,22 +201,46 @@ public class DoctorMessageService extends BusinessServices {
 	@Override
 	public int save(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("enter agree");
+		System.out.println("enter save");
+		
+		String content = ac.getHttpRequest().getParameter("CONTENT");
+		String messageid = ac.getHttpRequest().getParameter("MESSAGE_ID");
+		String doctorid = ac.getHttpRequest().getParameter("DOCTOR_ID");
+		String patientid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		String doctorname = ac.getHttpRequest().getParameter("DOCTOR_NAME");
+		String patientname = ac.getHttpRequest().getParameter("PATIENT_NAME");
+		DBDYPO pop = new DBDYPO("COMMENT","COMMENT_ID");
+		int idlLen = 20;
+		int state = 0;
 		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
-		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
-		pop.set("DOCTOR_ID", did);
-		pop.set("PATIENT_ID", pid);
-		DBDYDao.selectByID(ac.getConnection(), pop);
-		pop.set("STATE","1");
-		result = DBDYDao.update(ac.getConnection(), pop);
-		if(0 == result) {
+		int reply_state = 1;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		 Timestamp nowdate1 = new Timestamp(System.currentTimeMillis());
+		 String datestr = sdf.format(nowdate1);
+		String commentID = super.genIdString("", idlLen);
+		pop.set("COMMENT_ID", commentID);
+		pop.set("MESSAGE_ID", messageid);
+		pop.set("CONTENT", content);
+		pop.set("TIME", datestr);
+		pop.set("DOCTOR_ID", doctorid);
+		pop.set("DOCTOR_NAME", doctorname);
+		pop.set("PATIENT_ID", patientid);
+		pop.set("PATIENT_NAME", patientname);
+		pop.set("STATE", state);
+		
+		result = DBDYDao.insert(ac.getConnection(), pop);
+		
+		DBDYPO po = new DBDYPO(tableName,keyField);
+		po.set("MESSAGE_ID", messageid);
+		DBDYDao.selectByID(ac.getConnection(), po);
+		po.set("IS_REPLY", reply_state);
+		int result1 = DBDYDao.update(ac.getConnection(), po);
+		if((0 == result)||(0 == result1)) {
 			
-			setMessage(ac, "通过失败!");
+			setMessage(ac, "回复失败!");
 		} else {
 			
-			setMessage(ac, "通过成功!");
+			setMessage(ac, "回复成功!");
 		}
 		return CONST_RESULT_AJAX;
 	}

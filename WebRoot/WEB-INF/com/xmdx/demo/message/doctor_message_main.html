@@ -49,6 +49,7 @@ function myProject(option){
 	
 }
 
+
 </script>
 </head>
 
@@ -97,30 +98,12 @@ function myProject(option){
                                         		
                                         	</td>
                                         	<td>
-				   							<div class="col-xs-6 col-sm-4">
-											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">查看</button>
-				
-										    </div>
-				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  									<div class="modal-dialog">
-			    								<div class="modal-content">
-			     								<div class="modal-header">
-			        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        							<h4 class="modal-title" id="myModalLabel">健康咨询</h4>
-			      								</div>
-			     
-				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
-												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-                                        		<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
-                                        		<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">回复内容</textarea>
-												<input type="submit" value="回复">
-				   								</form>
-			   
-			    
-			    								</div>
-			  									</div>
-												</div>
+				   							<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!read">
+												<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
+                                        		<input type="submit" value="查看">
+				   							</form>
+											
+                                        	
 											
 											
                                         	</td>
@@ -137,31 +120,10 @@ function myProject(option){
                                         		
                                         	</td>
                                         	<td>
-				   							<div class="col-xs-6 col-sm-4">
-											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">查看</button>
-				
-										    </div>
-				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  									<div class="modal-dialog">
-			    								<div class="modal-content">
-			     								<div class="modal-header">
-			        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        							<h4 class="modal-title" id="myModalLabel">健康咨询</h4>
-			      								</div>
-			     
-				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
-												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-                                        		<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
-                                        		<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">回复内容</textarea>
-												<input type="submit" value="回复">
-				   								</form>
-			   
-			    
-			    								</div>
-			  									</div>
-												</div>
-											
+				   							<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!read">
+												<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
+                                        		<input type="submit" value="查看">
+				   							</form>
 											
                                         	</td>
                                         	@end{}
