@@ -67,7 +67,7 @@ function myProject(option){
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">标题</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">时间</span></th>
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">状态</span></th>
+                                           
                                            
                                             
                                             <th>操作</th>
@@ -78,19 +78,17 @@ function myProject(option){
                                         
                                        		 <tr>@foreach{APPS: APP}
 												 
-			                                     @if{APPS.get("IS_NEW")=="0"}
+			                                     @if{APPS.get("IS_READ")=="0"}
 											
                                         	<td style="font-weight:bold;">@{APPS.get("PATIENT_NAME")}</td>
-                                        	<td style="font-weight:bold;">@{APPS.get("TITLE")}</td>
+                                        	@if{APPS.get("IS_NEW")=="1"}
+                                        	<td style="font-weight:bold;">(未读)(有新回复)@{APPS.get("TITLE")}</td>
+                                        	@else{}
+                                        	<td style="font-weight:bold;">(未读)@{APPS.get("TITLE")}</td>
+                                        	@end{}
                                         	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;font-weight:bold;">@{APPS.get("CONTENT")}</td>
                                         	<td style="font-weight:bold;">@{APPS.get("TIME")}</td>
-                                        	<td style="font-weight:bold;">@if{APPS.get("IS_REPLY")=="0"}
-                                        		未回复
-                                        		@else{}
-                                        		已回复
-                                        		@end{}
-                                        		
-                                        	</td>
+                                        	
                                         	<td>
 				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!read">
 												<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
@@ -101,16 +99,14 @@ function myProject(option){
                                         	</td>
                                         	@else{}
                                           	<td >@{APPS.get("PATIENT_NAME")}</td>
+                                        	@if{APPS.get("IS_NEW")=="1"}
+                                        	<td >(有新回复)@{APPS.get("TITLE")}</td>
+                                        	@else{}
                                         	<td >@{APPS.get("TITLE")}</td>
+                                        	@end{}
                                         	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("CONTENT")}</td>
                                         	<td >@{APPS.get("TIME")}</td>
-                                        	<td >@if{APPS.get("IS_REPLY")=="0"}
-                                        		未回复
-                                        		@else{}
-                                        		已回复
-                                        		@end{}
-                                        		
-                                        	</td>
+                                        	
                                         	<td>
 				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!read">
 												<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>

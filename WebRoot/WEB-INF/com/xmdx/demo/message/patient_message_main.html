@@ -38,7 +38,7 @@ function myProject(option){
 
 	
 	var params = $.extend({rows:10},option);
-	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!mymessage&TMP=" + new Date(),params,{
+	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.message!mymessage&TMP=" + new Date(),params,{
 		dataType:"html",
 		success:function(data){
 			
@@ -84,30 +84,10 @@ function myProject(option){
                                         
                                        		 <tr>@foreach{APPS: APP}
 												 
-			                                     @if{APPS.get("IS_READ")=="0"}
+			                                     
 											
-                                        	<td style="font-weight:bold;">@{APPS.get("PATIENT_NAME")}</td>
-                                        	@if{APPS.get("IS_NEW")=="1"}
-                                        	<td style="font-weight:bold;">(未读)(有新回复)@{APPS.get("TITLE")}</td>
-                                        	@else{}
-                                        	<td style="font-weight:bold;">(未读)@{APPS.get("TITLE")}</td>
-                                        	@end{}
-                                        	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;font-weight:bold;">@{APPS.get("CONTENT")}</td>
-                                        	<td style="font-weight:bold;">@{APPS.get("TIME")}</td>
-                                        	
-                                        	<td>
-				   							<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!read">
-												<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
-                                        		<input type="submit" value="查看">
-				   							</form>
-											
-                                        	
-											
-											
-                                        	</td>
-                                        	@else{}
-                                          	<td >@{APPS.get("PATIENT_NAME")}</td>
-                                        	@if{APPS.get("IS_NEW")=="1"}
+                                        	<td >@{APPS.get("PATIENT_NAME")}</td>
+                                        	@if{APPS.get("IS_REPLY")=="1"}
                                         	<td >(有新回复)@{APPS.get("TITLE")}</td>
                                         	@else{}
                                         	<td >@{APPS.get("TITLE")}</td>
@@ -116,14 +96,12 @@ function myProject(option){
                                         	<td >@{APPS.get("TIME")}</td>
                                         	
                                         	<td>
-				   							<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.message!read">
+				   							<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.message!read">
 												<input type="hidden" style="width:90%" name="MESSAGE_ID" id="MESSAGE_ID" value="@{APPS.get("MESSAGE_ID")}"/>
                                         		<input type="submit" value="查看">
 				   							</form>
-											
-                                        	</td>
-                                        	@end{}
-                                        	
+											</td>
+                 
                                         	</tr> 
 										
                                       @end{}

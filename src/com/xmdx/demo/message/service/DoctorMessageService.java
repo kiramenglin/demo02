@@ -96,24 +96,37 @@ public class DoctorMessageService extends BusinessServices {
 	public int read(ActionContext ac) throws Exception {
 		System.out.println("enter read message");
 		int state = 1;
+		int new_state = 0;
 		String messageid = ac.getHttpRequest().getParameter("MESSAGE_ID");
 		System.out.println("message id = "+messageid);
 		StringBuilder sql = new StringBuilder("SELECT * FROM MESSAGE U ");
-//		
+		
 		if(StringUtils.isNotBlank(messageid)) {
 			sql.append(" WHERE U.MESSAGE_ID LIKE '%").append(messageid).append("%' ");
 		}
+		
+		StringBuilder ssql = new StringBuilder("SELECT * FROM COMMENT U ");
+		
+		if(StringUtils.isNotBlank(messageid)) {
+			ssql.append(" WHERE U.MESSAGE_ID LIKE '%").append(messageid).append("%' ORDER BY TIME ASC");
+		}
+		
+		DBDYPO[] pocom = DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+		
+		
 		DBDYPO[] po =DBDYDao.selectBySQL(ac.getConnection(), sql.toString());
 
 		DBDYPO pop = new DBDYPO(tableName,keyField);
 		pop.set("MESSAGE_ID", messageid);
 		DBDYDao.selectByID(ac.getConnection(), pop);
-		pop.set("IS_NEW", state);
+		pop.set("IS_READ", state);
+		pop.set("IS_NEW", new_state);
 		DBDYDao.update(ac.getConnection(), pop);
 		
-		System.out.println("title = "+po[0].getString("TITLE"));
-		ac.setObjValue("MESSAGE", po[0]);
 		
+		
+		ac.setObjValue("MESSAGE", po[0]);
+		ac.setObjValue("COMMENT",pocom);
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/doctor_message_read.html");
 		
 		return CONST_RESULT_SUCCESS;
@@ -135,7 +148,7 @@ public class DoctorMessageService extends BusinessServices {
 		System.out.println("id="+id);
 		StringBuilder ssql = new StringBuilder("SELECT * FROM MESSAGE U ");
 		if(StringUtils.isNotBlank(id)) {
-			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
+			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ORDER BY IS_NEW DESC,TIME DESC ");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 		if(pop.length==0)
@@ -198,6 +211,10 @@ public class DoctorMessageService extends BusinessServices {
 		return 0;
 	}
 
+	/**
+	 * 医生评论
+	 * 
+	 */
 	@Override
 	public int save(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
@@ -223,9 +240,9 @@ public class DoctorMessageService extends BusinessServices {
 		pop.set("CONTENT", content);
 		pop.set("TIME", datestr);
 		pop.set("DOCTOR_ID", doctorid);
-		pop.set("DOCTOR_NAME", doctorname);
+		pop.set("FROM_NAME", doctorname);
 		pop.set("PATIENT_ID", patientid);
-		pop.set("PATIENT_NAME", patientname);
+		pop.set("TO_NAME", patientname);
 		pop.set("STATE", state);
 		
 		result = DBDYDao.insert(ac.getConnection(), pop);
@@ -233,6 +250,7 @@ public class DoctorMessageService extends BusinessServices {
 		DBDYPO po = new DBDYPO(tableName,keyField);
 		po.set("MESSAGE_ID", messageid);
 		DBDYDao.selectByID(ac.getConnection(), po);
+		//给病患指示器，0时表示医生无新回复，1时表示医生有新回复
 		po.set("IS_REPLY", reply_state);
 		int result1 = DBDYDao.update(ac.getConnection(), po);
 		if((0 == result)||(0 == result1)) {
@@ -246,7 +264,7 @@ public class DoctorMessageService extends BusinessServices {
 	}
 	
 	/**
-	 * message分页
+	 * doctor message分页
 	 * @param ac
 	 * @return
 	 * @throws Exception
@@ -266,7 +284,7 @@ public class DoctorMessageService extends BusinessServices {
 		System.out.println("id="+id);
 		StringBuilder ssql = new StringBuilder("SELECT * FROM MESSAGE U ");
 		if(StringUtils.isNotBlank(id)) {
-			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
+			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ORDER BY IS_NEW DESC,TIME DESC");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 //		

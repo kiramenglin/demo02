@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<!-- 医生查看消息详细信息页面 -->
+<!-- 病患查看消息详细信息页面 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>查看消息</title>
 
@@ -49,7 +49,7 @@ $(document).ready(function() {
             
             
 
-<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.message">
+<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.message!new_save">
 					
 					
 						标题<input disabled="disabled" name="TITLE" id="TITLE" value = "@{MESSAGE.get("TITLE")}"><br>
@@ -58,7 +58,7 @@ $(document).ready(function() {
 						<input type = "hidden" name="PATIENT_ID" id="PATIENT_ID" value = "@{MESSAGE.get("PATIENT_ID")}">
 						<input type = "hidden" name="DOCTOR_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("DOCTOR_NAME")}">
 						<input type = "hidden" name="PATIENT_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("PATIENT_NAME")}">
-						患者<input disabled="disabled" name="PATIENTNAME" id="PATIENTNAME" value = "@{MESSAGE.get("PATIENT_NAME")}"><br>
+						医生<input disabled="disabled" name="DOCTORNAME" id="DOCTORNAME" value = "@{MESSAGE.get("DOCTOR_NAME")}"><br>
 						<img id="image"  style="width:200px;height:200px;" src="data:image/jpg;base64,@{MESSAGE.get("IMAGE")}"/><br>
 				    <textarea disabled="disabled" rows="8" cols="40" id="MESSAGE" name="MESSAGE">@{MESSAGE.get("CONTENT")}</textarea><br>
 
@@ -82,7 +82,7 @@ $(document).ready(function() {
                                         </thead>
                                         <tbody>
 <tr>@foreach{COMMENTS: COMMENT}
-@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("DOCTOR_NAME")}
+@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("PATIENT_NAME")}
 <td width="20%">我</td>
 @else{}
 <td width="20%">@{COMMENTS.get("FROM_NAME")}</td>
