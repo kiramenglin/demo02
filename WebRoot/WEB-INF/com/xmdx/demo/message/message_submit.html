@@ -25,15 +25,17 @@ $(document).ready(function() {
     	url = encodeURI(url);
     	
     	$.hkajax(url, "", {
-				success:function(data){
-					var str = data.result;
-					var filename = file.name;
-					var imgtype = filename.substring(filename.lastIndexOf(".") + 1);
-					$("#headPhoto").attr("src", "data:image/" + imgtype + ";base64," + str);
-					$("#IMGTYPE").val(imgtype);
-					$("#IMGDATA").val(str);
-				}
-			});
+    		
+			success:function(data){
+				
+				var str = data.result;
+				var filename = file.name;
+				
+				$("#headPhoto").attr("src", "data:image/jpg" + ";base64," + str);
+				
+				$("#IMGDATA").val(str);
+			}
+		});
 	});
 });
 

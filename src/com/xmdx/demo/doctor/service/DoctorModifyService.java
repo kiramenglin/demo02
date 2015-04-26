@@ -1,6 +1,7 @@
 package com.xmdx.demo.doctor.service;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,7 +143,7 @@ public class DoctorModifyService extends BusinessServices {
 		String imgFilePath = ac.getHttpSession().getServletContext().getRealPath("tmpfiles");
 		imgFilePath = imgFilePath + File.separator + filename;
 		code = StringUtil.convertToBase64(imgFilePath);
-		
+		code = URLEncoder.encode(code, "UTF-8");
 		// 处理头像
 
 //			DBDYPO doctor = new DBDYPO("DOCTOR", "DOCTOR_ID");
@@ -162,8 +163,9 @@ public class DoctorModifyService extends BusinessServices {
 //			
 			
 		
-		ac.setObjValue("CODE", code);
-		return CONST_RESULT_SUCCESS;
+		//ac.setObjValue("CODE", code);
+		setMessage(ac, code);
+		return CONST_RESULT_AJAX;
 	}
 
 }

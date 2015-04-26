@@ -144,7 +144,7 @@ public class PatientModifyService extends BusinessServices {
 		code = StringUtil.convertToBase64(imgFilePath);
 		
 		ac.setObjValue("CODE", code);
-		return CONST_RESULT_SUCCESS;
+		return CONST_RESULT_AJAX;
 	}
 
 }

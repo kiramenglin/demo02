@@ -27,15 +27,17 @@ $(document).ready(function() {
     	url = encodeURI(url);
     	
     	$.hkajax(url, "", {
-				success:function(data){
-					var str = data.result;
-					var filename = file.name;
-					var imgtype = filename.substring(filename.lastIndexOf(".") + 1);
-					$("#headPhoto").attr("src", "data:image/" + imgtype + ";base64," + str);
-					$("#IMGTYPE").val(imgtype);
-					$("#IMGDATA").val(str);
-				}
-			});
+    		
+			success:function(data){
+				
+				var str = data.result;
+				var filename = file.name;
+				
+				$("#headPhoto").attr("src", "data:image/jpg" + ";base64," + str);
+				
+				$("#IMGDATA").val(str);
+			}
+		});
 	});
 });
 
@@ -51,7 +53,7 @@ $(document).ready(function() {
 							<td align="left" rowspan="4" valign="bottom">
 								<input type="text" id="IMGTYPE" name="IMGTYPE" style="display: none;">
 								<input type="text" id="IMGDATA" name="IMGDATA" value="" style="display: none;">
-								<img id="headPhoto" src="/e9common/images/empty.gif" width="100px;" height="120px;">
+								<img id="headPhoto" src="/e9common/images/default_avatar_big.jpg" width="100px;" height="120px;">
 								<input type="text" id="FILENAME" name="FILENAME" style="vertical-align: middle;float:left;display: none;">
 								<input type="text" id="TMPNAME" name="TMPNAME" style="vertical-align: middle;float:left;display: none;">
 								<span id="spanButtonPlaceholder" style="vertical-align: middle;float:left;"></span>
@@ -60,7 +62,7 @@ $(document).ready(function() {
 								<input type="text" style="display: none;" id="FILENAMES" NAME="FILENAMES">
 								<input type="text" style="display: none;" id="TRUENAMES" NAME="TRUENAMES">
 							</td>
-							<img   style="width:200px;height:200px;" src="data:image/jpg;base64,@{USER.get("IMAGE")}"/>	<br>
+								<br>
 					   <input  type="hidden" name="CODE" id="CODE" value = "@{CODE}"><br>
 					性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别<select name="GENDER" id="GENDER ">
 				   		<option value ="男">男</option>
