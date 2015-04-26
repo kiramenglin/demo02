@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+	<script type="text/javascript" src="js/ssocommon.js"></script>    
+    <script type="text/javascript">
+    //验证变量
+    var validateForm = false;
+    $(function(){
+    	//重置表单（防止IE缓存）
+    	//$("#infoForm")[0].reset();
+    	//主题切换
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		//表格样式
+		$("#infoTableShort").styleTable();
+		//按钮样式
+		$( "input:button, a, button", "div" ).button();
+    	//验证表单
+    	commonValidate("infoForm");
+		//绑定表单提交事件
+		submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=patient.routine");
+		//按钮
+		$( "#buttonset" ).buttonset();
+		
+		//$("#ORGNAME").click(popOrg);//不需要弹出选择组织机构了，职员信息已经包含了组织机构，如果一个职员有多个组织机构，则采用下拉框选择
+		
+		getOrgInfo($("#EMPLOYEE_ID").val())
+    });
+    
+    //表单提交
+    function saveInfo(){
+    	$('#infoForm').submit();
+    }
+	</script>
+</head>
+<body class="ui-widget-content" style="border: 0">
+	<form method="post" name="infoForm" id="infoForm" action="/">
+		<input type="text" style="display: none;" name="CMD" id="CMD">
+		<input type="hidden" style="width:90%" name="TEST_ID" id="TEST_ID" />
+		<table style="width: 100%; " cellpadding="0" cellspacing="0" id="infoTableShort" class="full" >
+			<!-- 为了样式协调必需要 -->
+			<tr style="height: 1px;">
+				<td style="height: 0px;font-size: 0px;border-top-style: none;border-left-style: none;border-right-style: none; " colspan="4"><img src="/e9common/images/empty.gif" style="height: 1px;"></td>
+			</tr>
+			<!-- ***end*** -->
+			
+			<tr>
+				<td height="33" width="200" align="right" >体温：</td>
+				<td align="left" >
+				   <input type="text" name="TEMPERATURE" > 
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >脉搏：</td>
+				<td align="left" >
+					<input type="text" name="PULSE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >呼吸：</td>
+				<td align="left" >
+				    <input type="text" name="BREATH" >
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >血压：</td>
+				<td align="left" >
+				    <input type="text" name="BLOODPRESSURE" >
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >发育：</td>
+				<td align="left" >
+				    
+				    <select name="GROWTH">
+				   <option value ="正常">正常</option>
+  				   <option value ="异常">异常</option>
+  				  
+  				   
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >营养：</td>
+				<td align="left" >
+				    
+				    <select name="NUTRITION">
+				   <option value ="良好">良好</option>
+  				   <option value ="不良">不良</option>
+  				  </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >体型：</td>
+				<td align="left" >
+				    
+				    <select name="FIGURE">
+				   <option value ="匀称型">匀称型</option>
+  				   <option value ="非匀称型">非匀称型</option>
+  	
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >神智：</td>
+				<td align="left" >
+				  
+				    <select name="MIND">
+				   <option value ="清楚">清楚</option>
+  				   <option value ="不清楚">不清楚</option>
+  			
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >体位：</td>
+				<td align="left" >
+				  
+				    <select name="BODYPOSITION">
+				   <option value ="自动">被动</option>
+  				   <option value ="被动">被动</option>
+  			
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >面色：</td>
+				<td align="left" >
+				  
+				    <select name="COMPLEXION">
+				   <option value ="红润">红润</option>
+  				   <option value ="苍白">苍白</option>
+  			
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >步态：</td>
+				<td align="left" >
+				  
+				    <select name="PACE">
+				   <option value ="稳健">稳健</option>
+  				   <option value ="不稳">不稳</option>
+  			
+				   </select>
+				</td>
+			</tr>
+			<tr>
+				<td height="33" width="200" align="right" >对答：</td>
+				<td align="left" >
+				  
+				    <select name="CONVERSATION">
+				   <option value ="切题">切题</option>
+  				   <option value ="不切题">不切题</option>
+  			
+				   </select>
+				</td>
+			</tr>
+        </table>
+	</form>
+	<!-- 以下是按钮区域 -->
+	<div style="position:absolute;width: 100%;border-bottom:0px;border-left:0px;border-right:0px;bottom:40px;font-size: 0px;" class="ui-widget-content"></div>
+	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
+		<span id="buttonset">
+			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
+			<button id="cancelBtn" onclick="cancel()"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
+		</span>
+	</div>
+</body>
+</html>
+<!--Form Setting Start-->
+	<var name="CMD" value="USER_BEAN.getCmd()"/>
+	<var name="TEST_ID" value="USER_BEAN.get('TEST_ID')" required="true"/><!-- 用户ID -->
+	<var name="TEMPERATURE" value="USER_BEAN.get('TEMPERATURE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="PULSE" value="USER_BEAN.get('PULSE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="BREATH" value="USER_BEAN.get('BREATH')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="BLOODPRESSURE" value="USER_BEAN.get('BLOODPRESSURE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="GROWTH" value="USER_BEAN.get('GROWTH')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="NUTRITION" value="USER_BEAN.get('TUTRITION')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="FIGURE" value="USER_BEAN.get('FIGURE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="MIND" value="USER_BEAN.get('MIND')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="BODYPOSITION" value="USER_BEAN.get('BODYPOSITION')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="COMPLEXION" value="USER_BEAN.get('COMPLEXION')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="PACE" value="USER_BEAN.get('PACE')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+	<var name="CONVERSATION" value="USER_BEAN.get('CONVERSATION')"  validate="required,maxSize[20]"/><!-- 用户名称  -->
+<!--Form Setting End-->

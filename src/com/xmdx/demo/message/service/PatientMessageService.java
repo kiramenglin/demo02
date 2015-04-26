@@ -1,6 +1,7 @@
 package com.xmdx.demo.message.service;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -336,8 +337,9 @@ public class PatientMessageService extends BusinessServices {
 		String imgFilePath = ac.getHttpSession().getServletContext().getRealPath("tmpfiles");
 		imgFilePath = imgFilePath + File.separator + filename;
 		code = StringUtil.convertToBase64(imgFilePath);
+		code = URLEncoder.encode(code, "UTF-8");
 		
-		ac.setObjValue("CODE", code);
+		setMessage(ac, code);
 		return CONST_RESULT_AJAX;
 	}
 	
