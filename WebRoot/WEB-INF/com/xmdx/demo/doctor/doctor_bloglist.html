@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>个人博客</title>
 <style type="text/css">
-
+#content{overflow-y:hidden;max-height:143px;}
 </style>
 
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
@@ -59,38 +59,45 @@ window.load=validate();
 <body>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-4">
-				<h3 align="center">我的博客</h3>
-			</div>
-			<div class="col-md-8">
-			</div>
-		</div>
-		<div class="row">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">博客列表</h4>
-			</div>
-			<a href="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!initBlog"
-				class="btn btn-primary" role="button">新增</a>
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">
+			       	 博客列表
+			      </a>
+			      
+			    </div>
+			    <p class="navbar-text navbar-right"><a href="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!initBlog"
+				 role="button" class="navbar-link">新增文章</a></p>
+			  </div>
+			</nav>
+			
 			@if{SIZE!="0"}   
 			
 			<div class="modal-body" id="modal_body">
 			@foreach{BLOG: BLOGS}
 				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
 				<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog"><h3 id = @{BLOG.get("ID")}>@{BLOG.get("TITLE")}</h3></a>
-				<div>@{BLOG.get("CONTENT")}</div>
-				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog">
+				<div id="content">@{BLOG.get("CONTENT")}</div>
+				<div class="row">
+				<div class="col-md-1">
+					<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog">
 					
-					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
-					
-					<input type="submit" class="btn btn-link" value="修改">
-				</form>
+						<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
+						
+						<input type="submit" class="btn btn-link" value="修改">
+					</form>
+				</div>
+				<div class="col-md-1">
+				
 				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=doctor.blog">
 					
 					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
 					
 					<input type="submit" class="btn btn-link" value="删除">
 				</form>
+				</div>
+				</div>
 				@end{}
 			
 			</div>
