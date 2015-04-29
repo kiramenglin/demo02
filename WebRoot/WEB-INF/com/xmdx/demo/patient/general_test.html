@@ -9,9 +9,9 @@
     <script type="text/javascript">
     var pDialog;//用于弹窗
     var gridHeight=0;//必须要，用于计算grid高度
-    var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=patient.routine";
-    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=patient.routine";
-    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=patient.routine";
+    var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=patient.general";
+    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=patient.general";
+    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=patient.general";
     
 	$(document).ready(function () {
 		//过滤按钮权限
@@ -121,6 +121,14 @@
 			deleteInfo(e,selectedId);
 		});
 		
+		$("#infoBtn").click(function(){
+			var selectedId = getSelectedCheckbox("gridTable");
+			if(!selectOne(selectedId))return;
+			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.general!generalInfo" + "&TEST_ID="+rowData.TEST_ID+"&TMP="+new Date();
+			window.location.href=url;
+		});
+		
 		//删除操作
 		function deleteInfo(e,rowid){
 			var rows = rowid.split(",");
@@ -171,6 +179,7 @@
 					<button id="addBtn" rightval="2"><span class="ui-icon ui-icon-plus" style="float: left;"></span>新增</button>
 					<button id="updateBtn" rightval="4"><span class="ui-icon ui-icon-pencil" style="float: left;"></span>修改</button>
 					<button id="delBtn" rightval="8"><span class="ui-icon ui-icon-trash" style="float: left;"></span>删除</button>
+					<button id="infoBtn" ><span class="ui-icon ui-icon-newwin" style="float: left;"></span>查看详细信息</button>
 				</span>
 	        </div>
 		</div>

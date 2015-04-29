@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script> 
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4">
+  
+			<form class="form-horizontal" method="post" name="infoForm" id="infoForm" action="/">
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">体温</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("TEMPERATURE")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">脉搏</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("PULSE")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">呼吸</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("BREATH")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">血压</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("BLOODPRESSURE")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">发育</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("GROWTH")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">营养</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("NUTRITION")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">体型</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("FIGURE")}</p>
+					</div>
+				</div>				
+				
+		
+								
+			</form>
+		</div>
+		<div class="col-md-4">
+			<form class="form-horizontal" method="post" name="infoForm" id="infoForm" action="/">
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">心智</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("MIND")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">体位</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("BODYPOSITION")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">面色</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("COMPLEXION")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">步态</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("PACE")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">沟通</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("CONVERSATION")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">体检</label>
+					<div class="col-sm-5">
+					  <p>@{USER.get("PHYSICALEXAM")}</p>
+					</div>
+				</div>		
+			</form>
+		</div>
+		<div class="col-md-4">
+			@{USER.get("IMAGE")}
+		</div>
+	</div>
+</div>
+</body>
+</html>

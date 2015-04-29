@@ -16,6 +16,8 @@ public class GeneralService extends BusinessServices {
 	private static final String tableName = "ROUTINE_TEST";
 	//主键名
 	private static final String keyField = "TEST_ID";
+	
+	private static String uid = null;
 	@Override
 	public int delete(ActionContext ac) throws Exception {
 		checkAuth(ac, authFuncNo, RIGHT_EIGHT);
@@ -141,5 +143,26 @@ public class GeneralService extends BusinessServices {
 		
 		return CONST_RESULT_AJAX;
 	}
+	
+	public int generalInfo(ActionContext ac) throws Exception {
+		System.out.println("enter goto");
+		uid = ac.getHttpRequest().getParameter("TEST_ID");
+		System.out.println("test id = "+uid);
+		// TODO Auto-generated method stub
 
+		
+		StringBuilder sqlp = new StringBuilder("SELECT * FROM ROUTINE_TEST U ");
+		if(StringUtils.isNotBlank(uid)) {
+			sqlp.append(" WHERE U.TEST_ID LIKE '%").append(uid).append("%' ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), sqlp.toString());
+		ac.setObjValue("USER", pop[0]);
+		
+		checkAuth(ac, authFuncNo, RIGHT_ONE);
+		
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/patient/general_info.html");
+		return CONST_RESULT_SUCCESS;
+	}
+	
 }
