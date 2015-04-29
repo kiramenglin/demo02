@@ -75,14 +75,18 @@ function myProject(option){
                                         		
                                         	</td>
                                         	<td>@if{APPS.get("STATE")=="0"}
+                                        	<div class="row">
+                                        	<div class="col-md-3">
                                         	<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=apply.info">
                                         	<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
                                         	<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-											<input type="submit" value="同意">
+											<input class="btn btn-primary btn-sm" type="submit" value="同意">
 				   							</form>
-				   							<div class="col-xs-6 col-sm-4">
-											<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">拒绝</button>
+				   							</div>
+				   							<div class="col-md-3">
+											<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">拒绝</button>
 				
+										    </div>
 										    </div>
 				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  									<div class="modal-dialog">
