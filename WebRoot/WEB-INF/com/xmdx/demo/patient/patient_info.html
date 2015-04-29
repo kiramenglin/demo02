@@ -11,16 +11,7 @@
 <script type="text/javascript" src="swfupload/src/handlers.js"></script>
 <script type="text/javascript" src="js/js/bootstrap.min.js"></script>
 <script type="text/javascript">   
-function startLoad(){  
-    var url="http://127.0.0.1:8080/demo02/HttpChannel?act"+"ion=SAVE_ACTION&BUSINESS_TYPE=patient.info"; //处理上传的servlet  
-    var sizeLimit="1 MB";// 文件的大小  注意: 中间要有空格  
-    var types="*.jpg;*.jpeg;*.gif"; //注意是 " ; " 分割   
-    var typesdesc="web iamge file"; //这里可以自定义  
-    var uploadLimit=1;  //上传文件的 个数  
-    
-    initSwfupload(url,sizeLimit,types,typesdesc,uploadLimit); 
-    alert("hehe1");
-}  
+
 </script>    
 </head>
 <body>
@@ -34,11 +25,9 @@ function startLoad(){
 		</div>
 		<div class="row">
 			<div class="col-md-4">
-			<div id="swfupload-control">
-				<center><input type="button" onclick="startLoad()" value="批量图片上传"/></center>  
-			</div>
+			
 			 	<div class="text-center profile-pic">
-				    <img src="image/1.png" alt="">
+				    <img style="width:300px;height:300px;" src="data:image/jpg;base64,@{USER.get("IMAGE")}"/>
 				</div>
 				<ul class="nav nav-tabs nav-stacked">
 				    <li><a href="javascript:void(0)"><i class="icon-coffee"></i> 公文包</a></li>
