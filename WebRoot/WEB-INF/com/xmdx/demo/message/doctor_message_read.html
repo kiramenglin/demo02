@@ -44,59 +44,82 @@ $(document).ready(function() {
  </head>
  <body>
 <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-            
-            
-
-<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.message">
-					
-					
-						标题<input disabled="disabled" name="TITLE" id="TITLE" value = "@{MESSAGE.get("TITLE")}"><br>
-						<input type = "hidden" name="MESSAGE_ID" id="MESSAGE_ID" value = "@{MESSAGE.get("MESSAGE_ID")}">
-						<input type = "hidden" name="DOCTOR_ID" id="DOCTOR_ID" value = "@{MESSAGE.get("DOCTOR_ID")}">
-						<input type = "hidden" name="PATIENT_ID" id="PATIENT_ID" value = "@{MESSAGE.get("PATIENT_ID")}">
-						<input type = "hidden" name="DOCTOR_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("DOCTOR_NAME")}">
-						<input type = "hidden" name="PATIENT_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("PATIENT_NAME")}">
-						患者<input disabled="disabled" name="PATIENTNAME" id="PATIENTNAME" value = "@{MESSAGE.get("PATIENT_NAME")}"><br>
+	<div class="row">
+		<div class="col-md-6">           
+			<form class="form-horizontal" method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.message">
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">标题</label>
+					<div class="col-sm-5">
+						<h4>@{MESSAGE.get("TITLE")}</h4>
+					</div>
+				</div>
+				<input type = "hidden" name="MESSAGE_ID" id="MESSAGE_ID" value = "@{MESSAGE.get("MESSAGE_ID")}">
+				<input type = "hidden" name="DOCTOR_ID" id="DOCTOR_ID" value = "@{MESSAGE.get("DOCTOR_ID")}">
+				<input type = "hidden" name="PATIENT_ID" id="PATIENT_ID" value = "@{MESSAGE.get("PATIENT_ID")}">
+				<input type = "hidden" name="DOCTOR_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("DOCTOR_NAME")}">
+				<input type = "hidden" name="PATIENT_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("PATIENT_NAME")}">					
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">患者</label>
+					<div class="col-sm-5">
+						<h4>@{MESSAGE.get("PATIENT_NAME")}</h4>
+					</div>
+				</div>		
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">病例单</label>
+					<div class="col-sm-5">
 						<img id="image"  style="width:200px;height:200px;" src="data:image/jpg;base64,@{MESSAGE.get("IMAGE")}"/><br>
-				    <textarea disabled="disabled" rows="8" cols="40" id="MESSAGE" name="MESSAGE">@{MESSAGE.get("CONTENT")}</textarea><br>
-
-					<textarea  rows="8" cols="40" id="CONTENT" name="CONTENT">回复内容</textarea><br>
- <input type="submit" value="回复">
-				
- </form>
- </div>
-<div class="col-md-8">
-全部回复<br>
-<table border="1" style="table-layout:fixed;">
-<thead >
-                                        <tr >
-                                          
-                                          
-                                           <th ><i class="icon-tags"> </i><span class="hidden-phone">来自</span></th>
-                                           <th ><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
-                                           <th ><i class="icon-tags"> </i><span class="hidden-phone">时间</span></th>
-                                           
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-<tr>@foreach{COMMENTS: COMMENT}
-@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("DOCTOR_NAME")}
-<td width="20%">我</td>
-@else{}
-<td width="20%">@{COMMENTS.get("FROM_NAME")}</td>
-@end{}
-<td width="60%">@{COMMENTS.get("CONTENT")}</td>
-<td width="20%">@{COMMENTS.get("TIME")}</td>
-</tr>
-@end{}
-</tbody>
-</table>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label"></label>
+					<div class="col-sm-5">
+						<p>@{MESSAGE.get("CONTENT")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">回复内容</label>
+					<div class="col-sm-5">
+						<textarea class="form-control"  rows="8" cols="40" id="CONTENT" name="CONTENT"></textarea><br>
+					</div>
+				</div>
+				<div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				    	<input type="submit" class="btn btn-primary" value="回复">
+				    </div>
+				</div>							
+			</form>
+		</div>
+		<div class="col-md-6">
+	全部回复<br>
+		<table class="table" border="1" style="table-layout:fixed;">
+				<thead >
+				<tr >
+				  
+				  
+				   <th ><i class="icon-tags"> </i><span class="hidden-phone">来自</span></th>
+				   <th ><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
+				   <th ><i class="icon-tags"> </i><span class="hidden-phone">时间</span></th>
+				   
+				</tr>
+				</thead>
+				<tbody>
+					<tr>@foreach{COMMENTS: COMMENT}
+					@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("DOCTOR_NAME")}
+					<td class="success" width="20%">我</td>
+					<td class="success" width="60%">@{COMMENTS.get("CONTENT")}</td>
+					<td class="success" width="20%">@{COMMENTS.get("TIME")}</td>
+					@else{}
+					<td class="danger" width="20%">@{COMMENTS.get("FROM_NAME")}</td>
+					<td class="danger" width="60%">@{COMMENTS.get("CONTENT")}</td>
+					<td class="danger" width="20%">@{COMMENTS.get("TIME")}</td>
+					@end{}
+					</tr>
+					@end{}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
-        
-    </div>
-    </div>
     
  </body>
  </html>

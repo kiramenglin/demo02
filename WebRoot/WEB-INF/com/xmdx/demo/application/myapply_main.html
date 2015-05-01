@@ -1,3 +1,4 @@
+<html>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -37,98 +38,94 @@ function myProject(option){
 }
 
 </script>
-<div class="container-fluid">
-
-<div class="row" id = "modal_body">
-			
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4">
+				<h3 align="center">    申请信息</h3>
+			</div>
+			<div class="col-md-8">
+			</div>
+		</div>
+		 @if{SIZE!="0"}
+		<div class="row" id = "modal_body">
 			<table class="table table-striped table-bordered table-advance table-hover" style="table-layout:fixed;">
-                                        <thead>
-                                        <tr>
-                                          
-                                          
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">病患姓名</span></th>
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">申请理由</span></th>
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">申请时间</span></th>
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">审核状态</span></th>
-                                           
-                                            
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                       
-                                        <tbody>
-                                        
-                                       		 <tr>@foreach{APPS: APP}
-												 
-			                                     
-											
-                                        	<td>@{APPS.get("PATIENT_NAME")}</td>
-                                        	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
-                                        	<td>@{APPS.get("CREATE_TIME")}</td>
-                                        	<td>@if{APPS.get("STATE")=="0"}
-                                        		待审查
-                                        		@else{APPS.get("STATE")=="1"}
-                                        		已通过
-                                        		@else{}
-                                        		已拒绝
-                                        		@end{}
-                                        		
-                                        	</td>
-                                        	<td>@if{APPS.get("STATE")=="0"}
-                                        	<div class="row">
-                                        	<div class="col-md-3">
-                                        	<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=apply.info">
-                                        	<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        	<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-											<input class="btn btn-primary btn-sm" type="submit" value="同意">
-				   							</form>
-				   							</div>
-				   							<div class="col-md-3">
-											<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">拒绝</button>
-				
-										    </div>
-										    </div>
-				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  									<div class="modal-dialog">
-			    								<div class="modal-content">
-			     								<div class="modal-header">
-			        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        							<h4 class="modal-title" id="myModalLabel">申请私人医生</h4>
-			      								</div>
-			     
-				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
-												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-                                        		<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">拒绝理由</textarea>
-												<input type="submit" value="拒绝">
-				   								</form>
-			   
-			    
-			    								</div>
-			  									</div>
-												</div>
-											
-											@else{}
-											<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.info">
-											<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        	<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-											<input type="submit" value="删除">
-				   							</form>
-											@end{}
-                                        	</td>
-                                        	</tr> 
-										@end{}
-										
-										
-                                       
-                                                                                   
-                                        
-                                        
-                                        </tbody>
-                                    </table>
-				
+				<thead>
+				<tr>			  
+				   <th><i class="icon-tags"> </i><span class="hidden-phone">病患姓名</span></th>
+				   <th><i class="icon-tags"> </i><span class="hidden-phone">申请理由</span></th>
+				   <th><i class="icon-tags"> </i><span class="hidden-phone">申请时间</span></th>
+				   <th><i class="icon-tags"> </i><span class="hidden-phone">审核状态</span></th>				    
+				   <th>操作</th>
+				</tr>
+				</thead>			
+				<tbody>			
+					<tr>@foreach{APPS: APP}				
+					
+					@if{APPS.get("STATE")=="0"}
+						<td class="warning">@{APPS.get("PATIENT_NAME")}</td>
+						<td class="warning" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
+						<td class="warning">@{APPS.get("CREATE_TIME")}</td>
+						<td class="warning">待审查</td>
+						@else{APPS.get("STATE")=="1"}
+						<td class="success">@{APPS.get("PATIENT_NAME")}</td>
+						<td class="success" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
+						<td class="success">@{APPS.get("CREATE_TIME")}</td>
+						<td class="success">已通过</td>
+						@else{}
+						<td class="danger">@{APPS.get("PATIENT_NAME")}</td>
+						<td class="danger" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
+						<td class="danger">@{APPS.get("CREATE_TIME")}</td>
+						<td class="danger">已拒绝</td>
+						@end{}	
+					
+				@if{APPS.get("STATE")=="0"}
+				<td class="warning">
+				<div class="row">
+					<div class="col-md-3">
+						<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=apply.info">
+						<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+						<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+						<input class="btn btn-success btn-sm" type="submit" value="同意">
+						</form>
+					</div>
+					<div class="col-md-3">
+						<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">拒绝</button>
+					</div>
+				</div>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">申请私人医生</h4>
+					</div>
+					<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
+						<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+						<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+						<textarea class="form-control" rows="8" cols="40" id="MESSAGE" name="MESSAGE">拒绝理由</textarea>
+						<input class="btn btn-danger btn-sm" type="submit" value="拒绝">
+					</form>
+				</div>
+			</div>
+		</div>
+		</td>
+					@else{}
+					<td class="success">
+					<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.info">
+						<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+					    <input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+						<input class="btn btn-danger btn-sm" type="submit" value="删除">
+					</form>
+					</td>
+					@end{}
+					
+					</tr> 
+					@end{}
+				</tbody>                            
+			</table>				
 		</div>
 		
 	</div>
-	
-	
+</body>
+</html>

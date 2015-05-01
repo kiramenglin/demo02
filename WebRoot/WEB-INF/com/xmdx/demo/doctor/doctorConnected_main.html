@@ -47,6 +47,8 @@
 						
 						']'
 						)},
+						 multiselect: false,
+						 
 			    	onSelectRow:function(rowid){},
 			    	ondblClickRow:function(rowid,iRow,iCol,e){
 			    		selectCheckbox("gridTable",rowid);
@@ -60,6 +62,7 @@
 			    		resizeGrid('gridTable','queryDiv','contentDiv');
 			    	}
 		});
+		
 		//resize绑定
 		$(window).bind('resize', function(){resizeGrid('gridTable','queryDiv','contentDiv');}).trigger('resize');
 		
