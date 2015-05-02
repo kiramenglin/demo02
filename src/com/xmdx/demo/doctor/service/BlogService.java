@@ -252,6 +252,30 @@ public class BlogService extends BusinessServices {
 		return CONST_RESULT_SUCCESS;
 	}
 	
+	public int blogView(ActionContext ac) throws Exception {
+		System.out.println("aaaaaaaa");
+		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
+		String uid = ac.getHttpRequest().getParameter("ID");
+		System.out.println("blog_id="+uid);
+		System.out.println(uid + "uid");
+		if (StringUtils.isNotEmpty(uid)) {
+			
+			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
+			
+			if(pos.length == 0) {
+				ac.setErrorContext("您所选择文章已被删除！");
+				return CONST_RESULT_ERROR;
+			}
+			DBDYPO old = pos[0];
+			old.setCmd("U");
+			
+			System.out.println(old.get("TITLE")+" title here");
+			ac.setObjValue("BLOG", old);
+		} 
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/doctor/doctor_blogview.html");
+		return CONST_RESULT_SUCCESS;
+	}
+	
 	public int myblog(ActionContext ac) throws Exception {
 		String userName=SessionUtil.getOpno(ac);
 //		

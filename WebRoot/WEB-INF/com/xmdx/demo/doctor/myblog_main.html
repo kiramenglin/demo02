@@ -48,8 +48,10 @@ function myProject(option){
 			
 			<div class="modal-body" id="modal_body">
 			@foreach{BLOG: BLOGS}
-				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get("ID")}"/>
-				<a href="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.blog"><h3 id = @{BLOG.get("ID")}>@{BLOG.get("TITLE")}</h3></a>
+				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!blogView">
+				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
+				<input type="submit" class="btn btn-link" value="@{BLOG.get('TITLE')}">
+				</form>
 				<div id="content">@{BLOG.get("CONTENT")}</div>
 				<div class="row">
 				<div class="col-md-1">
