@@ -4,7 +4,9 @@ import org.apache.commons.lang.StringUtils;
 
 import com.e9rj.platform.common.GenID;
 import com.e9rj.platform.common.services.BusinessServices;
+import com.e9rj.platform.util.SessionUtil;
 import com.xmzy.frameext.business.service.annotate.Service;
+import com.xmzy.frameext.simpledb.DBConn;
 import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
@@ -97,13 +99,24 @@ public class GeneralService extends BusinessServices {
 
 	@Override
 	public int query(ActionContext ac) throws Exception {
-		StringBuilder sql = new StringBuilder("SELECT * FROM ROUTINE_TEST U ");
-		
+		String userName=SessionUtil.getOpno(ac);
+//		
+		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
+//		
+		if(StringUtils.isNotBlank(userName)) {
+			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
+		}
+		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+		String id =po[0].getString("PERSON_ID");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM ROUTINE_TEST U ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE U.TEST_ID IN(SELECT TEST_ID from PATIENT_TEST where PATIENT_ID LIKE '%").append(id).append("%') ");
+		}
 		
 
-		sql.append(super.order(ac, "U.TEST_ID", "DESC"));
+		ssql.append(super.order(ac, "U.TEST_ID", "DESC"));
 		
-		querySql = sql.toString();
+		querySql = ssql.toString();
 		
 		
 		return CONST_RESULT_AJAX;
@@ -111,10 +124,21 @@ public class GeneralService extends BusinessServices {
 
 	@Override
 	public int save(ActionContext ac) throws Exception {
+		String userName=SessionUtil.getOpno(ac);
+		
+		StringBuilder sql = new StringBuilder("SELECT * FROM TS_OP U ");
+		
+		if(StringUtils.isNotBlank(userName)) {
+			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
+		}
+		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
+		String pid =po[0].getString("PERSON_ID");
+		
 		DBDYPO user = new DBDYPO(tableName, keyField, request);
 		
 		String uid = request.getParameter(keyField);
 		int result = 0;
+		int result1 = 0;
 		boolean isAdd = false;
 	
 		
@@ -130,10 +154,17 @@ public class GeneralService extends BusinessServices {
 			
 			uid = GenID.genIdString("U", 21);
 			user.set(keyField, uid);
+			user.set("TIME", new java.sql.Date(System.currentTimeMillis()));
 			isAdd = true;
+			
+			
+			DBDYPO con = new DBDYPO("PATIENT_TEST", "PATIENT_ID,TEST_ID");
+			con.set("TEST_ID", uid);
+			con.set("PATIENT_ID", pid);
 			result = DBDYDao.insert(ac.getConnection(), user);
+			result1 = DBDYDao.insert(ac.getConnection(), con);
 		}
-		if(0 == result) {
+		if(0 == result||(0==result1)) {
 			log(ac, LOGLEVEL_W, "SYS01", user.getTableName(), uid, isAdd ? "insert" : "update", "保存失败!");
 			setMessage(ac, "保存失败!");
 		} else {
