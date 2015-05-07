@@ -24,20 +24,20 @@ import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.frameext.simpledb.page.JdbcPage;
 import com.xmzy.framework.context.ActionContext;
-@Service(name="patient.appointment")
+@Service(name="doctor.appointment")
 /**
  * 
  * @author Jinghui Lu
- * 病患端预约服务
+ * 医生端预约服务
  *
  */
-public class PatientAppointmentService extends BusinessServices {
+public class DoctorAppointmentService extends BusinessServices {
 	/**
 	 * 病患向医生提出预约服务
 	 * 
 	 */
 	//功能号
-	private static final String authFuncNo = "patient.appointment";
+	private static final String authFuncNo = "doctor.appointment";
 	//表名
 	private static final String tableName = "APPOINTMENT";
 	//主键名
@@ -108,7 +108,7 @@ public class PatientAppointmentService extends BusinessServices {
 			po1.set("IS_NEW", pop[i].get("IS_NEW").toString());
 			po1.set("DOCTOR_ID", pop[i].get("DOCTOR_ID").toString());
 			po1.set("PATIENT_ID", pop[i].get("PATIENT_ID").toString());
-			po1.set("STATE", pop[i].get("STATE").toString());
+			
 			po1.set("DOCTOR_NAME", pop[i].get("DOCTOR_NAME").toString());
 			po1.set("TIME", pop[i].get("TIME").toString());
 			po1.set("DATE", pop[i].get("DATE").toString());
@@ -138,18 +138,18 @@ public class PatientAppointmentService extends BusinessServices {
 		System.out.println("enter read appointment");
 		int state = 1;
 		int new_state = 0;
-		String messageid = ac.getHttpRequest().getParameter("APPOINTMENT_ID");
+		String messageid = ac.getHttpRequest().getParameter("MESSAGE_ID");
 		System.out.println("message id = "+messageid);
-		StringBuilder sql = new StringBuilder("SELECT * FROM APPOINTMENT U ");
+		StringBuilder sql = new StringBuilder("SELECT * FROM MESSAGE U ");
 		
 		if(StringUtils.isNotBlank(messageid)) {
-			sql.append(" WHERE U.APPOINTMENT_ID LIKE '%").append(messageid).append("%' ");
+			sql.append(" WHERE U.MESSAGE_ID LIKE '%").append(messageid).append("%' ");
 		}
 		
-		StringBuilder ssql = new StringBuilder("SELECT * FROM ACOMMENT U ");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM COMMENT U ");
 		
 		if(StringUtils.isNotBlank(messageid)) {
-			ssql.append(" WHERE U.APPOINTMENT_ID LIKE '%").append(messageid).append("%' ORDER BY TIME ASC");
+			ssql.append(" WHERE U.MESSAGE_ID LIKE '%").append(messageid).append("%' ORDER BY TIME ASC");
 		}
 		
 		DBDYPO[] pocom = DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
@@ -158,7 +158,7 @@ public class PatientAppointmentService extends BusinessServices {
 		DBDYPO[] po =DBDYDao.selectBySQL(ac.getConnection(), sql.toString());
 
 		DBDYPO pop = new DBDYPO(tableName,keyField);
-		pop.set("APPOINTMENT_ID", messageid);
+		pop.set("MESSAGE_ID", messageid);
 		DBDYDao.selectByID(ac.getConnection(), pop);
 		pop.set("IS_READ", state);
 		pop.set("IS_REPLY", new_state);
@@ -168,7 +168,7 @@ public class PatientAppointmentService extends BusinessServices {
 		
 		ac.setObjValue("MESSAGE", po[0]);
 		ac.setObjValue("COMMENT",pocom);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/appointment/patient_appointment_read.html");
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/patient_message_read.html");
 		
 		return CONST_RESULT_SUCCESS;
 	
@@ -244,7 +244,6 @@ public class PatientAppointmentService extends BusinessServices {
 		newAppointment.set("IS_REPLY", state);
 		newAppointment.set("IS_NEW", state);
 		newAppointment.set("IS_READ", state);
-		newAppointment.set("STATE", state);
 		newAppointment.set("DATE", adate);
 		newAppointment.set("TIME", atime);
 		
@@ -275,12 +274,12 @@ public class PatientAppointmentService extends BusinessServices {
 		System.out.println("enter save");
 		
 		String content = ac.getHttpRequest().getParameter("CONTENT");
-		String messageid = ac.getHttpRequest().getParameter("APPOINTMENT_ID");
+		String messageid = ac.getHttpRequest().getParameter("MESSAGE_ID");
 		String doctorid = ac.getHttpRequest().getParameter("DOCTOR_ID");
 		String patientid = ac.getHttpRequest().getParameter("PATIENT_ID");
 		String doctorname = ac.getHttpRequest().getParameter("DOCTOR_NAME");
 		String patientname = ac.getHttpRequest().getParameter("PATIENT_NAME");
-		DBDYPO pop = new DBDYPO("ACOMMENT","ACOMMENT_ID");
+		DBDYPO pop = new DBDYPO("COMMENT","COMMENT_ID");
 		int idlLen = 20;
 		int state = 0;
 		int result = 0;
@@ -289,8 +288,8 @@ public class PatientAppointmentService extends BusinessServices {
 		 Timestamp nowdate1 = new Timestamp(System.currentTimeMillis());
 		 String datestr = sdf.format(nowdate1);
 		String commentID = super.genIdString("", idlLen);
-		pop.set("ACOMMENT_ID", commentID);
-		pop.set("APPOINTMENT_ID", messageid);
+		pop.set("COMMENT_ID", commentID);
+		pop.set("MESSAGE_ID", messageid);
 		pop.set("CONTENT", content);
 		pop.set("TIME", datestr);
 		pop.set("DOCTOR_ID", doctorid);
@@ -302,7 +301,7 @@ public class PatientAppointmentService extends BusinessServices {
 		result = DBDYDao.insert(ac.getConnection(), pop);
 		
 		DBDYPO po = new DBDYPO(tableName,keyField);
-		po.set("APPOINTMENT_ID", messageid);
+		po.set("MESSAGE_ID", messageid);
 		DBDYDao.selectByID(ac.getConnection(), po);
 		//给病患指示器，0时表示医生无新回复，1时表示医生有新回复
 		po.set("IS_NEW", reply_state);
@@ -358,7 +357,7 @@ public class PatientAppointmentService extends BusinessServices {
 		System.out.println("id="+id);
 		StringBuilder ssql = new StringBuilder("SELECT * FROM APPOINTMENT U ");
 		if(StringUtils.isNotBlank(id)) {
-			ssql.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ORDER BY IS_REPLY DESC,CREATE_TIME DESC");
+			ssql.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ORDER BY IS_REPLY DESC,TIME DESC");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 //		
@@ -398,7 +397,6 @@ public class PatientAppointmentService extends BusinessServices {
 			po1.set("IS_READ", pop[n].get("IS_READ").toString());
 			po1.set("IS_NEW", pop[n].get("IS_NEW").toString());
 			po1.set("DOCTOR_ID", pop[n].get("DOCTOR_ID").toString());
-			po1.set("STATE", pop[n].get("STATE").toString());
 			po1.set("PATIENT_ID", pop[n].get("PATIENT_ID").toString());
 			po1.set("DATE", pop[n].get("DATE").toString());
 			po1.set("CREATE_TIME", pop[n].get("CREATE_TIME").toString());

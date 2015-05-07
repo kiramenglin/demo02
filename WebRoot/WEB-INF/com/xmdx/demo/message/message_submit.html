@@ -26,7 +26,7 @@ $(function(){
 $(document).ready(function() {
 	
 	  //加载上传附件组件,初始化文件上传组件，参数：url,文件大小(单位k),文件类型,文件个数（目前只支持1个，有必要再扩展）
-		initSwfUpload("spanButtonPlaceholder","fsUploadProgress","btnCancel","/@{com.xmzy.framework.core.FrameworkConstant.appCode}/FileUpload?INPUT_CODE=TMPNAME&INPUT_NAME=FILENAME","1024","*.jpg;*.gif;*.png","1","/e9common/",function(file){
+		initSwfUpload("spanButtonPlaceholder","fsUploadProgress","btnCancel","/@{com.xmzy.framework.core.FrameworkConstant.appCode}/FileUpload?INPUT_CODE=TMPNAME&INPUT_NAME=FILENAME","300","*.jpg;*.gif;*.png","1","/e9common/",function(file){
 			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.message!convertToBase64&FILENAME=" + $("#TMPNAME").val();
 	    	url = encodeURI(url);
 	    	
@@ -43,6 +43,15 @@ $(document).ready(function() {
 				}
 			});
 		});
+	  
+		var text=$("#edit_myfrom textarea").val();
+	    var counter=text.length;
+	    $("#numtj var").text(200-counter);
+	    $(document).keyup(function() {
+	        var text=$("#edit_myfrom textarea").val();
+	        var counter=text.length;
+	        $("#numtj var").text(200-counter);
+	    });
 	});
 
 
@@ -90,15 +99,19 @@ function saveInfo(){
 		<div class="form-group">
 			<label for="inputPassword" class="col-sm-2 control-label">标题</label>
 			<div class="col-sm-5">
-			  	<input  name="TITLE" id="TITLE">
+			  	<input  name="TITLE" id="TITLE" maxlength="20">
 			</div>
 		</div>			
 		<div class="form-group">
-			<label for="inputPassword" class="col-sm-2 control-label">所咨询问题</label>
-			<div class="col-sm-5">
-			  	<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE"></textarea>
-			</div>
-		</div>				
+					<label for="inputPassword" class="col-sm-2 control-label">回复内容</label>
+					<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea name="MESSAGE" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					
+					</div>
+				</div>				
 			    
 					
 				

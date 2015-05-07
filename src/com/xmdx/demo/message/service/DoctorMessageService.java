@@ -179,7 +179,7 @@ public class DoctorMessageService extends BusinessServices {
 			po1.set("IS_NEW", pop[i].get("IS_NEW").toString());
 			po1.set("DOCTOR_ID", pop[i].get("DOCTOR_ID").toString());
 			po1.set("PATIENT_ID", pop[i].get("PATIENT_ID").toString());
-			po1.set("IMAGE", pop[i].get("IMAGE").toString());
+			//po1.set("IMAGE", pop[i].get("IMAGE").toString());
 			po1.set("DOCTOR_NAME", pop[i].get("DOCTOR_NAME").toString());
 			po1.set("TIME", pop[i].get("TIME").toString());
 			projects.add(po1);
@@ -325,7 +325,7 @@ public class DoctorMessageService extends BusinessServices {
 			po1.set("IS_NEW", pop[n].get("IS_NEW").toString());
 			po1.set("DOCTOR_ID", pop[n].get("DOCTOR_ID").toString());
 			po1.set("PATIENT_ID", pop[n].get("PATIENT_ID").toString());
-			po1.set("IMAGE", pop[n].get("IMAGE").toString());
+			//po1.set("IMAGE", pop[n].get("IMAGE").toString());
 			po1.set("DOCTOR_NAME", pop[n].get("DOCTOR_NAME").toString());
 			po1.set("TIME", pop[n].get("TIME").toString());
 			projects.add(po1);

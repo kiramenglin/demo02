@@ -66,8 +66,8 @@ function myProject(option){
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">医生姓名</span></th>
                               
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">时间</span></th>
-                                           
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">预约时间</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">状态</span></th>
                                            
                                             
                                             <th>操作</th>
@@ -88,7 +88,13 @@ function myProject(option){
                                         	@end{}
                                         	
                                         	<td >@{APPS.get("DATE")} @{APPS.get("TIME")}</td>
-                                        	
+                                        	@if{APPS.get("STATE")=="0"}
+                                        	<td>待审核</td>
+                                        	@else{APPS.get("STATE")=="1"}
+                                        	<td>已通过/td>
+                                        	@else{}
+                                        	<td>已拒绝</td>
+                                        	@end{}
                                         	<td>
 				   							<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.appointment!read">
 												<input type="hidden" style="width:90%" name="APPOINTMENT_ID" id="APPOINTMENT_ID" value="@{APPS.get("APPOINTMENT_ID")}"/>

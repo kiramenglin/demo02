@@ -1,0 +1,978 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>欢迎使用</title>
+
+	<link rel="stylesheet" type="text/css" href="/e9common/jquery/css/layout-default-latest.css" />
+	<link rel="stylesheet" type="text/css" href="/e9common/jquery/css/jquery-ui-1.8.21.custom.css" class="ui-theme" />
+	<link rel="stylesheet" type="text/css" href="/e9common/css/base.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.21.custom.css" class="project-ui-theme"/>
+	<!-- REQUIRED scripts for layout widget -->
+	<script type="text/javascript" src="/e9common/jquery/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/e9common/jquery/js/jquery-ui-1.8.22.custom.min.js"></script>
+	<script type="text/javascript" src="/e9common/jquery/js/jquery.layout-latest.js"></script>
+	<script type="text/javascript" src="/e9common/jquery/js/jquery.layout.resizePaneAccordions-1.0.js"></script> 
+
+    <script type="text/javascript" src="/e9common/jquery/js/themeswitchertool.js"></script>
+    <script type="text/javascript" src="/e9common/js/uiwindow.js"></script>
+    <!-- jquery context -->
+	<link rel="stylesheet" type="text/css" href="/e9common/jquery/css/jquery.contextMenu.css" />
+    <script type="text/javascript" src="/e9common/jquery/ui/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="/e9common/jquery/js/jquery.contextMenu.js"></script>
+    <script src="/e9common/js/common.js"></script>
+	<!-- CUSTOMIZE/OVERRIDE THE DEFAULT CSS -->
+	<style type="text/css">
+		/* remove padding and scrolling from elements that contain an Accordion OR a content-div */
+		.ui-layout-center ,	/* has content-div */
+		.ui-layout-west ,	/* has Accordion */
+		.ui-layout-east ,	/* has content-div ... */
+		.ui-layout-east .ui-layout-content { /* content-div has Accordion */
+			padding: 0;
+			overflow: hidden;
+		}
+		.ui-layout-center P.ui-layout-content {
+			line-height:	1.4em;
+			margin:			0; /* remove top/bottom margins from <P> used as content-div */
+		}
+		h3, h4 { /* Headers & Footer in Center & East panes */
+			font-size:		1.1em;
+			background:		#EEF;
+			border:			1px solid #BBB;
+			border-width:	0 0 1px;
+			padding:		7px 10px;
+			margin:			0;
+		}
+		.ui-layout-west{
+			font-size:		14px;
+		}
+
+		/*菜单组样式*/
+		.menufolder {
+			width: 99.6%;
+			text-align: left;
+			vertical-align:middle;
+			background:url(/e9common/images/main/menu_arrow.png) no-repeat 15px 8px;
+			cursor:pointer;
+		}
+		.menufolder a{
+			padding-left:30px;
+		}
+		.menufolderselected {
+			background:url(/e9common/images/main/menu_arrow1.png) no-repeat 15px 8px;
+		}
+		/*菜单样式*/
+		.menuitem {
+			width: 99.6%;
+			text-align: left;
+			vertical-align:middle;
+			background:url(/e9common/images/main/menuitem.png) no-repeat 30px 4px;
+			cursor:pointer;
+		}
+		.menuitem a{
+			padding-left:38px;
+		}
+		a,a:visited{text-decoration:none;}
+		
+	  	.mymenu ul{margin-top:0px;list-style-type:none;margin:0; padding:0;width: 99.6%}
+	  	.mymenu ul li{line-height:25px;list-style-type:none;margin:0; padding:0;width: 99.6%}
+	    
+		#maintabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0.6em; cursor: pointer; }
+		
+		.inner_content{ width:100%;}
+		.manfield { margin-top:20px;margin-right:10px;}
+		.manfield LEGEND{ font-size:14px;}
+		.manfield div{
+			line-height:30px; font-size:12px;
+			margin:10px;
+			color:#333;
+		}
+	.ui-autocomplete {
+		max-height: 100px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+		/* add padding to account for vertical scrollbar */
+		padding-right: 20px;
+	}
+	/* IE 6 doesn't support max-height
+	 * we use height instead, but this forces the menu to always be this tall
+	 */
+	* html .ui-autocomplete {
+		height: 100px;
+	}
+	</style>
+	<script type="text/javascript">
+		/*扩展函数*/
+		(function( $, undefined ) {
+			$.fn.nextfind = function(s) {
+				if($.browser.msie) {
+					if(parseInt($.browser.version)<=7){
+						//IE6/7使用find
+						return $(this).find(s);
+					}
+				}
+				return $(this).next(s);
+			};
+		})(jQuery);
+	    //取用户app数据
+	    function getUserApp(){
+	    	var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=platform.sso.user.query!getUserApp";
+	    	
+	    	$.ajax({  
+		        async : false,  
+		        cache:false,  
+		        type: 'POST',  
+		        dataType : "json",  
+		        url: url,//请求的action路径  
+		        error: function () {//请求失败处理函数  
+		            alert('加载应用信息失败');  
+		        },  
+		        success:function(data){ //请求成功后处理函数。    
+		        	if(data.result!=""){
+						var datastr = "["
+						var str = data.result.split(";")
+						for(var i=0;i<str.length;i++){
+							if(str[i]!=""){
+								var s="{";
+								
+								var code = str[i].split(",")[0];
+								var name = str[i].split(",")[1]+' ';
+								var appUrl = str[i].split(",")[2]+' ';
+								s = s + '"label":"'+name+'",';
+								s = s + '"value":"'+appUrl+'"';
+								s += '}'
+								if(i!=str.length-2){
+									s+=',';
+								}
+								datastr +=s;
+							}
+							
+						}
+						datastr +="]";
+						appDatas = eval(datastr);
+						appAutoComplete = $( "#appSwitcher" ).autocomplete({
+		         			source: appDatas,
+		         			select: function(event, ui) {
+		         				location.href=ui.item.value;
+		         			}
+		         		});
+					}
+		        }  
+		    });
+	    }
+	</script>
+	
+	<script type="text/javascript">
+		var tab,$maintabs;
+		var tab_counter = 1;
+		var url;
+		String.prototype.replaceAll = function(s1,s2) { 
+		    return this.replace(new RegExp(s1,"gm"),s2); 
+		}
+
+		var tmplateStr = "<li label='${label}'><a href='${href}' style='padding-right:1px;'>${label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>";
+
+		//半透明的拖动条
+		var alphaDiv="<div class='div' id='alphaDiv' style='position:absolute;height:2000px;top:0;z-index:10001;filter:alpha(opacity=50);opacity:0.5;left:200px'> </div>"; 
+
+		/*计算iframe的高度*/
+		function getFrameHeight(){
+			var northHeight = $('.ui-layout-north:visible').outerHeight();// +6线的高度
+			var southHeight = $('.ui-layout-south:visible').outerHeight();
+			var h = Math.round($(window).height() - northHeight - southHeight - $($("#maintabs").find(".ui-tabs-nav")[0]).height()-2);
+
+			return h;
+		}
+		/*拖动时创建背景*/
+		function createMask(){ 
+			//创建背景 
+			var rootEl=document.documentElement||document.body; 
+			var docHeight=((rootEl.clientHeight>rootEl.scrollHeight)?rootEl.clientHeight:rootEl.scrollHeight)+"px";
+			var docWidth=((rootEl.clientWidth>rootEl.scrollWidth)?rootEl.clientWidth:rootEl.scrollWidth)+"px"; 
+			var shieldStyle="position:absolute;top:0px;left:0px;width:"+docWidth+";height:"+docHeight+";background:#000;z-index:10000;filter:alpha(opacity=0);opacity:0"; 
+			$("<div id='shield' style=\""+shieldStyle+"\"></div>").appendTo("body"); 
+		}
+		
+		// 添加新tab
+		function addTab(link,title) {
+			url = link;
+			//var totalSize = $(".ui-tabs-nav > li").size();
+			//如果已经存在，就显示
+			for(var i=0;i<=tab_counter;i++){
+				if($($(".ui-tabs-nav > li")[i]).attr("label") == title){
+					$maintabs.tabs('select', $($(".ui-tabs-nav > li")[i]).find("a").attr("href"));
+					//定位
+					calPosition();
+					return;
+				}
+			}
+
+			tab_counter++;
+			//添加tab
+			var tab = $maintabs.tabs( "add", "#maintabs-" + tab_counter, title );
+			
+			//添加成功后，显示最新添加的tab
+			$maintabs.tabs('select', '#maintabs-' + tab_counter);
+			//计算高度
+			calWidth();
+			//定位
+			calPosition();
+		}
+		//关闭tab标签页
+		function closeTab(title) {
+			
+			for(var i=0;i<=tab_counter;i++){
+				if($($(".ui-tabs-nav > li")[i]).attr("label") == title){
+					$("#maintabs-"+i+"-frame").contents().find(".swfupload").remove();
+					$maintabs.tabs('remove', i);
+					return;
+				}
+			}
+		}
+		var menuLayouts,appDatas;
+		var aos,appAutoComplete;
+		$(document).ready( function() {
+			//取布局信息
+			loadMenuLayout();
+			if("#{com.xmzy.framework.core.FrameworkConstant.getLoginMode()}"=="cas"){
+				getUserApp();
+			}else{
+				$("#appSwitcher").css("display","none");
+			}
+			
+			$("#menuSwitcher").click(function(){
+				var ms = $("#menuSwitcher");				
+				if($(".ui-autocomplete").css("display")=="none"){
+					$(aos).autocomplete('search', ' ');
+					$(".ui-autocomplete").css({top:ms.offset().top + ms.height()}).css("width","145px");
+				}else{
+					$(".ui-autocomplete").css("display","none");
+				}
+			});
+			$("#appSwitcher").click(function(){
+				var ms = $("#appSwitcher");
+				if($(".ui-autocomplete").css("display")=="none"){
+					$(appAutoComplete).autocomplete('search', ' ');
+					$(".ui-autocomplete").css({top:ms.offset().top + ms.height()}).css("width","145px");
+				}else{
+					$(".ui-autocomplete").css("display","none");
+				}
+			});
+			myLayout = $('body').layout({
+				west__size:			200
+			,	north__size:		93
+			,	north__closable:	false
+			,	north__resizable:	false
+			,	south__resizable:	false
+			,	north__spacing_open:-2
+			,	south__spacing_open:3
+			,	south__size:		32
+			,	north__onresize:	function(){$(window).trigger("resize")}
+			,	north__onclose:		function(){$(window).trigger("resize")}
+			,	south__onclose:		function(){$(window).trigger("resize")}
+			,	south__onresize:	function(){$(window).trigger("resize")}
+			,	west__onresize:		$.layout.callbacks.resizePaneAccordions
+			,	ondrag_start:function(){
+					createMask();//遮住iframe
+				}
+        	,ondrag_end:function(){
+        			$("#shield").remove(); //删除蒙板 
+					$("body").css("cursor","normal"); //恢复光标类型 
+        		}
+			});
+	
+			chgTime();
+			// ACCORDION - in the West pane
+			$("#menuAccordion").accordion({ fillSpace:	true });
+			//tab开始************************
+			$maintabs = maintab = $( "#maintabs").tabs({
+				tabTemplate: tmplateStr.replaceAll("\\$", "#"),
+				add: function( event, ui ) {
+					$(ui.panel).css("padding","0");
+					
+					var frameHeight = getFrameHeight();
+					
+					//scrolling='auto' 下面这个auto没有用
+					$( ui.panel ).append( "<iframe src='"+encodeURI(url)+"' id='maintabs-"+tab_counter+"-frame' style='position: absolute;top: 35px;' width='100%' height='"+frameHeight+"' frameborder='0' scrolling='auto'></iframe>" );
+				}
+			});
+			
+
+			//关闭tab操作，点击关闭按钮
+			$( "#maintabs span.ui-icon-close" ).live( "click", function() {
+				var index = $( "li", $maintabs ).index( $( this ).parent() );
+				try{
+					$maintabs.tabs( "remove", index );
+				}catch(e){
+					
+				}
+				calWidth();
+			});
+			//双击关闭
+			$( "#maintabs li" ).live( "dblclick", function() {
+				if(winStatus=="max"){
+					restoreWin();
+				}else {
+					maxWin();
+				}
+				/*
+				var index = $("li", $maintabs ).index($(this));
+				if(index==0) return;
+				try{
+					$maintabs.tabs( "remove", index );
+				}catch(e){
+					
+				}
+				calWidth();
+				*/
+			});
+			
+			$maintabs.removeClass("ui-widget");
+			//$maintabs.removeClass("ui-widget-content");
+			//$maintabs.removeClass("ui-corner-all");
+			//tab结束************************
+			
+			//resize绑定
+			$(window).bind('resize', function(){
+				//设置每个iframe的高度
+				var frameHeight = getFrameHeight();
+				
+				for(var i=1;i<=tab_counter;i++){
+					if($("#maintabs-"+i+"-frame")!=null){
+						$("#maintabs-"+i+"-frame").height(frameHeight);
+					}
+				}
+				
+			});
+			
+			// THEME SWITCHER
+			addThemeSwitcher2('.ui-layout-north',
+					{ top: '65px', right: '5px' },
+					{
+						switchFun:function(linkHrefStr){
+							try{
+								switchProjectCss(linkHrefStr);//切换样式时要调的函数
+							}catch(e){
+								
+							}
+						}
+					});
+			
+			//菜单点击操作
+			$(".mymenu ul li").nextfind("ul").hide();//使用自定义函数
+			$(".mymenu ul li").click(function(e){
+				$this = $(this);
+				if($(this).attr("link")!=null && $(this).attr("link")!=""){
+					addTab($(this).attr("link"),$(this).attr("title"));
+					e.stopPropagation();//在IE6/7下会触发下面这个toggle，加个冒泡阻止
+				}else{
+					$(this).nextfind("ul").each(function(){
+						$this.toggleClass("menufolderselected");
+						$(this).toggle();
+					});
+				}
+			});
+			//$(".menua > .ui-button-text").css("text-align","left");
+			
+			/* allow time for browser to re-render with new theme */
+			setTimeout( myLayout.resizeAll, 1000 ); 
+			//不让tab折行
+			$("#maintabs > .ui-tabs-nav").css("width","30000px");
+			//滚动条样式
+			var ulHeight = $("#maintabs > ul").css("height");
+			$("#rightSpan").css("height",parseInt(ulHeight)+2);
+			$("#leftSpan").css("height",parseInt(ulHeight)+2);
+			
+			if($.browser.msie) {
+				$(".manfield").removeClass("ui-corner-all");//ie下去除ui-corner-all样式
+			}
+			//右键菜单
+			loadContextMenu();
+			
+		});
+		//右键菜单
+		function loadContextMenu(){
+			var index = 0;
+			var id = "";
+			var currTabId = "";
+			$( "#maintabs li" ).live( "mousedown", function() {
+				index = $("li", $maintabs ).index($(this));
+				id = $(this).find("a").attr("href");
+				currTabId = id.substring(1);
+				currTabId = currTabId + "-frame";
+			});
+			
+    		
+    		
+			$.contextMenu({
+		        selector: '#maintabs > ul > li', 
+		        callback: function(key, options) {
+		        	if("reload" == key){
+		        		$maintabs.tabs('select', '#maintabs-' + (index+1));
+		        		if(index!=0){
+		        			$("#" + currTabId).attr("src",$("#" + currTabId).attr("src"));
+		        		}
+		        	}
+		        	if("close" == key){
+		        		if(index!=0){
+		        			try{
+		    					try{
+		    						$maintabs.tabs( "remove", index );
+		    					}catch(e){
+		    						
+		    					}
+		    				}catch(e){
+		    					
+		    				}
+		        		}
+		        	}
+		        	if("closeOther" == key){
+		        		//先关右侧
+		        		for(var i=$maintabs.tabs("length");i>index+1;i--){
+		        			if(index==0){
+		        				try{
+		        					$maintabs.tabs( "remove", ($maintabs.tabs("length")-1) );
+		        				}catch(e){
+		        					
+		        				}
+		        			}else{
+		        				try{
+		        					$maintabs.tabs( "remove", ($maintabs.tabs("length")-1) );
+		        				}catch(e){
+		        					
+		        				}
+		        			}
+		        		}
+		        		//再关左侧
+		        		for(var i=$maintabs.tabs("length");i>2;i--){
+		        			if(index==0){
+		        				try{
+		        					$maintabs.tabs( "remove", ($maintabs.tabs("length")-2) );
+		        				}catch(e){
+		        					
+		        				}
+		        			}else{
+		        				try{
+		        					$maintabs.tabs( "remove", ($maintabs.tabs("length")-2) );
+		        				}catch(e){
+		        					
+		        				}
+		        			}
+		        		}
+		        	}
+		        	if("closeRight" == key){
+		        		for(var i=$maintabs.tabs("length");i>index+1;i--){
+		        			if(index==0){
+		        				try{
+		        					$maintabs.tabs( "remove", ($maintabs.tabs("length")-1) );
+			        			}catch(e){
+			        				
+			        			}
+		        			}else{
+		        				try{
+		        					$maintabs.tabs( "remove", ($maintabs.tabs("length")-1) );
+			        			}catch(e){
+			        				
+			        			}
+		        			}
+		        			
+		        		}
+		        	}
+		        	if("closeAll" == key){
+		        		for(var i=$maintabs.tabs("length");i>1;i--){
+		        			try{
+		        				$maintabs.tabs( "remove", $maintabs.tabs("length")-1 );
+		        			}catch(e){
+		        				
+		        			}
+		        			
+		        		}
+		        	}
+		        	if("maxwin"==key){
+		        		maxWin();
+		        	}
+		        	if("restorewin"==key){
+		        		restoreWin();
+		        	}
+		        	
+		        	calWidth();
+		        },
+		        items: {
+		        	"reload": {name: "  重新载入", icon: "refresh"},
+		        	"close": {name: "  关闭标签页", icon: "deletepage"},
+		        	"closeOther": {name: "  关闭其它标签页", icon: "process"},
+		        	"closeRight": {name: "  关闭右侧标签页", icon: "right"},
+		        	"closeAll": {name: "  全部关闭", icon: "deleteall"},
+		        	"maxwin": {name: "  最大化", icon: "maxwin"},
+		        	"restorewin": {name: "  还原", icon: "restorewin"}
+		        }
+		    });
+		}
+		
+		function closeIframe()
+		{
+		    $('#dialog-window').dialog('close');
+		    return false;
+		}
+		//关闭弹出窗
+		function closePopWindow(id)
+		{
+			$('#'+id).remove();
+		    $('#'+id).dialog('close');
+		    return false;
+		}
+		//计算总宽度
+		function calWidth(){
+			
+			var allWidth=0;
+			$.each($("#maintabs > ul > li"),function(i,obj){
+				var w = $(obj).css("width")
+				w = w.substring(0,w.indexOf("px"));
+				allWidth = allWidth + parseInt(w);
+			});
+			//alert(allWidth+"  " +$("#maintabs").css("width"))
+			var maintabWidth = $("#maintabs").css("width");
+			maintabWidth = maintabWidth.substring(0,maintabWidth.indexOf("px"));
+			
+			if(parseInt(allWidth)>parseInt(maintabWidth)){
+				//$("#maintabs > ul > li:first").css("margin-left","15px");
+				$("#rightSpan").css("display","");
+				$("#leftSpan").css("display","");
+			}else{
+				//$("#maintabs > ul > li:first").css("margin-left","1px");
+				$("#rightSpan").css("display","none");
+				$("#leftSpan").css("display","none");
+				$('#maintabs > ul').animate({
+				    left: "0px"
+				  }, 500, function() {
+				    // Animation complete.
+				  });
+			}
+			return allWidth;
+		}
+		//右移
+		function right(){
+			//所有tab宽度
+			var allwidth = calWidth();
+			if($("#maintabs > ul").css("left")=="auto"){
+				$("#maintabs > ul").css("left","0px");
+			}
+			var left = getWidth($("#maintabs > ul").css("left"));
+			left = parseInt(left) - 200;
+			
+			//工作区宽度
+			var maintabWidth = getWidth($("#maintabs").css("width"));
+			
+			//alert(parseInt(allwidth)+parseInt(left)-parseInt(maintabWidth))
+			var maxLeft = parseInt(maintabWidth) - parseInt(allwidth)- ($maintabs.tabs('length')*8);
+			if(left < maxLeft){
+				left = maxLeft
+			}
+			$('#maintabs > ul').animate({
+			    	left: left+"px"
+			  	}, 
+			  	500, 
+			  	function() {
+			    // Animation complete.
+			});
+		}
+		//左移
+		function left(){
+			
+			var allWidth=0;
+			$.each($("#maintabs > ul > li"),function(i,obj){
+				var w = $(obj).css("width")
+				w = w.substring(0,w.indexOf("px"));
+				allWidth = allWidth + parseInt(w)
+			});
+			if($("#maintabs > ul").css("left")=="auto" || $("#maintabs > ul").css("left")=="0px"){
+				return;
+			}
+			if($("#maintabs > ul").css("left")>"0px"){
+				$('#maintabs > ul').animate({
+				    left: "0px"
+				  }, 500, function() {
+				  });
+				return;
+			}
+			var left = $("#maintabs > ul").css("left")
+			left = left.substring(0,left.indexOf("px"));
+			left = parseInt(left) + 200;
+			//$("#maintabs > ul").css("left",left+"px")
+			$('#maintabs > ul').animate({
+			    left: left+"px"
+			  }, 500, function() {
+				  if($("#maintabs > ul").css("left")>"0px"){
+					  $('#maintabs > ul').animate({
+						    left: "0px"
+						  }, 500, function() {
+						  });
+				  }
+			  });
+		}
+		//计算当前节点位置
+		function calPreLiWidth(){
+			var selected = $maintabs.tabs('option', 'selected');
+			var preLi = $("#maintabs > ul > li");
+			var preWidth = 0;
+			$.each(preLi,function(i,obj){
+				if(i<=selected){
+					preWidth = preWidth + getWidth($(obj).css("width"));
+				}
+			});
+			return preWidth;
+		}
+		//定位
+		function calPosition(){
+			//alert($("#maintabs > ul").css("right"))
+			//选中tab的索引
+			var selected = $maintabs.tabs('option', 'selected');
+			//如果没有超宽，则不处理
+			if($("#rightSpan").css("display")=="none"){
+				return;
+			} 
+			var currTabWidth = getWidth($("#maintabs > ul > .ui-tabs-selected").css("width")); 
+			//当前tab宽度
+			var width = calPreLiWidth();
+			//工作区宽度
+			var maintabWidth = getWidth($("#maintabs").css("width"));
+			//所有tab宽度
+			var allwidth = calWidth();
+			//alert("width:"+width+"  maintabWidth:"+maintabWidth + "  allwidth:"+allwidth +"  left:"+$('#maintabs > ul').css("left"))
+			//如果当前tab的宽度小于工作区宽度，则显示到最前面
+			if(width<maintabWidth){
+				$('#maintabs > ul').animate({
+			    	left: "0px"
+			  	}, 
+			  	500, 
+			  	function() {
+				});
+			}else{
+				
+				$('#maintabs > ul').animate({
+			    	left: (maintabWidth - width - currTabWidth - selected*2) + "px"
+			  	}, 
+			  	500, 
+			  	function() {
+				});
+			}
+			
+		}
+		function getWidth(width){
+			return parseInt(width.substring(0,width.indexOf("px")));
+		}
+		//退出
+		function logoutSystem(){
+			
+			window.location = "HttpChannel?action=USER_LOGOUT";
+		}	
+		//主页
+		function goHome(){
+			location.href="index.jsp";
+			//$maintabs.tabs('select', '#maintabs-1');
+		}
+		//到更改密码页面
+		function chgPassword(){
+			addTab("HttpChannel?action=CHANGEPASSWORD","更改密码");
+		}
+		function helpCenter(){
+			addTab("HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=platform.help&CMD=B","系统帮助")
+		}
+		
+		//检测关联页面
+		function checkRelatePage(itemNo,relateItemNo){
+
+			if(itemNo==null||itemNo==""||relateItemNo==null||relateItemNo==""){
+				return;
+			}
+
+			//循环找到相关页面
+			for(var i=1;i<=tab_counter;i++){
+				if($("#maintabs-"+i+"-frame")!=null){
+					var c = $("#maintabs-"+i+"-frame").contents();
+					var pageItemNo = c.find("#RESOURCE_ITEMNO").text();
+
+					if(pageItemNo!=null&&pageItemNo!=""&&((","+relateItemNo+",").indexOf(","+pageItemNo+",")>=0)){
+						//有相关，则在相关页面提示
+						//$("#maintabs-"+i+"-frame")[0].contentWindow.$.jqalert("本功能相关数据可能有修改，请刷新本页面！");
+						$("#maintabs-"+i+"-frame")[0].contentWindow.alertReload();
+					}
+				}
+			}
+		}
+		//显示系统时间
+		function getSysDate(){
+			var NOW = new Date();
+			var Y = NOW.getFullYear();
+			var M = NOW.getMonth()+1;
+			var D = NOW.getDate();
+			var H = NOW.getHours();
+			var m = NOW.getMinutes();
+			var S = NOW.getSeconds();
+			var d = NOW.getDay();
+			if (H<10) {
+				H = "0"+H/1;
+			}
+			if (m<10) {
+				m = "0"+m/1;
+			}
+			if (S<10) {
+				S = "0"+S/1;
+			}
+			switch (d) {
+			case 0 :
+				d = "星期日";
+				break;
+			case 1 :
+				d = "星期一";
+				break;
+			case 2 :
+				d = "星期二";
+				break;
+			case 3 :
+				d = "星期三";
+				break;
+			case 4 :
+				d = "星期四";
+				break;
+			case 5 :
+				d = "星期五";
+				break;
+			case 6 :
+				d = "星期六";
+				break;
+			}
+			return Y+"年"+M+"月"+D+"日  "+d+"  "+H+":"+m+":"+S;
+		}
+		function chgTime(){
+			setInterval( function() {
+				var newDate = new Date();
+				$("#showtime").html(getSysDate());
+			},1000);
+		}
+		//加载布局信息
+		function loadMenuLayout(){
+			$.ajax({  
+		        async : false,  
+		        cache:false,  
+		        type: 'POST',  
+		        dataType : "json",  
+		        url: "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=sys.menuscheme.query!queryLayoutForSelect",//请求的action路径  
+		        error: function () {//请求失败处理函数  
+		            alert('加载布局信息失败');  
+		        },  
+		        success:function(data){ //请求成功后处理函数。    
+		        	menuLayouts = data;   
+					aos = $( "#menuSwitcher" ).autocomplete({
+	         			source: menuLayouts,
+	         			select: function(event, ui) {
+	         				/*
+	         				var hrefstr = location.href;
+
+	         				if(hrefstr.indexOf("#")>0){
+	         					hrefstr = hrefstr.replace("#","");
+	         				}
+	         				if(hrefstr.indexOf("?LAYOUT")>0){
+	         					hrefstr = hrefstr.substring(0,hrefstr.indexOf("?LAYOUT"));
+	         				}
+	         			    location.href=hrefstr+"?LAYOUT="+ui.item.value;
+	         			    */
+	         				location.href="HttpChannel?action=PLATFORM_MAIN_ACTION&logintype=MENUSWITCH&LAYOUT="+ui.item.value;
+	         			}
+	         		});
+		        }  
+		    });
+		}
+		//切换样式
+		function switchProjectCss(str){
+			var path = str.substring(str.indexOf("theme"));
+			path = "css/"+path
+			updateProjectCSS(path);
+		}
+		function updateProjectCSS(locStr){
+			var cssLink = $('<link href="'+locStr+'" type="text/css" rel="Stylesheet" class="project-ui-theme" />');
+			$("head").append(cssLink);
+			if( $("link.project-ui-theme").size() > 1){
+				$("link.project-ui-theme:first").remove();
+			}	
+		}
+		
+		//最大化窗口
+		var winStatus = "normal";
+		function maxWin(){
+			winStatus = "max";
+			myLayout.hide("east")
+			myLayout.hide("west");
+			myLayout.hide("north");
+			myLayout.hide("south");
+		}
+		function restoreWin(){
+			winStatus = "normal";
+			myLayout.show("east")
+			myLayout.show("west");
+			myLayout.show("north");
+			myLayout.show("south");
+		}
+		//帮助信息
+		function gotoHelp(helpId){
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=arch.student!gotoHelp&HELPID="+helpId;	
+			$.uiPopWindow('stuHelpDialog', url, {
+				closeOnEscape: true,
+				title: "学生如何申报及在线支付指南", 
+				width: 900, 
+				height: 600, 
+				draggable: true
+			});	
+			//popRe2adInfo(url, "查看考试计划信息", 800, 500);
+		}
+	</script>
+</head>
+
+<body>
+<div class="ui-layout-north ui-widget-content theme-title-bg" style="display: none;">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:0;padding:0;">
+	<tr><td>
+	<div class="theme-title" ><span class="theme-title-text"></span></div>
+	</td><td width="500" class="theme-title-right">
+	<div style="float: right; margin-right: 5px;margin-top: 6px;">
+		<div class="theme-title-btn-1"
+			onmouseover="$(this).addClass('theme-title-btn-1-hover');"
+			onmouseout="$(this).removeClass('theme-title-btn-1-hover');"
+			onclick="goHome();return(false);">
+			<img src="/e9common/images/main/home.png" border="0" height="26"><br>
+			<span style="color:#fff;">回首页</span>
+		</div>
+		<!--  <div class="theme-title-btn-2"
+			onmouseover="$(this).addClass('theme-title-btn-2-hover');"
+			onmouseout="$(this).removeClass('theme-title-btn-2-hover');"
+			onclick="chgPassword();return(false);">
+			<img src="/e9common/images/main/lock.png" border="0" height="26"><br>
+			<span style="color:#fff;">修改密码</span>
+		</div>
+		<div class="theme-title-btn-3"
+			onmouseover="$(this).addClass('theme-title-btn-3-hover');"
+			onmouseout="$(this).removeClass('theme-title-btn-3-hover');"
+			onclick="helpCenter();">
+			<img src="/e9common/images/main/helpcenter.png" border="0"><br>
+			<span style="color:#fff;">帮助中心</span>
+		</div>-->
+		<div class="theme-title-btn-3"
+			onmouseover="$(this).addClass('theme-title-btn-3-hover');"
+			onmouseout="$(this).removeClass('theme-title-btn-3-hover');"
+			id="themeSwitcherHref" onclick="$('#themeSwitcherBtn').click();">
+			<img src="/e9common/images/main/chgtheme1.png" border="0" height="26"><br>
+			<span style="color:#fff;">更换风格</span>
+		</div>
+		<!-- 
+		<div class="theme-title-btn-3"
+			onmouseover="$(this).addClass('theme-title-btn-3-hover');"
+			onmouseout="$(this).removeClass('theme-title-btn-3-hover');"
+			id="menuSwitcher" onclick="">
+			<img src="/e9common/images/main/menu_layout.png" border="0" height="26"><br>
+			<span style="color:#fff;">切换布局</span>
+		</div>
+		-->
+		<!--<div class="theme-title-btn-3"
+			onmouseover="$(this).addClass('theme-title-btn-3-hover');"
+			onmouseout="$(this).removeClass('theme-title-btn-3-hover');"
+			id="appSwitcher" onclick="">
+			<img src="/e9common/images/main/menu_layout.png" border="0" height="26"><br>
+			<span style="color:#fff;">切换应用</span>
+		</div>-->
+
+		<div class="theme-title-btn-4"
+			onmouseover="$(this).addClass('theme-title-btn-4-hover');"
+			onmouseout="$(this).removeClass('theme-title-btn-4-hover');"
+			onclick="logoutSystem();return(false);">
+			<img src="/e9common/images/main/exit.png" border="0"><br>
+			<span style="color:#fff;">退出系统</span>
+		</div>
+	</div>
+	</td><td>
+	<div style="position:absolute;right:15px;top:68px;color:#fff;"></div>
+	</td>
+	</table>
+</div>
+<div class="ui-layout-south ui-widget-content theme-bottom" style="display: none;">
+	<div style="float: left; margin-left: 5px;color:#fff;margin-top:-3px;">
+	#{userInfo.get('IMGDATA')==null?'<img src="/e9common/images/icon/001_54.png" height="16" style="vertical-align:middle">':'
+	<img src="data:image/'+userInfo.get('IMGTYPE')+';base64,'+userInfo.get('IMGDATA')+'" height="16" style="vertical-align:middle">
+	'}
+	欢迎您，#{SESSION_USER_BEAN.getSysUserPO().getOpName()} </div>
+	
+	<div style="float: right; margin-right: 10px;margin-top:-3px;color:#fff;">
+		<span style="cursor: pointer;"><a  target="_blank" style="color: #FFFFFF" href="@{com.xmzy.framework.service.MessageService.getMessage('BACKPAGEFOOTER_HREF')}">@{com.xmzy.framework.service.MessageService.getMessage("BACKPAGEFOOTER")}</a></span>
+	</div>
+</div>
+
+<div class="ui-layout-center ui-layout-content-bgcolor" style="display: none;border:0px;"> 
+	<!-- 右移 -->
+	<span id="rightSpan" onclick="right()" title="Next tab" style="display:none; cursor: pointer; z-index: 1000; position: absolute; top: 1px; right: 0px;" class="ui-state-active ui-corner-tr ui-corner-br stNext stNav">
+		<span class="ui-icon ui-icon-carat-1-e" style="margin-top: 7px; "></span>
+	</span>
+	<!-- 左移 -->
+	<span id="leftSpan" onclick="left()" title="Previous tab" style="display:none;cursor: pointer; z-index: 1000; position: absolute; top: 1px; right: 16px;" class="ui-state-active ui-corner-tl ui-corner-bl stPrev stNav">
+		<span class="ui-icon ui-icon-carat-1-w" style="margin-top: 7px; "></span>
+	</span>
+	<!-- 工作区开始 -->
+	<div id="maintabs" style="width: 100%; height: 100%; padding:0;">
+		<ul style="position:absolute;padding-left:4px;">
+			<li label="主页"><a href="#maintabs-1"><img src="/e9common/images/main/main_home.png" height="12" width="30" border="0" align="absmiddle"> 主页</a>&nbsp;&nbsp;&nbsp;&nbsp;</li>
+		</ul>
+		<div id="maintabs-1" style="padding: 0;width:100%;">
+			<div style="position:absolute;top:35px;height:100%;width:100%;background:#fff url(images/main/content_bg.jpg) no-repeat bottom right;">
+				<div class="inner_content">
+					<FIELDSET class="manfield" style="border:0;">
+						<LEGEND>
+							&nbsp;&nbsp;<b>用户登录信息：</b>
+							
+							<br>
+							
+						</LEGEND>
+						<div>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								<tr height="12"><td align="left" width="85">上次登录IP：</td><td>#{userInfo.get('PREVLOGINIP')}</td></tr>
+								<tr height="12"><td align="left">上次登录时间：</td><td>#{com.e9rj.platform.common.StringUtil.formatTime(userInfo.get('PREVLOGINTIME'))}</td></tr>
+								<tr height="12"><td align="left">本次登录IP：</td><td>#{userInfo.get('LASTLOGINIP')}</td></tr>
+								<tr height="12"><td align="left">总登录次数：</td><td>#{userInfo.get('LOGINTIMES')}</td></tr>
+								#{(IS_ZKXJ == '1' && SESSION_USER_BEAN.sysUserExtendPO.get('USERTYPE') == '4') ? '
+									<tr height="12"><td align="left"></td><td></td></tr>
+									<tr height="12" >
+										<td align="left" colspan="2" style="">
+											<a href="javascript:void(0)" onclick="gotoHelp(\'HP131219093125879001\')" style="width: 18px;color: red;font: bolder;font-size: 16px;">请点击查看：1、学生如何报考及在线支付？</a>
+											&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="gotoHelp(\'HP140404154134942001\')" style="width: 18px;color: red;font: bolder;font-size: 16px;">2、学生如何进行学位申请及在线支付？</a>
+										</td>
+									</tr>
+									<tr height="12"><td align="left" colspan="2"><span style="width: 18px;color: red;font: bolder;font-size: 16px;">注：现在只支持建设银行网上银行!</span></td></tr>
+									<tr height="12"><td align="left" colspan="2">
+									手机微信扫描下方二维码，关注“福建益玖”公众号，可以在线反馈问题、实时查分等...<br>
+									益玖将竭诚为您提供更优质的服务！衷心希望您将更好的建议和想法告诉我们！: )
+									</td></tr>
+									<tr height="12" ><td align="left" colspan="2">
+									<img alt="" src="/zkxj/UserFiles/Image/201309/qrcode_e9rj.jpg" style="width: 130px; height: 130px;">
+									</td></tr>
+								' : ''}
+								
+								#{IS_ZKXJ == '1' ? '' : '<tr height="12"><td align="left">组织机构：</td><td>' + userInfo.get('ORG_NAME') + (userInfo.get('DEPT_NAME')==null?'':('-' + userInfo.get('DEPT_NAME'))) + '</td></tr>'}
+							</table>
+						</div>
+					</FIELDSET>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 工作区结束 -->
+</div>
+
+<div class="ui-layout-west ui-layout-content-bgcolor" style="display: none;padding-right:1px;padding-bottom:2px;border:0px;">
+	<div id="menuAccordion" class="basic" style="margin-top:-1px;">
+		<!-- 菜单区开始 -->
+		#{com.e9rj.platform.util.MenuUtil.genMenu(GROUP_LIST,MENU_LIST)}
+		<!-- 菜单区结束 -->
+	</div>
+</div>
+
+</body>
+</html> 

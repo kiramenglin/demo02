@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!-- 病患查看预约详细信息页面 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>查看消息</title>
+
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="/e9common/swfupload/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/swfupload.queue.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/fileprogress.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/handlers.js"></script>
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/common.js"></script>  
+
+<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>  
+<script type="text/javascript">
+var validateForm = false;
+$(function(){
+	 submitInfoForm("infoForm", "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.appointment!new_save");
+	 
+	 var text=$("#edit_myfrom textarea").val();
+	    var counter=text.length;
+	    $("#numtj var").text(200-counter);
+	    $(document).keyup(function() {
+	        var text=$("#edit_myfrom textarea").val();
+	        var counter=text.length;
+	        $("#numtj var").text(200-counter);
+	    });
+});	
+
+
+
+function saveInfo(){
+	var str1=document.infoForm.CONTENT.value;
+	  
+	  
+	  if(str1==""){
+		  alert("请输入内容！");
+		  validateForm = false;
+	   return  false ;
+	  }
+	  validateForm = true;
+	  
+	  $('#infoForm').submit();
+	
+}
+
+
+ </script>
+ </head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">                        
+			<form class="form-horizontal" method="post" name="infoForm" id="infoForm" >
+												
+				<input type = "hidden" name="APPOINTMENT_ID" id="APPOINTMENT_ID" value = "@{MESSAGE.get("APPOINTMENT_ID")}">
+				<input type = "hidden" name="DOCTOR_ID" id="DOCTOR_ID" value = "@{MESSAGE.get("DOCTOR_ID")}">
+				<input type = "hidden" name="PATIENT_ID" id="PATIENT_ID" value = "@{MESSAGE.get("PATIENT_ID")}">
+				<input type = "hidden" name="DOCTOR_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("DOCTOR_NAME")}">
+				<input type = "hidden" name="PATIENT_NAME" id="DOCTOR_NAME" value = "@{MESSAGE.get("PATIENT_NAME")}">
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">医生</label>
+					<div class="col-sm-5">
+						<h4>@{MESSAGE.get("DOCTOR_NAME")}</h4>
+					</div>
+				</div>	
+				
+				
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">预约内容</label>
+					<div class="col-sm-5">
+						<p>@{MESSAGE.get("DESCRIPTION")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">预约时间</label>
+					<div class="col-sm-5">
+						<p>@{MESSAGE.get("DATE")} @{MESSAGE.get("TIME")}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">回复内容</label>
+					<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea name="CONTENT" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					
+					</div>
+				</div>
+					
+																									    
+			</form>
+			<div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		    	<button  class="btn btn-primary" onclick="saveInfo()">提交</button>
+		    </div>
+  		</div>	
+		</div>
+		<div class="col-md-6">
+		<h3>全部回复</h3><br>
+		<table class="table"  style="table-layout:fixed;">
+		<thead >
+		<tr >
+		  
+		  
+		   <th ><i class="icon-tags"> </i><span class="hidden-phone">来自</span></th>
+		   <th ><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
+		   <th ><i class="icon-tags"> </i><span class="hidden-phone">时间</span></th>
+		   
+		</tr>
+		</thead>
+		<tbody>
+		<tr>@foreach{COMMENTS: COMMENT}
+		@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("PATIENT_NAME")}
+		<td class="danger" width="20%">我</td>
+		<td class="danger" width="60%" style="word-break:break-all; word-wrap:break-word;">@{COMMENTS.get("CONTENT")}</td>
+		<td class="danger" width="20%">@{COMMENTS.get("TIME")}</td>
+		@else{}
+		<td class="success" width="20%">@{COMMENTS.get("FROM_NAME")}</td>
+		<td class="success" width="60%" style="word-break:break-all; word-wrap:break-word;">@{COMMENTS.get("CONTENT")}</td>
+		<td class="success" width="20%">@{COMMENTS.get("TIME")}</td>
+		@end{}
+		
+		</tr>
+		@end{}
+		</tbody>
+		</table>
+		</div>
+        
+</div>
+</div>
+    
+</body>
+</html>
