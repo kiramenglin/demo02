@@ -36,7 +36,7 @@
 					colModel:
 						#{com.e9rj.platform.form.GridFormUtil.getColumnSetting(SESSION_USER_BEAN.getSysUserPO().getOpNo(),
 						tabLogo, 
-						'[{name:"DOCTOR_ID",index:"DOCTOR_ID",label:"医生ID",width:"60px"},' +
+						'[{name:"DOCTOR_ID",index:"DOCTOR_ID",hidden:true,label:"医生ID",width:"60px"},' +
 						'{name:"NAME",index:"NAME",label:"医生名称",width:"60px"},' +
 						'{name:"GENDER",index:"GENDER",label:"性别",width:"30px", align:"center"},' +
 						'{name:"TITLE",index:"GENDER",label:"职称",width:"30px", align:"center"},' +
@@ -109,7 +109,7 @@
 			var url = gotoAction + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
 			popReadInfo(url,"查看医生信息",globalPopWidth,globalPopHeightShort);
 		});
-		
+		//医生详情按钮
 		$("#infoBtn").click(function(){
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
@@ -117,12 +117,20 @@
 			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.connected!doctorInfo" + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
 			window.location.href=url;
 		});
-		
+		//咨询按钮
 		$("#messageBtn").click(function(){
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
 			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
 			var url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=patient.message" + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
+			window.location.href=url;
+		});
+		//预约按钮
+		$("#appointmentBtn").click(function(){
+			var selectedId = getSelectedCheckbox("gridTable");
+			if(!selectOne(selectedId))return;
+			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
+			var url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=patient.appointment" + "&DOCTOR_ID="+rowData.DOCTOR_ID+"&TMP="+new Date();
 			window.location.href=url;
 		});
 		
@@ -182,9 +190,9 @@
 	        <div id="gridPager" style="height: 36px"></div>
 	        <div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;">
 				<span id="buttonset">
-	            <button id="infoBtn" ><span class="ui-icon ui-icon-newwin" style="float: left;"></span>查看详细信息</button>
-	            <button id="messageBtn" ><span class="ui-icon ui-icon-newwin" style="float: left;"></span>诊疗咨询</button>
-					
+	            <button id="infoBtn" ><span class="ui-icon ui-icon-newwin" style="float: left;"></span>详情</button>
+	            <button id="messageBtn" ><span class="ui-icon ui-icon-newwin" style="float: left;"></span>咨询</button>
+				<button id="appointmentBtn" ><span class="ui-icon ui-icon-newwin" style="float: left;"></span>预约</button>
 				   
 				</span>
 	        </div>

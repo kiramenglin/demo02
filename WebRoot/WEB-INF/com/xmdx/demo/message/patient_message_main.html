@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 医生查看消息页面 -->
+<!-- 病患查看消息页面 -->
 <meta charset="UTF-8">
 <title>咨询消息</title>
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
@@ -69,7 +69,7 @@ function myProject(option){
                                         <tr>
                                           
                                           
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">病患姓名</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">医生姓名</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">标题</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">时间</span></th>
@@ -86,7 +86,7 @@ function myProject(option){
 												 
 			                                     
 											
-                                        	<td >@{APPS.get("PATIENT_NAME")}</td>
+                                        	<td >@{APPS.get("DOCTOR_NAME")}</td>
                                         	@if{APPS.get("IS_REPLY")=="1"}
                                         	<td >(有新回复)@{APPS.get("TITLE")}</td>
                                         	@else{}
