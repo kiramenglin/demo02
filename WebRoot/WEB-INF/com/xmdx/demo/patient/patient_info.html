@@ -29,19 +29,10 @@
 			 	<div class="text-center profile-pic">
 				    <img style="width:300px;height:300px;" src="data:image/jpg;base64,@{USER.get("IMAGE")}"/>
 				</div>
-				<ul class="nav nav-tabs nav-stacked">
-				    <li><a href="javascript:void(0)"><i class="icon-coffee"></i> 公文包</a></li>
-				    <li><a href="javascript:void(0)"><i class="icon-paper-clip"></i> 工程</a></li>
-				    <li><a href="javascript:void(0)"><i class="icon-picture"></i> 收藏</a></li>
-				</ul>
-				<ul class="nav nav-tabs nav-stacked">
-				    <li><a href="javascript:void(0)"><i class="icon-facebook"></i> Facebook</a></li>
-				    <li><a href="javascript:void(0)"><i class="icon-twitter"></i> Twitter</a></li>
-				   
-				</ul>
+				
 			</div>
 			<div class="col-md-8">
-				<h4>@{USER.get("NAME")}<br><small>@{USER.get("WORKPLACE")}</small></h4>
+				<h4>@{USER.get("NAME")}<br></h4>
 				<table class="table table-borderless">
 				    <tbody>
 				    <tr>
@@ -51,9 +42,15 @@
 				        </td>
 				    </tr>
 				    <tr>
-				        <td class="span2">年龄 :</td>
+				        <td class="span2">出生年月 :</td>
 				        <td>
-				        	@{USER.get("AGE")}
+				        	@{USER.get("BIRTHDAY")}
+				        </td>
+				    </tr>
+				    <tr>
+				        <td class="span2">民族:</td>
+				        <td>
+				        	@{USER.get("NATION")}
 				        </td>
 				    </tr>
 				    <tr>
@@ -69,9 +66,9 @@
 				        </td>
 				    </tr>
 				    <tr>
-				        <td class="span2">住址 :</td>
+				        <td class="span2">工作地点 :</td>
 				        <td>
-				        	@{USER.get("ADDRESS")}
+				        	@{USER.get("WORKPLACE")}
 				        </td>
 				    </tr>
 				    </tbody>
@@ -84,10 +81,7 @@
 				
 			</div>
 				
-			<div class="col-xs-6 col-sm-4">
-				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">修改</button>
-				<button type="button" class="btn btn-info">确认</button>
-			</div>
+			
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 			    <div class="modal-content">
