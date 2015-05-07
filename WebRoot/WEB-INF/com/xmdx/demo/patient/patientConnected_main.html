@@ -35,7 +35,7 @@
 					colModel:
 						#{com.e9rj.platform.form.GridFormUtil.getColumnSetting(SESSION_USER_BEAN.getSysUserPO().getOpNo(),
 						tabLogo, 
-						'[{name:"PATIENT_ID",index:"PATIENT_ID",label:"病患ID",width:"60px"},' +
+						'[{name:"PATIENT_ID",hidden:true, index:"PATIENT_ID",label:"病患ID",width:"60px"},' +
 						'{name:"NAME",index:"NAME",label:"病患名称",width:"60px"},' +
 						'{name:"GENDER",index:"GENDER",label:"性别",width:"30px", align:"center"},' +
 						'{name:"BIRTHDAY",index:"BIRTHDAY",label:"年龄",width:"70px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},' +
@@ -50,6 +50,7 @@
 						
 						']'
 						)},
+						multiselect: false,
 			    	onSelectRow:function(rowid){},
 			    	ondblClickRow:function(rowid,iRow,iCol,e){
 			    		selectCheckbox("gridTable",rowid);
@@ -81,25 +82,6 @@
 			$("#searchform")[0].reset();
 		});
 		
-		//新增按钮
-		$("#addBtn").click(function(){
-			var url = gotoAction + "&TMP="+new Date();
-			popSaveInfo(url,"新增病患信息",globalPopWidth,globalPopWidth);
-		});
-		
-		//修改按钮
-		$("#updateBtn").click(function(){
-			
-			
-			var selectedId = getSelectedCheckbox("gridTable");
-			if(!selectOne(selectedId))return;
-	        var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-	        
-	        
-	        var url = gotoAction + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-	        popSaveInfo(url,"修改病患信息",globalPopWidth,globalPopWidth);
-	        
-		});
 		
 		//查看按钮
 		$("#readBtn").click(function(){

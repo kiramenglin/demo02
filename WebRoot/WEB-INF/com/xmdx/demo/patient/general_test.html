@@ -34,7 +34,7 @@
 					colModel:
 						#{com.e9rj.platform.form.GridFormUtil.getColumnSetting(SESSION_USER_BEAN.getSysUserPO().getOpNo(),
 						tabLogo, 
-						'[{name:"TEST_ID",index:"TEST_ID",label:"常规检查单ID",width:"0px"},' +
+						'[{name:"TEST_ID",hidden:true,index:"TEST_ID",label:"常规检查单ID",width:"60px"},' +
 						'{name:"TEMPERATURE",index:"TEMPERATURE",label:"体温",width:"60px"},' +
 						'{name:"PULSE",index:"PULSE",label:"脉搏",width:"60px", align:"center"},' +
 						'{name:"BREATH",index:"BREATH",label:"呼吸",width:"60px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},' +
@@ -48,9 +48,9 @@
 						'{name:"PACE",index:"PACE",label:"步态",width:"60px"},' +
 						'{name:"CONVERSATION",index:"CONVERSATION",label:"沟通",width:"60px"},' +
 						'{name:"PHYSICALEXAM",index:"PHYSICALEXAM",label:"体检",width:"60px"},' +
-						'{name:"IMAGE",index:"IMAGE",label:"",width:"60px"},' +
 						']'
 						)},
+						multiselect: false,
 			    	onSelectRow:function(rowid){},
 			    	ondblClickRow:function(rowid,iRow,iCol,e){
 			    		selectCheckbox("gridTable",rowid);
