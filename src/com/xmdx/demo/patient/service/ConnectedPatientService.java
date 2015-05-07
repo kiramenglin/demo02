@@ -1,7 +1,9 @@
 package com.xmdx.demo.patient.service;
 
 import org.apache.commons.lang.StringUtils;
+
 import java.sql.Connection;
+
 import com.e9rj.platform.common.CodeNameConvert;
 import com.e9rj.platform.common.GenID;
 import com.e9rj.platform.common.services.BusinessServices;
@@ -183,4 +185,19 @@ public class ConnectedPatientService extends BusinessServices {
 		return CONST_RESULT_AJAX;
 	}
 
+	public int checkPatient(ActionContext ac) throws Exception {
+		String id = ac.getHttpRequest().getParameter("PATIENT_ID");
+		StringBuilder sqlp = new StringBuilder("SELECT * FROM PATIENT U ");
+		if(StringUtils.isNotBlank(id)) {
+			sqlp.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), sqlp.toString());
+		ac.setObjValue("USER", pop[0]);
+		
+		checkAuth(ac, authFuncNo, RIGHT_ONE);
+		
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/patient/patient_info.html");		
+		return CONST_RESULT_SUCCESS;
+	}
 }

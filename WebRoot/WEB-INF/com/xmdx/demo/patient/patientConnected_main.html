@@ -82,43 +82,13 @@
 			$("#searchform")[0].reset();
 		});
 		
-		
-		//查看按钮
-		$("#readBtn").click(function(){
+		$("#infoBtn").click(function(){
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
 			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = gotoAction + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-			popReadInfo(url,"查看病患信息",globalPopWidth,globalPopWidth);
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.connected!checkPatient" + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
+			window.location.href=url;
 		});
-		
-		//删除按钮
-		$("#delBtn").click(function(e){
-			var selectedId = getSelectedCheckbox("gridTable");
-			if(selectedId==""){
-				$.uialert("请选择数据!");
-				return;
-			}
-			deleteInfo(e,selectedId);
-		});
-		
-		//删除操作
-		function deleteInfo(e,rowid){
-			var rows = rowid.split(",");
-			var ids = "";
-			jQuery.each(rows, function() {
-				var rowData = $("#gridTable").jqGrid("getRowData", this);  
-				ids = ids + rowData.PATIENT_ID + ",";
-			});
-			$.uiconfirm("确定要删除吗？", "确认提示",
-		      function() {
-				var url = delAction + "&PATIENT_ID="+ids;
-				commonDelete(url);
-		      },
-		      function() {
-		        //取消删除
-		      });
-		}
 		
 	});
 	
@@ -148,7 +118,7 @@
 	        <div id="gridPager" style="height: 36px"></div>
 	        <div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;">
 				<span id="buttonset">
-	                <button id="readBtn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>查看</button>
+	                <button id="infoBtn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>详情</button>
 					
 				</span>
 	        </div>
