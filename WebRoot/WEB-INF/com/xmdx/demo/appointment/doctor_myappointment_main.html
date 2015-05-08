@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<!-- 病患查看预约页面 -->
+<!-- 医生查看预约分页页面 -->
 <meta charset="UTF-8">
 <title>预约消息</title>
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
@@ -38,7 +38,7 @@ function myProject(option){
 
 	
 	var params = $.extend({rows:10},option);
-	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.appointment!myappointment&TMP=" + new Date(),params,{
+	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.appointment!myappointment&TMP=" + new Date(),params,{
 		dataType:"html",
 		success:function(data){
 			
@@ -50,18 +50,12 @@ function myProject(option){
 }
 
 
+
 </script>
 </head>
 
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-4">
-				<h3 align="center">    预约信息</h3>
-			</div>
-			<div class="col-md-8">
-			</div>
-		</div>
-		 @if{SIZE!="0"}
+		
 		<div class="row" id = "modal_body">
 			
 			<table class="table table-striped table-bordered table-advance table-hover" style="table-layout:fixed;">
@@ -69,12 +63,11 @@ function myProject(option){
                                         <tr>
                                           
                                           
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">医生姓名</span></th>
-                                           
-                                           <th><i class="icon-tags"> </i><span class="hidden-phone">内容</span></th>
-                                           
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">病患姓名</span></th>
+                                         
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">预约内容</span></th>
                                            <th><i class="icon-tags"> </i><span class="hidden-phone">预约时间</span></th>
-                                            <th><i class="icon-tags"> </i><span class="hidden-phone">状态</span></th>
+                                           <th><i class="icon-tags"> </i><span class="hidden-phone">状态</span></th>
                                            
                                             
                                             <th>操作</th>
@@ -85,10 +78,34 @@ function myProject(option){
                                         
                                        		 <tr>@foreach{APPS: APP}
 												 
-			                                     
+			                                     @if{APPS.get("IS_READ")=="0"}
 											
-                                        	<td >@{APPS.get("DOCTOR_NAME")}</td>
-                                        	@if{APPS.get("IS_REPLY")=="1"}
+                                        	<td style="font-weight:bold;">@{APPS.get("PATIENT_NAME")}</td>
+                                        	@if{APPS.get("IS_NEW")=="1"}
+                                        	<td style="font-weight:bold;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;font-weight:bold;">(未读)(有新回复)@{APPS.get("DESCRIPTION")}</td>
+                                        	@else{}
+                                        	<td style="font-weight:bold;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;font-weight:bold;">(未读)@{APPS.get("DESCRIPTION")}</td>
+                                        	@end{}
+                                        
+                                        	<td style="font-weight:bold;">@{APPS.get("DATE")} @{APPS.get("TIME")}</td>
+                                        	@if{APPS.get("STATE")=="0"}
+                                        	<td style="font-weight:bold;">待审核</td>
+                                        	@else{APPS.get("STATE")=="1"}
+                                        	<td style="font-weight:bold;">已通过</td>
+                                        	@else{}
+                                        	<td style="font-weight:bold;">已拒绝</td>
+                                        	@end{}
+                                        	<td>
+				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.appointment!read">
+												<input type="hidden" style="width:90%" name="APPOINTMENT_ID" id="APPOINTMENT_ID" value="@{APPS.get("APPOINTMENT_ID")}"/>
+                                        		<input type="submit" value="查看">
+				   							</form>
+											
+											
+                                        	</td>
+                                        	@else{}
+                                          	<td >@{APPS.get("PATIENT_NAME")}</td>
+                                        	@if{APPS.get("IS_NEW")=="1"}
                                         	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">(有新回复)@{APPS.get("DESCRIPTION")}</td>
                                         	@else{}
                                         	<td style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("DESCRIPTION")}</td>
@@ -96,19 +113,21 @@ function myProject(option){
                                         	
                                         	<td >@{APPS.get("DATE")} @{APPS.get("TIME")}</td>
                                         	@if{APPS.get("STATE")=="0"}
-                                        	<td>待审核</td>
+                                        	<td >待审核</td>
                                         	@else{APPS.get("STATE")=="1"}
-                                        	<td>已通过</td>
+                                        	<td >已通过</td>
                                         	@else{}
-                                        	<td>已拒绝</td>
+                                        	<td >已拒绝</td>
                                         	@end{}
                                         	<td>
-				   							<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.appointment!read">
+				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.appointment!read">
 												<input type="hidden" style="width:90%" name="APPOINTMENT_ID" id="APPOINTMENT_ID" value="@{APPS.get("APPOINTMENT_ID")}"/>
                                         		<input type="submit" value="查看">
 				   							</form>
-											</td>
-                 
+											
+                                        	</td>
+                                        	@end{}
+                                        	
                                         	</tr> 
 										
                                       @end{}
@@ -123,14 +142,7 @@ function myProject(option){
 		
 	</div>
 	
-	<div class="text-center" >
-			<ul id="pageBar" class="pagination pagination-lg">
-		</ul>
-	</div>
-	 									@else{}
-                                        <div class="col-md-4">
-										<h3 align="center">您目前没有消息</h3>
-										</div>
-										@end{}
+	
+	 									
 </body>
 </html>
