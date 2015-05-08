@@ -10,12 +10,14 @@
     var pDialog;//用于弹窗
     var gridHeight=0;//必须要，用于计算grid高度
     var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=internal.nervous";
-    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=nternal.nervous";
-    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=nternal.nervous";
+    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=internal.nervous";
+    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=internal.nervous";
     
   
 	$(document).ready(function () {
 		//过滤按钮权限
+		
+		
 		var auth = "#{RESOURCE_AUTH}";
 		author(auth);
 		//主题切换

@@ -114,7 +114,7 @@ public class DoctorService extends BusinessServices {
 	public int query(ActionContext ac) throws Exception {
 		
 		StringBuilder sql = new StringBuilder("SELECT * FROM DOCTOR U ");
-		String userName = request.getParameter("NAME");
+		String userName = new String(request.getParameter("NAME").getBytes("ISO-8859-1"),"utf-8");
 		
 		if(StringUtils.isNotBlank(userName)) {
 			sql.append(" WHERE U.NAME LIKE '%").append(userName).append("%' ");

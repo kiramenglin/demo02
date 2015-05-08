@@ -104,6 +104,13 @@
 	}
 	</style>
 	<script type="text/javascript">
+	//$(function(){
+		
+		
+		
+	//});	
+	
+
 		/*扩展函数*/
 		(function( $, undefined ) {
 			$.fn.nextfind = function(s) {
@@ -233,7 +240,16 @@
 		}
 		var menuLayouts,appDatas;
 		var aos,appAutoComplete;
+		var text1;
 		$(document).ready( function() {
+			
+			$("#menuAccordion").children("div").children("div").children("ul").children("ul").children("li").children("a").click(function(){
+				
+				text1 = $(this).text();
+				alert(text1);
+				// $('#infoFormtext').submit();
+			});
+			
 			//取布局信息
 			loadMenuLayout();
 			if("#{com.xmzy.framework.core.FrameworkConstant.getLoginMode()}"=="cas"){
@@ -295,7 +311,7 @@
 					var frameHeight = getFrameHeight();
 					
 					//scrolling='auto' 下面这个auto没有用
-					$( ui.panel ).append( "<iframe src='"+encodeURI(url)+"' id='maintabs-"+tab_counter+"-frame' style='position: absolute;top: 35px;' width='100%' height='"+frameHeight+"' frameborder='0' scrolling='auto'></iframe>" );
+					$( ui.panel ).append( "<iframe src='"+encodeURI(url+"&TEXT="+text1)+"' id='maintabs-"+tab_counter+"-frame' style='position: absolute;top: 35px;' width='100%' height='"+frameHeight+"' frameborder='0' scrolling='auto'></iframe>" );
 				}
 			});
 			
@@ -957,6 +973,10 @@
 								
 								#{IS_ZKXJ == '1' ? '' : '<tr height="12"><td align="left">组织机构：</td><td>' + userInfo.get('ORG_NAME') + (userInfo.get('DEPT_NAME')==null?'':('-' + userInfo.get('DEPT_NAME'))) + '</td></tr>'}
 							</table>
+						<!--  	<form class="form-horizontal" method="post" name="infoFormtext" id="infoFormtext" action="HttpChannel?action=INIT_ACTION&BUSINESS_TYPE=internal.nervous">
+		
+							<input type="hidden" name="TEXT" id="TEXT" value = "haha"/>
+                           </form>-->
 						</div>
 					</FIELDSET>
 				</div>

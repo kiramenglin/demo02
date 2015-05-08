@@ -14,6 +14,8 @@ public class NervousService extends BusinessServices {
 	private static final String tableName = "TB_USER";
 	//主键名
 	private static final String keyField = "U_ID";
+	
+	private static String text = null;
 	@Override
 	public int delete(ActionContext arg0) throws Exception {
 		// TODO Auto-generated method stub
@@ -28,7 +30,8 @@ public class NervousService extends BusinessServices {
 
 	@Override
 	public int init(ActionContext ac) throws Exception {
-		
+		text= new String(request.getParameter("TEXT").getBytes("ISO-8859-1"),"utf-8");
+		System.out.println("text="+text);
 		checkAuth(ac, authFuncNo, RIGHT_ONE);
 		
 		ac.setStringValue("tabLogo", authFuncNo);
@@ -45,7 +48,10 @@ public class NervousService extends BusinessServices {
 	@Override
 	public int query(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
-		StringBuilder sql = new StringBuilder("SELECT * FROM DOCTOR U  WHERE U.SECTION LIKE '%神经内科%'");
+		StringBuilder sql = new StringBuilder("SELECT * FROM DOCTOR U");
+		if(StringUtils.isNotBlank(text)) {
+			sql.append(" WHERE U.SECTION LIKE '%").append(text).append("%' ");
+		}
 		String userName = request.getParameter("NAME");
 		
 		if(StringUtils.isNotBlank(userName)) {
