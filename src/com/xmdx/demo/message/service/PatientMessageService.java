@@ -174,6 +174,29 @@ public class PatientMessageService extends BusinessServices {
 		pop.set("IS_REPLY", new_state);
 		DBDYDao.update(ac.getConnection(), pop);
 		
+		DBDYPO[] alist = DBDYDao.selectByID(ac.getConnection(), pop);
+		pop.set("IS_READ", state);
+		pop.set("IS_NEW", new_state);
+		DBDYDao.update(ac.getConnection(), pop);
+		
+		String doctor_id = alist[0].get("DOCTOR_ID").toString();
+		String patient_id = alist[0].get("PATIENT_ID").toString();
+		System.out.println("doctor_id="+doctor_id);
+		System.out.println("patient_id="+patient_id);
+		
+		StringBuilder doctorsql = new StringBuilder("SELECT * FROM DOCTOR U ");
+		if(StringUtils.isNotBlank(doctor_id)) {
+			doctorsql.append(" WHERE U.DOCTOR_ID LIKE '%").append(doctor_id).append("%' ");
+		}
+		DBDYPO[] podoctor =DBDYDao.selectBySQL(ac.getConnection(), doctorsql.toString());
+		ac.setObjValue("DOCTOR", podoctor[0]);
+		
+		StringBuilder patientsql = new StringBuilder("SELECT * FROM PATIENT U ");
+		if(StringUtils.isNotBlank(patient_id)) {
+			patientsql.append(" WHERE U.PATIENT_ID LIKE '%").append(patient_id).append("%' ");
+		}
+		DBDYPO[] popatient =DBDYDao.selectBySQL(ac.getConnection(), patientsql.toString());
+		ac.setObjValue("PATIENT", popatient[0]);
 		
 		
 		ac.setObjValue("MESSAGE", po[0]);

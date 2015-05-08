@@ -58,17 +58,17 @@ function myProject(option){
 					
 					@if{APPS.get("STATE")=="0"}
 						<td class="warning">@{APPS.get("PATIENT_NAME")}</td>
-						<td class="warning" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
+						<td class="warning" >@{APPS.get("MESSAGE")}</td>
 						<td class="warning">@{APPS.get("CREATE_TIME")}</td>
 						<td class="warning">待审查</td>
 						@else{APPS.get("STATE")=="1"}
 						<td class="success">@{APPS.get("PATIENT_NAME")}</td>
-						<td class="success" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
+						<td class="success" >@{APPS.get("MESSAGE")}</td>
 						<td class="success">@{APPS.get("CREATE_TIME")}</td>
 						<td class="success">已通过</td>
 						@else{}
 						<td class="danger">@{APPS.get("PATIENT_NAME")}</td>
-						<td class="danger" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
+						<td class="danger" >@{APPS.get("MESSAGE")}</td>
 						<td class="danger">@{APPS.get("CREATE_TIME")}</td>
 						<td class="danger">已拒绝</td>
 						@end{}	

@@ -87,14 +87,14 @@ function myProject(option){
                                         	
                                         	@if{APPS.get("STATE")=="0"}
                                         	<td class="warning">@{APPS.get("DOCTOR_NAME")}</td>
-                                        	<td class="warning" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
-                                        	<td class="warning" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("REJECT_MESSAGE")}</td>
+                                        	<td class="warning" >@{APPS.get("MESSAGE")}</td>
+                                        	<td class="warning" >@{APPS.get("REJECT_MESSAGE")}</td>
                                         	<td class="warning">@{APPS.get("CREATE_TIME")}</td>
                                         		<td class="warning">待审查</td>
                                         		@else{APPS.get("STATE")=="1"}
                                         		<td class="success">@{APPS.get("DOCTOR_NAME")}</td>
-                                        		<td class="success" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("MESSAGE")}</td>
-                                        		<td class="success" style="white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">@{APPS.get("REJECT_MESSAGE")}</td>
+                                        		<td class="success" >@{APPS.get("MESSAGE")}</td>
+                                        		<td class="success" >@{APPS.get("REJECT_MESSAGE")}</td>
                                         		<td class="success">@{APPS.get("CREATE_TIME")}</td>
                                         		<td class="success">已通过</td>
                                         		@else{}

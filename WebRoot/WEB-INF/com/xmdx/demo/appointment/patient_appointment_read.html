@@ -99,7 +99,7 @@ function saveInfo(){
 			</form>
 			<div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
-		    	<button  class="btn btn-primary" onclick="saveInfo()">提交</button>
+		    	<button  class="btn btn-primary" onclick="saveInfo()">回复</button>
 		    </div>
   		</div>	
 		</div>
@@ -119,11 +119,19 @@ function saveInfo(){
 		<tbody>
 		<tr>@foreach{COMMENTS: COMMENT}
 		@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("PATIENT_NAME")}
-		<td class="danger" width="20%">我</td>
+		@if{PATIENT.get("IMAGE")!=null}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="data:image/jpg;base64,@{PATIENT.get("IMAGE")}"/>我</td>
+					@else{}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="/e9common/images/default_avatar_big.jpg"/>我</td>
+					@end{}
 		<td class="danger" width="60%" style="word-break:break-all; word-wrap:break-word;">@{COMMENTS.get("CONTENT")}</td>
 		<td class="danger" width="20%">@{COMMENTS.get("TIME")}</td>
 		@else{}
-		<td class="success" width="20%">@{COMMENTS.get("FROM_NAME")}</td>
+		@if{DOCTOR.get("IMAGE")!=null}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="data:image/jpg;base64,@{DOCTOR.get("IMAGE")}"/>@{COMMENTS.get("FROM_NAME")}</td>
+					@else{}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="/e9common/images/default_avatar_big.jpg"/>@{COMMENTS.get("FROM_NAME")}</td>
+					@end{}
 		<td class="success" width="60%" style="word-break:break-all; word-wrap:break-word;">@{COMMENTS.get("CONTENT")}</td>
 		<td class="success" width="20%">@{COMMENTS.get("TIME")}</td>
 		@end{}

@@ -175,11 +175,19 @@ function saveInfo2(){
 				<tbody>
 					<tr>@foreach{COMMENTS: COMMENT}
 					@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("DOCTOR_NAME")}
+					@if{DOCTOR.get("IMAGE")!=null}
 					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="data:image/jpg;base64,@{DOCTOR.get("IMAGE")}"/>我</td>
+					@else{}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="/e9common/images/default_avatar_big.jpg"/>我</td>
+					@end{}
 					<td class="success" width="60%" style="word-break:break-all; word-wrap:break-word;">@{COMMENTS.get("CONTENT")}</td>
 					<td class="success" width="20%">@{COMMENTS.get("TIME")}</td>
 					@else{}
-					<td class="danger" width="20%"><img   style="width:20px;height:20px;" src="data:image/jpg;base64,@{PATIENT.get("IMAGE")}"/>@{COMMENTS.get("FROM_NAME")}</td>
+					@if{PATIENT.get("IMAGE")!=null}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="data:image/jpg;base64,@{PATIENT.get("IMAGE")}"/>@{COMMENTS.get("FROM_NAME")}</td>
+					@else{}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="/e9common/images/default_avatar_big.jpg"/>@{COMMENTS.get("FROM_NAME")}<</td>
+					@end{}
 					<td class="danger" width="60%" style="word-break:break-all; word-wrap:break-word;">@{COMMENTS.get("CONTENT")}</td>
 					<td class="danger" width="20%">@{COMMENTS.get("TIME")}</td>
 					@end{}

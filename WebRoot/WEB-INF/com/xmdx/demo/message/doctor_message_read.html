@@ -21,6 +21,15 @@
 var validateForm = false;
 $(function(){
 	 submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.message");
+	 
+	 var text=$("#edit_myfrom textarea").val();
+	    var counter=text.length;
+	    $("#numtj var").text(200-counter);
+	    $(document).keyup(function() {
+	        var text=$("#edit_myfrom textarea").val();
+	        var counter=text.length;
+	        $("#numtj var").text(200-counter);
+	    });
 });	
 $(document).ready(function() {
 	
@@ -91,8 +100,12 @@ function saveInfo(){
 				</div>
 				<div class="form-group">
 					<label for="inputPassword" class="col-sm-2 control-label">回复内容</label>
-					<div class="col-sm-5">
-						<textarea class="form-control" rows="8" cols="40" id="CONTENT" name="CONTENT"></textarea><br>
+					<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea name="CONTENT" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					
 					</div>
 				</div>
 				
@@ -111,8 +124,12 @@ function saveInfo(){
 				</div>
 				<div class="form-group">
 					<label for="inputPassword" class="col-sm-2 control-label">回复内容</label>
-					<div class="col-sm-5">
-						<textarea class="form-control" rows="8" cols="40" id="CONTENT" name="CONTENT"></textarea><br>
+					<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea name="CONTENT" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					
 					</div>
 				</div>
 				
@@ -140,11 +157,19 @@ function saveInfo(){
 				<tbody>
 					<tr>@foreach{COMMENTS: COMMENT}
 					@if{COMMENTS.get("FROM_NAME")==MESSAGE.get("DOCTOR_NAME")}
-					<td class="success" width="20%">我</td>
+					@if{DOCTOR.get("IMAGE")!=null}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="data:image/jpg;base64,@{DOCTOR.get("IMAGE")}"/>我</td>
+					@else{}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="/e9common/images/default_avatar_big.jpg"/>我</td>
+					@end{}
 					<td class="success" width="60%">@{COMMENTS.get("CONTENT")}</td>
 					<td class="success" width="20%">@{COMMENTS.get("TIME")}</td>
 					@else{}
-					<td class="danger" width="20%">@{COMMENTS.get("FROM_NAME")}</td>
+					@if{PATIENT.get("IMAGE")!=null}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="data:image/jpg;base64,@{PATIENT.get("IMAGE")}"/>@{COMMENTS.get("FROM_NAME")}</td>
+					@else{}
+					<td class="success" width="20%"><img   style="width:20px;height:20px;" src="/e9common/images/default_avatar_big.jpg"/>@{COMMENTS.get("FROM_NAME")}<</td>
+					@end{}
 					<td class="danger" width="60%">@{COMMENTS.get("CONTENT")}</td>
 					<td class="danger" width="20%">@{COMMENTS.get("TIME")}</td>
 					@end{}

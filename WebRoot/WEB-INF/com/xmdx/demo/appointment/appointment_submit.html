@@ -22,6 +22,14 @@
 var validateForm = false;
 $(function(){
 	 submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=patient.appointment");
+	 var text=$("#edit_myfrom textarea").val();
+	    var counter=text.length;
+	    $("#numtj var").text(200-counter);
+	    $(document).keyup(function() {
+	        var text=$("#edit_myfrom textarea").val();
+	        var counter=text.length;
+	        $("#numtj var").text(200-counter);
+	    });
 });	
 
 function saveInfo(){
@@ -63,9 +71,13 @@ function saveInfo(){
 		</div>			
 		<div class="form-group">
 			<label for="inputPassword" class="col-sm-2 control-label">预约内容</label>
-			<div class="col-sm-5">
-			  	<textarea  rows="8" cols="40" id="DESCRIPTION" name="DESCRIPTION"></textarea>
-			</div>
+			<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea name="DESCRIPTION" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					
+					</div>
 		</div>				
 			    
 					

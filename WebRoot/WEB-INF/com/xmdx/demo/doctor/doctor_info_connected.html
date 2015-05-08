@@ -7,13 +7,35 @@
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
 <script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
-<script type="text/javascript" src="js/js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script>  
+<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>  
 <script type="text/javascript">
-function validate(){
-	  document.getElementByIdx_x('infoForm').submit();
-	}
-window.load=validate();
+var validateForm = false;
+var validateForm = false;
+$(function(){
+	 submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.info1");
+	 var text=$("#edit_myfrom textarea").val();
+	    var counter=text.length;
+	    $("#numtj var").text(200-counter);
+	    $(document).keyup(function() {
+	        var text=$("#edit_myfrom textarea").val();
+	        var counter=text.length;
+	        $("#numtj var").text(200-counter);
+	    });
+});	
 
+function saveInfo(){
+	var str1=document.infoForm.MESSAGE.value;
+	  
+	  if(str1==""){
+		  alert("请输入申请内容！");
+		  validateForm = false;
+	   return  false ;
+	  }
+	  validateForm = true;
+	  $('#infoForm').submit();
+	
+}
 </script>
 </head>
 <body>
@@ -100,22 +122,26 @@ window.load=validate();
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">申请私人医生</h4>
 			      </div>
-			      <form class="form-horizontal" method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.info1">
+			      <form class="form-horizontal" method="post" name="infoForm" id="infoForm" >
 					<input type="hidden" style="width:90%" name="DOCTOR_NAME" id="DOCTOR_NAME" value = "@{USER.get("NAME")}"/>
 					<div class="form-group">
 						<label for="inputPassword" class="col-sm-2 control-label"></label>
-						<div class="col-sm-5">
-							<textarea  rows="8" cols="40" id="MESSAGE" name="MESSAGE">申请信息</textarea>
-						</div>
+						<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea name="MESSAGE" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					
 					</div>
-					<div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-10">
-					    	<input type="submit" class="btn btn-primary" value="提交申请">
-					    </div>
 					</div>
 					
+					
 				   </form>
-			   
+			  
+		    <div class="col-sm-offset-2 col-sm-10">
+		    	<button   class="btn btn-primary" onclick="saveInfo()" >提交</button>
+		    </div>
+  		
 			    
 			    </div>
 			  </div>
