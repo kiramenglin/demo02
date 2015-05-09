@@ -5,6 +5,8 @@ import org.apache.commons.lang.StringUtils;
 import com.e9rj.platform.common.CodeNameConvert;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.xmzy.frameext.business.service.annotate.Service;
+import com.xmzy.frameext.simpledb.DBDYDao;
+import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.framework.context.ActionContext;
 @Service(name="internal.nervous")
 public class NervousService extends BusinessServices {
@@ -23,9 +25,36 @@ public class NervousService extends BusinessServices {
 	}
 
 	@Override
-	public int goTo(ActionContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int goTo(ActionContext ac) throws Exception {
+		DBDYPO po = new DBDYPO(tableName, keyField, ac.getHttpRequest());
+		String uid = ac.getHttpRequest().getParameter("DOCTOR_ID");
+		if (StringUtils.isNotEmpty(uid)) {
+			
+			if("read".equalsIgnoreCase(ac.getStringValue(CONST_RESOURCEAUTH))) {
+				//查看
+				checkAuth(ac, authFuncNo, RIGHT_ONE);
+			} else {
+				// 修改
+				checkAuth(ac, authFuncNo, RIGHT_FOUR);
+			}
+			
+			DBDYPO[] pos = DBDYDao.selectByID(ac.getConnection(), po);
+			
+			if(pos.length == 0) {
+				ac.setErrorContext("您所选择的医生已被删除！");
+				return CONST_RESULT_ERROR;
+			}
+			DBDYPO old = pos[0];
+			old.setCmd("U");
+			ac.setObjValue("USER_BEAN", old);
+		} else {
+			// 新增
+			checkAuth(ac, authFuncNo, RIGHT_TWO);
+			po.setCmd("A");
+			ac.setObjValue("USER_BEAN", po);
+		}
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/doctor/doctor_edit.html");
+		return CONST_RESULT_SUCCESS;
 	}
 
 	@Override
@@ -52,17 +81,17 @@ public class NervousService extends BusinessServices {
 		if(StringUtils.isNotBlank(text)) {
 			sql.append(" WHERE U.SECTION LIKE '%").append(text).append("%' ");
 		}
-		String userName = request.getParameter("NAME");
+		String userName = new String(request.getParameter("NAME").getBytes("ISO-8859-1"),"utf-8");
 		
 		if(StringUtils.isNotBlank(userName)) {
-			sql.append(" WHERE U.NAME LIKE '%").append(userName).append("%' ");
+			sql.append("AND U.NAME LIKE '%").append(userName).append("%' ");
 		}
 		
 		//设置排序条件，默认的按BIRTHDAY降序
 		sql.append(super.order(ac, "U.BIRTHDAY", "DESC"));
 		
 		querySql = sql.toString();
-		
+		addNameCodeConvert("GENDER", CodeNameConvert.getCachedData("SYSCODE", "SEX"), REPLACE);
 		return CONST_RESULT_AJAX;
 	}
 
