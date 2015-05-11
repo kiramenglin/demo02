@@ -1,116 +1,176 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Insert title here</title>
-	<link href="/e9common/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="/e9common/bootstrap/css/bootstrap-theme.css" rel="stylesheet" />
+	<!-- 引入系统常用资源 -->
 	<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
-	<script type="text/javascript" src="js/ssocommon.js"></script>    
-    <script type="text/javascript">
-    //验证变量
-    var validateForm = false;
-    $(function(){
-    	//重置表单（防止IE缓存）
-    	//$("#infoForm")[0].reset();
-    	//主题切换
-		addThemeSwitcher('head',{ top: '0px', right: '0px' });
-		//按钮样式
-		$( "input:button, a, button", "div" ).button();
-    	//验证表单
-    	commonValidate("infoForm");
-		//绑定表单提交事件
-		submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=back.user");
-		//按钮
-		$( "#buttonset" ).buttonset();
-		
-		//$("#ORGNAME").click(popOrg);//不需要弹出选择组织机构了，职员信息已经包含了组织机构，如果一个职员有多个组织机构，则采用下拉框选择
-		
-		//getOrgInfo($("#EMPLOYEE_ID").val())
-    });
     
-    //表单提交
-    function saveInfo(){
-    	$('#infoForm').submit();
-    }
-	</script>
-</head>
-<body class="ui-widget-content" style="border: 0">
-	<form method="post" name="infoForm" id="infoForm" action="/">
-		<input type="text" style="display: none;" name="CMD" id="CMD">
-		<div class="form-group">
-		  <label for="exampleInputEmail1">眉毛</label>
-		  <input type="email" class="form-control" id="EYEBROW" placeholder="EYEBROW">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">双眼睑</label>
-		  <input type="email" class="form-control" id="LID" placeholder="LID">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">眼球</label>
-		  <input type="email" class="form-control" id="EYEBALL" placeholder="EYEBALL">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">结膜</label>
-		  <input type="email" class="form-control" id="CONJUNCTIVA" placeholder="CONJUNCTIVA">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">巩膜</label>
-		  <input type="email" class="form-control" id="SCLERA" placeholder="SCLERA">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">角膜</label>
-		  <input type="email" class="form-control" id="CORNEA" placeholder="CORNEA">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">两侧瞳孔</label>
-		  <input type="email" class="form-control" id="PUPIL" placeholder="PUPIL">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">对光反射</label>
-		  <input type="email" class="form-control" id="ATTRIBUTE1" placeholder="ATTRIBUTE1">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">调节与辐辏反射</label>
-		  <input type="email" class="form-control" id="ATTRIBUTE2" placeholder="ATTRIBUTE2">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">视力</label>
-		  <input type="email" class="form-control" id="EYESIGHT" placeholder="EYESIGHT">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">泪器</label>
-		  <input type="email" class="form-control" id="ATTRIBUTE3" placeholder="ATTRIBUTE3">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">前房</label>
-		  <input type="email" class="form-control" id="ATTRIBUTE4" placeholder="ATTRIBUTE4">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">虹膜</label>
-		  <input type="email" class="form-control" id="IRIS" placeholder="IRIS">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">晶体</label>
-		  <input type="email" class="form-control" id="CRYSTAL" placeholder="CRYSTAL">
-		</div>
-		<div class="form-group">
-		  <label for="exampleInputEmail1">玻璃体</label>
-		  <input type="email" class="form-control" id="VITERUM" placeholder="VITERUM">
-		</div>
-
+    <script type="text/javascript">
+    var pDialog;//用于弹窗
+    var gridHeight=0;//必须要，用于计算grid高度
+    var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=patient.eye";
+    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=patient.eye";
+    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=patient.eye";
+    
+	$(document).ready(function () {
+		//过滤按钮权限
+		var auth = "#{RESOURCE_AUTH}";
+		author(auth);
+		//主题切换
+		addThemeSwitcher('head',{ top: '0px', right: '0px' });
+		//按钮样式		
+		$( "input:button, button", "div" ).button();
 		
-	</form>
-	<!-- 以下是按钮区域 -->
-	<div style="position:absolute;width: 100%;border-bottom:0px;border-left:0px;border-right:0px;bottom:40px;font-size: 0px;" class="ui-widget-content"></div>
-	<div id="buttonDiv" style="position:absolute;bottom:0px;right:15px;">
-		<span id="buttonset">
-			#{FORM_IS_READONLY=="true"?'':'<button id="addBtn" onclick="saveInfo()" class="btn btn-default"><span class="ui-icon ui-icon-check" style="float: left;"></span>保存</button>'}
-			<button id="cancelBtn" onclick="cancel()" class="btn btn-default"><span class="ui-icon ui-icon-close" style="float: left;"></span>取消</button>		
-		</span>
-	</div>
+		// 配置jqGrid组件  
+		//初始化表格.grid(gridid,url,param,pagerid, options)
+		$.grid(
+				"gridTable",
+				queryAction,
+				$("#searchform").serialize(),
+				"gridPager",
+				{
+					rowNum:#{com.e9rj.platform.common.BaseConstants.getGlobalValue("505","20")},
+					colModel:
+						#{com.e9rj.platform.form.GridFormUtil.getColumnSetting(SESSION_USER_BEAN.getSysUserPO().getOpNo(),
+						tabLogo, 
+						'[{name:"EYE_ID",hidden:true,index:"EYE_ID",label:"常规检查单ID",width:"60px"},' +
+						'{name:"NV",index:"NV",label:"裸眼视力",width:"60px"},' +
+						'{name:"TENSION",index:"TENSION",label:"眼压",width:"60px", align:"center"},' +
+						'{name:"CANAL",index:"CANAL",label:"泪河",width:"60px",align:"center"},' +
+						'{name:"TBUT",index:"TBUT",label:"TBUT",width:"60px"},' +
+						']'
+						)},
+						multiselect: false,
+			    	onSelectRow:function(rowid){},
+			    	ondblClickRow:function(rowid,iRow,iCol,e){
+			    		selectCheckbox("gridTable",rowid);
+			    		var rowData = $("#gridTable").jqGrid("getRowData", rowid);  
+						var url = gotoAction + "&EYE_ID="+rowData.EYE_ID+"&TMP="+new Date();
+						popReadInfo(url,"查看详细信息",globalPopWidth,globalPopHeightShort);
+			    	},
+			    	gridComplete: function () {
+			    		//设置菜单
+			    		setContextMenu("gridTable","contentDiv");
+			    		resizeGrid('gridTable','queryDiv','contentDiv');
+			    	}
+		});
+		//resize绑定
+		$(window).bind('resize', function(){resizeGrid('gridTable','queryDiv','contentDiv');}).trigger('resize');
+		
+		//判断分页设置
+		checkPager("gridTable");
+		
+		$( "#buttonset" ).buttonset();
+		//end****************************************
+		//查询按钮
+		$("#searchBtn").click(function(){
+			commonQuery(queryAction,"gridTable","searchform","searchBtn");   //(10)重新载入Grid表格  
+		});
+		
+		//重置按钮
+		$("#resetBtn").click(function(){
+			$("#searchform")[0].reset();
+		});
+		
+		//新增按钮
+		$("#addBtn").click(function(){
+	 
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.eye!newInfo" +"&TMP="+new Date();
+			popSaveInfo(url,"新建信息",globalPopWidth,globalPopWidth);
+			
+		});
+		
+		//修改按钮
+		$("#updateBtn").click(function(){
+			
+			
+			var selectedId = getSelectedCheckbox("gridTable");
+			if(!selectOne(selectedId))return;
+	        var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
+	        
+	        
+	        var url = gotoAction + "&EYE_ID="+rowData.EYE_ID+"&TMP="+new Date();
+	        popSaveInfo(url,"修改信息",globalPopWidth,globalPopWidth);
+	        
+		});
+		
+		//查看按钮
+		$("#readBtn").click(function(){
+			var selectedId = getSelectedCheckbox("gridTable");
+			if(!selectOne(selectedId))return;
+			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.eye!info" + "&EYE_ID="+rowData.EYE_ID+"&TMP="+new Date();
+			
+			popReadInfo(url,"查看信息",globalPopWidth,globalPopWidth);
+		});
+		
+		//删除按钮
+		$("#delBtn").click(function(e){
+			var selectedId = getSelectedCheckbox("gridTable");
+			if(selectedId==""){
+				$.uialert("请选择数据!");
+				return;
+			}
+			deleteInfo(e,selectedId);
+		});
+		
+		
+		
+		//删除操作
+		function deleteInfo(e,rowid){
+			var rows = rowid.split(",");
+			var ids = "";
+			jQuery.each(rows, function() {
+				var rowData = $("#gridTable").jqGrid("getRowData", this);  
+				ids = ids + rowData.EYE_ID + ",";
+			});
+			$.uiconfirm("确定要删除吗？", "确认提示",
+		      function() {
+				var url = delAction + "&EYE_ID="+ids;
+				commonDelete(url);
+		      },
+		      function() {
+		        //取消删除
+		      });
+		}
+		
+	});
+	
+
+    </script>
+</head>
+<body>
+    <div class="ui-layout-center">
+	    <div id="queryDiv" style="border:0;padding:0;padding-top:3px;overflow:hidden;" class="ui-widget-content ui-widget">
+			<fieldset id="selectCondition" class="ui-corner-all">
+					<div>
+					<form id="searchform" onSubmit="return false" style="margin:0;">
+					用户姓名：
+					<input type="text" id="NAME" name="NAME">
+					<button id="searchBtn" type="button"><span class="ui-icon ui-icon-search" style="float: left;"></span>查询</button>
+					<button id="resetBtn" type="button"><span class="ui-icon ui-icon-reset" style="float: left;"></span>重置</button>
+				</form>
+				</div>
+				</fieldset>
+		</div>
+		<script type="text/javascript">
+				createSelectCondition();
+		</script>
+		<!-- tabLogo的值必须全局唯一 -->
+		<div id="contentDiv" style="padding:0;width:100%;height:100%;margin-top: 2px;margin-left: 2px;" tabLogo="#{tabLogo}">
+			<table id="gridTable" class="ui-pg-table"></table>  
+	        <div id="gridPager" style="height: 36px"></div>
+	        <div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;">
+				<span id="buttonset">
+					<button id="readBtn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>查看</button>
+					<button id="addBtn" rightval="2"><span class="ui-icon ui-icon-plus" style="float: left;"></span>新增</button>
+					<button id="updateBtn" rightval="4"><span class="ui-icon ui-icon-pencil" style="float: left;"></span>修改</button>
+					<button id="delBtn" rightval="8"><span class="ui-icon ui-icon-trash" style="float: left;"></span>删除</button>
+					
+				</span>
+	        </div>
+		</div>
+    </div>
 </body>
 </html>
-<!--Form Setting Start-->
-	
-<!--Form Setting End-->

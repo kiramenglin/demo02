@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <questionlist>
 	<quesiton>
-		<title>1、阅读或近距离工作时您是否会感到疲劳或不适</title>
+		<title>1、是否畏光</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -11,7 +11,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>2、视物时是否有存在复视（看东西为两个）</title>
+		<title>2、是否有异物感</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -21,7 +21,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>3、阅读或近距离工作时是否头痛</title>
+		<title>3、是否有眼痛不适</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -31,7 +31,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>4、阅读或近距离工作时，你的注意力是否不集中</title>
+		<title>4、是否会有视力模糊</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -41,7 +41,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>5、你是否对记住度过的东西感到困难</title>
+		<title>5、是否有视力不良</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -61,7 +61,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>7、阅读或近距离工作时你是否觉得文字移动、跳动、游动或在纸上漂浮</title>
+		<title>7、是否限制开夜车</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -71,7 +71,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>8、你是否觉得你的阅读速度慢</title>
+		<title>8、是否影响你使用电脑工作</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -81,7 +81,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>9、阅读或近距离工作时你是否觉得眼痛、眼酸</title>
+		<title>9、是否影响你看电视</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -91,7 +91,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>10、阅读或近距离工作时你是否有一种眼球牵拉感</title>
+		<title>10、在遇到风沙时，是否感到不适</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -101,7 +101,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>11、阅读或近距离工作时你是否会出现失误模糊或聚焦不准确</title>
+		<title>11、在干燥、低湿度的地区时，是否感到不适</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>
@@ -111,37 +111,7 @@
 		</answers>
 	</quesiton>
 	<quesiton>
-		<title>12、阅读或近距离工作时，您是否会“串行”</title>
-		<answers>
-			<opt valume="0">从不</opt>
-			<opt valume="1">偶尔</opt>
-			<opt valume="2">经常</opt>
-			<opt valume="3">频繁</opt>
-			<opt valume="4">一直都是</opt>	
-		</answers>
-	</quesiton>
-	<quesiton>
-		<title>13、阅读或近距离工作时，您是否不得不重复读同一行</title>
-		<answers>
-			<opt valume="0">从不</opt>
-			<opt valume="1">偶尔</opt>
-			<opt valume="2">经常</opt>
-			<opt valume="3">频繁</opt>
-			<opt valume="4">一直都是</opt>	
-		</answers>
-	</quesiton>
-	<quesiton>
-		<title>14、您是否回避阅读或近距离工作</title>
-		<answers>
-			<opt valume="0">从不</opt>
-			<opt valume="1">偶尔</opt>
-			<opt valume="2">经常</opt>
-			<opt valume="3">频繁</opt>
-			<opt valume="4">一直都是</opt>	
-		</answers>
-	</quesiton>
-	<quesiton>
-		<title>15、您是否从远视转到近视或从近视转到远视感到聚焦困难</title>
+		<title>12、在有空调的地方，是否感到不适</title>
 		<answers>
 			<opt valume="0">从不</opt>
 			<opt valume="1">偶尔</opt>

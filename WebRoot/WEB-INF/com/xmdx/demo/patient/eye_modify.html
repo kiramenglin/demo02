@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!-- 眼科信息完善 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>眼科个人信息</title>
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+
+<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="/e9common/swfupload/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/swfupload.queue.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/fileprogress.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/handlers.js"></script>
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/common.js"></script>   
+<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+<script type="text/javascript">
+var validateForm = false;
+$(function(){
+	 submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=patient.eye");
+});	
+$(document).ready(function() {
+
+  //加载上传附件组件,初始化文件上传组件，参数：url,文件大小(单位k),文件类型,文件个数（目前只支持1个，有必要再扩展）
+	initSwfUpload("spanButtonPlaceholder","fsUploadProgress","btnCancel","/@{com.xmzy.framework.core.FrameworkConstant.appCode}/FileUpload?INPUT_CODE=TMPNAME&INPUT_NAME=FILENAME","300","*.jpg;*.gif;*.png","1","/e9common/",function(file){
+		var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.eye!convertToBase64&FILENAME=" + $("#TMPNAME").val();
+		url = encodeURI(url);
+		
+		
+    	$.hkajax(url, "", {
+    		
+				success:function(data){
+					
+					var str = data.result;
+					var filename = file.name;
+					
+					$("#headPhoto").attr("src", "data:image/jpg" + ";base64," + str);
+					
+					$("#IMGDATA").val(str);
+				}
+			});
+    	
+	});
+});
+
+
+
+
+function saveInfo(){
+	
+	  validateForm = true;
+	  $('#infoForm').submit();
+	
+}
+ </script>
+ </head>
+ <body>
+<div class="container-fluid">
+ <div class="row">
+	<form class="form-horizontal" method="post" name="infoForm" id="infoForm" >
+		<input type="text" style="display: none;" name="CMD" id="CMD">
+		<input type="hidden" style="width:90%" name="EYE_ID" id = "EYE_ID" value="@{USER.get('EYE_ID')}"/>
+		<div class="form-group">
+		  <label for="inputPassword" class="col-sm-2 control-label">裸眼视力</label>
+		  <div class="col-sm-5">
+		    <input class="form-control"  name="NV" id="NV" value = "@{USER.get("NV")}"><br>
+		  </div>
+		</div>
+		<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">眼压</label>
+			<div class="col-sm-5">
+			  	<input class="form-control" name="TENSION" id="TENSION" value = "@{USER.get("TENSION")}">
+			</div>
+		</div>	
+		<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">泪河</label>
+			<div class="col-sm-5">
+			  	<input class="form-control" name="CANAL" id="CANAL" value = "@{USER.get("CANAL")}">
+			</div>
+		</div>		
+		<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">TBUT</label>
+			<div class="col-sm-5">
+			  	<input class="form-control" name="TBUT" id="TBUT" value = "@{USER.get("TBUT")}">
+			</div>
+		</div>
+		<div class="form-group">
+			
+			<label for="inputPassword" class="col-sm-2 control-label">角膜荧光素钠染色</label>
+			
+			<div class="col-sm-5">
+			<td align="left" rowspan="4" valign="bottom">
+				
+				<input type="text" id="IMGDATA" name="IMGDATA" value="" style="display: none;">
+				<img id="headPhoto" src="/e9common/images/default_avatar_big.jpg" width="100px;" height="120px;">
+				<input type="text" id="FILENAME" name="FILENAME" style="vertical-align: middle;float:left;display: none;">
+				<input type="text" id="TMPNAME" name="TMPNAME" style="vertical-align: middle;float:left;display: none;">
+				<span id="spanButtonPlaceholder" style="vertical-align: middle;float:left;"></span>
+				<input id="btnCancel" type="button" value="取消" onclick="cancelQueue(upload);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;display: none;float:left;" />
+				<div class="flash" id="fsUploadProgress" style="clear: left;"></div>
+				<input type="text" style="display: none;" id="FILENAMES" NAME="FILENAMES">
+				<input type="text" style="display: none;" id="TRUENAMES" NAME="TRUENAMES">
+			</td>
+			</div>
+		</div>
+		<input  type="hidden" name="CODE" id="CODE" value = "@{CODE}"><br>
+
+				
+ </form>
+ <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		    	<button  class="btn btn-primary" onclick="saveInfo()">提交修改</button>
+		    </div>
+  		</div>
+  </div>
+ </div>
+ </div>
+ </body>
+ </html>

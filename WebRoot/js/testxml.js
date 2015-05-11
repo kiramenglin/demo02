@@ -16,7 +16,7 @@ $(document).ready(function(){
 		   type:"GET",
 		   url:xmlurl,
 		   dataType:'xml',
-		   timeut:1500,
+		   timeout:1500,
 		   error:function(){alert("Error loading xml!")},   
 		   success:function(xml){
 			   $("#loader").fadeOut(200);
@@ -59,10 +59,11 @@ $(document).ready(function(){
 				ele.parents("div.cnt").addClass("selected");
 				ele.addClass("sel");
 				res+=parseInt (ele.find("input").val());
+				
 				if(sld<len){
-					$("#temp").html("您目前得分是 "+res);		
+					$("#temp").html("您目前得分是 "+(res*25/sld));		
 					}else if(sld==len){
-						$("#temp").html("您最终得分是 "+res);		
+						$("#temp").html("您最终得分是 "+(res*25/sld));		
 						}
 				}
 		
@@ -85,7 +86,7 @@ $(document).ready(function(){
 						}			
 					setporogress(1);					
 					if(i==len){
-						result(res);
+						result(res*25/sld);
 						}	
 					return false;	
 				})
@@ -93,9 +94,10 @@ $(document).ready(function(){
 			function result(k){
 				var toload;
 				var sult=$("<div class='result' id='result'></div>");
-				if(k>=12 && k<=18) toload=page+" #re0";
-				if(k>18 && k<=24) toload=page+" #re1";
-				if(k>24 && k<=48) toload=page+" #re2";		
+				if(k>=0 && k<=12) toload=page+" #re0";
+				if(k>12 && k<=22) toload=page+" #re1";
+				if(k>24 && k<=32) toload=page+" #re2";	
+				if(k>32) toload=page+" #re3";	
 				sult.load(toload).appendTo($("#issue"));		
 				}
 		

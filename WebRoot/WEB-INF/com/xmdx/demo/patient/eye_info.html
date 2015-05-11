@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!-- 眼科信息完善 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>眼科个人信息</title>
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+
+<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="/e9common/swfupload/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/swfupload.queue.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/fileprogress.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/handlers.js"></script>
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/common.js"></script>   
+<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
+
+ </head>
+ <body>
+<div class="container-fluid">
+ <div class="row">
+ <div class="col-md-offset-2">
+	<form class="form-horizontal" method="post" name="infoForm" id="infoForm" >
+		<input type="text" style="display: none;" name="CMD" id="CMD">
+		<input type="hidden" style="width:90%" name="EYE_ID" id = "EYE_ID" value="@{USER.get('EYE_ID')}"/>
+		<div class="form-group">
+		  <label for="inputPassword" class="col-sm-2 control-label">裸眼视力</label>
+		  <div class="col-sm-5">
+		    <p> @{USER.get("NV")}</p><br>
+		  </div>
+		</div>
+		<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">眼压</label>
+			<div class="col-sm-5">
+			  	<p> @{USER.get("TENSION")}</p><br>
+			</div>
+		</div>	
+		<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">泪河</label>
+			<div class="col-sm-5">
+			  	<p> @{USER.get("CANAL")}</p><br>
+			</div>
+		</div>		
+		<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">TBUT</label>
+			<div class="col-sm-5">
+			  	<p> @{USER.get("TBUT")}</p><br>
+			</div>
+		</div>
+		<div class="form-group">
+			
+			<label for="inputPassword" class="col-sm-2 control-label">角膜荧光素钠染色</label>
+			
+			<div class="col-sm-5">
+				<img src = "data:image/jpg" + ";base64," + @{USER.get('STAINING')} >
+			</div>
+		</div>
+		
+
+				
+ </form>
+ </div>
+  </div>
+ </div>
+ </div>
+ </body>
+ </html>
