@@ -55,7 +55,7 @@
 			<label for="inputPassword" class="col-sm-2 control-label">角膜荧光素钠染色</label>
 			
 			<div class="col-sm-5">
-				<img src = "data:image/jpg" + ";base64," + @{USER.get('STAINING')} >
+				<img src = "data:image/jpg;base64,@{USER.get('STAINING')}" >
 			</div>
 		</div>
 		
