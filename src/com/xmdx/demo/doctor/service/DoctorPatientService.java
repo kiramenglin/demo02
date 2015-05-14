@@ -100,6 +100,10 @@ public class DoctorPatientService extends BusinessServices {
 	}
 
 	@Override
+	/**
+	 * 病患提出私人医生申请
+	 */
+
 	public int save(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
 		String userName=SessionUtil.getOpno(ac);

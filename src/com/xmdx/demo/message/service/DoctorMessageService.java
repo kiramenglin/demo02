@@ -188,7 +188,7 @@ public class DoctorMessageService extends BusinessServices {
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();
@@ -259,7 +259,7 @@ public class DoctorMessageService extends BusinessServices {
 		 String datestr = sdf.format(nowdate1);
 		String commentID = super.genIdString("", idlLen);
 		pop.set("COMMENT_ID", commentID);
-		pop.set("MESSAGE_ID", messageid);
+		pop.set("MESSAGE_ID", messageid); 
 		pop.set("CONTENT", content);
 		pop.set("TIME", datestr);
 		pop.set("DOCTOR_ID", doctorid);
@@ -325,7 +325,7 @@ public class DoctorMessageService extends BusinessServices {
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();

@@ -4,12 +4,15 @@
 <!-- 新增博客页面 -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
+	<link href="css/css/bootstrap.css" rel="stylesheet" />
+	<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/common.js"></script>
 	
 	<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script>
  	<script type="text/javascript" src="/e9common/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="/e9common/ckeditor/adapters/jquery.js"></script>
-	
 	<script type="text/javascript">
+	
 		$(document).ready(function() {
 			//ckeditor********
 			var config = {
@@ -39,16 +42,27 @@
 			$('.jquery_ckeditor').ckeditor(config);
 			//**********end********
 		});
-	</script>
-
-	<link href="css/css/bootstrap.css" rel="stylesheet" />
-	<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
-	<script type="text/javascript">
-	function validate(){
-		  document.getElementByIdx_x('infoForm').submit();
+		
+		function saveInfo(){
+			
+			var str1=document.infoForm.TITLE.value;
+			  var str2=CKEDITOR.instances.CONTENT.getData();
+			 
+			  if(str1==""){
+				  alert("请输入标题！");
+				  validateForm = false;
+			   return  false ;
+			  }
+			  
+			  if(str2==""){
+				  alert("请输入内容！");
+				  validateForm = false;
+			   return  false ;
+			  }
+			 
+			  $('#infoForm').submit();
+			
 		}
-	window.load=validate();
-
 	</script>
 </head>
 <body class="ui-widget-content">
@@ -77,10 +91,14 @@
 				
 			</tr>
 		</table>
-		<input type="submit" value="提交表单">
+		
 		</form>
 		</div>
-		
+		 <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		    	<button  class="btn btn-primary" onclick="saveInfo()">提交</button>
+		    </div>
+  		</div>
 	</div>
 </body>
 </html>

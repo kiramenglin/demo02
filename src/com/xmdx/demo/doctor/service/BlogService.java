@@ -140,7 +140,7 @@ public class BlogService extends BusinessServices {
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();
@@ -216,7 +216,14 @@ public class BlogService extends BusinessServices {
 			 String datestr = sdf.format(nowdate1);
 			 blog.set("MODIFYTIME",datestr);
 			result = DBDYDao.update(ac.getConnection(), blog);
-			result1 = 1;
+			if(0 == result) {
+				//log(ac, LOGLEVEL_W, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户失败!");
+				setMessage(ac, "修改失败!");
+			} else {
+				//log(ac, LOGLEVEL_I, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户成功!");
+				setMessage(ac, "修改成功!");
+			}
+			return CONST_RESULT_AJAX;
 		} else {
 			//新增
 			checkAuth(ac, authFuncNo, RIGHT_TWO);
@@ -233,16 +240,19 @@ public class BlogService extends BusinessServices {
 			con.set("DOCTOR_ID", pid);
 			result = DBDYDao.insert(ac.getConnection(), blog);
 			result1 = DBDYDao.insert(ac.getConnection(), con);
-		}
-		if((0 == result)||(0==result1)) {
-			//log(ac, LOGLEVEL_W, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户失败!");
-			setMessage(ac, "保存失败!");
-		} else {
-			//log(ac, LOGLEVEL_I, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户成功!");
-			setMessage(ac, "保存成功!");
+			
+			if((0 == result)||(0==result1)) {
+				//log(ac, LOGLEVEL_W, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户失败!");
+				setMessage(ac, "新增失败!");
+			} else {
+				//log(ac, LOGLEVEL_I, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户成功!");
+				setMessage(ac, "新增成功!");
+			}
+			return CONST_RESULT_AJAX;
 		}
 		
-		return CONST_RESULT_AJAX;
+		
+		
 	}
 
 	public int initBlog(ActionContext ac) throws Exception {
@@ -297,7 +307,7 @@ public class BlogService extends BusinessServices {
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();
