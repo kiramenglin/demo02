@@ -61,9 +61,9 @@ $(document).ready(function(){
 				res+=parseInt (ele.find("input").val());
 				
 				if(sld<len){
-					$("#temp").html("您目前得分是 "+(res*25/sld));		
+					$("#temp").html("您目前得分是 "+res);		
 					}else if(sld==len){
-						$("#temp").html("您最终得分是 "+(res*25/sld));		
+						$("#temp").html("您最终得分是 "+res);		
 						}
 				}
 		
@@ -86,7 +86,19 @@ $(document).ready(function(){
 						}			
 					setporogress(1);					
 					if(i==len){
-						result(res*25/sld);
+						result(res*25/12);
+						alert("a");
+						$.ajax({
+							   type:"POST",
+							   url:"HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=patient.question&RES="+(res*25/12),
+							   dataType:'json',
+							   timeout:1500,
+							   error:function(){alert("Error loading xml!")},   
+							   success:function(){
+								   alert("success");
+							   }
+						});
+						alert(res*25/12);
 						}	
 					return false;	
 				})
