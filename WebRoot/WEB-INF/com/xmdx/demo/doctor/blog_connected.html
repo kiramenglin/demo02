@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>个人博客</title>
+<style type="text/css">
+#content{overflow-y:hidden;max-height:143px;}
+</style>
+<link href="css/css/title.css" rel="stylesheet" />
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+<link href="css/pagination.css" rel="stylesheet" />
+<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="js/websiteCommon.js"></script>  
+
+<script type="text/javascript">
+
+
+var data = {
+		CurrentPage :"@{PAGE_BEAN.get('CurrentPage')}",	
+		TotalPage : "@{PAGE_BEAN.get('TotalPage')}",
+		TotalRows : "@{PAGE_BEAN.get('TotalRows')}"
+	};
+$(document).ready(function(){
+	/* myProject(); */
+	
+	initPager("pageBar", data, function(pageNumber, pageSize){
+		 myProject({
+			rows :  pageSize,
+			page : pageNumber
+		}); 
+	}, {
+		pageSize :2,
+		showHeadAndTail : 1,
+		hidePaperOnOnePage:0
+	});
+	
+});
+
+function myProject(option){
+	var params = $.extend({rows:10},option);
+	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.connected!myblog&TMP=" + new Date(),params,{
+		dataType:"html",
+		success:function(data){
+			
+			$('#modal_body').html(data);
+		}
+	
+	});
+}
+
+function validate(){
+	  document.getElementByIdx_x('infoForm').submit();
+	}
+window.load=validate();
+</script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="navbar navbar-default">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="#">
+			       	 博客列表
+			      </a>
+			      
+			    </div>
+			    
+			  </div>
+			</nav>
+			
+			@if{SIZE!="0"}   
+			
+			<div class="modal-body" id="modal_body">
+			@foreach{BLOG: BLOGS}
+				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!blogView">
+				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
+				<input type="submit" class="bt link" value="@{BLOG.get('TITLE')}">
+				</form>
+				<div id="content">@{BLOG.get("CONTENT")}</div>
+				
+				@end{}
+			
+			</div>
+			
+					
+		</div>
+		
+	</div>
+	<div class="text-center" >
+			<ul id="pageBar" class="pagination pagination-lg">
+		</ul>
+	</div>
+	@else{}
+			<div class="col-md-4">
+				<h3 align="center">您目前没有博客</h3>
+			</div>
+			@end{}	
+</body>
+</html>

@@ -1,15 +1,23 @@
 package com.xmdx.demo.doctor.service;
 
 import org.apache.commons.lang.StringUtils;
+
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
+import com.e9rj.platform.common.BaseConstants;
 import com.e9rj.platform.common.CodeNameConvert;
 import com.e9rj.platform.common.GenID;
 import com.e9rj.platform.common.services.BusinessServices;
 import com.e9rj.platform.util.SessionUtil;
 import com.xmzy.frameext.business.service.annotate.Service;
+import com.xmzy.frameext.json.FastJsonUtil;
 import com.xmzy.frameext.simpledb.DBConn;
 import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
+import com.xmzy.frameext.simpledb.page.JdbcPage;
 import com.xmzy.framework.context.ActionContext;
 
 @Service(name="doctor.connected")
@@ -207,6 +215,98 @@ public class ConnectedDoctorService extends BusinessServices {
 		
 		ac.setStringValue("tabLogo", authFuncNo);
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/doctor_patient_connected.html");		
+		return CONST_RESULT_SUCCESS;
+	}
+	
+	public int blogInfo(ActionContext ac) throws Exception {
+		System.out.println("enter goto");
+		String uid = ac.getHttpRequest().getParameter("DOCTOR_ID");
+		System.out.println("doctor id = "+uid);
+		// TODO Auto-generated method stub
+
+		StringBuilder ssql = new StringBuilder("SELECT * FROM BLOG B ");
+		if(StringUtils.isNotBlank(uid)) {
+			ssql.append(" WHERE B.ID IN(SELECT BLOG_ID from BLOG_DOCTOR where DOCTOR_ID LIKE '%").append(uid).append("%') ");
+		}
+		
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+		ac.setObjValue("USER", pop[0]);
+		
+		if(pop.length==0)
+		{
+			ac.setStringValue("SIZE", String.valueOf(pop.length));
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_connected.html");		
+			return CONST_RESULT_SUCCESS;
+		}
+		else{
+		int pageNumber = BaseConstants.getQueryPageNumber(ac);
+		int pageSize = BaseConstants.getQueryPageSize(ac);
+					
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
+		
+		
+		List<DBDYPO> polist = page.getThisPageList();
+		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
+		for(int i = 0; i< polist.size();i++){
+			DBDYPO po1 = polist.get(i);	
+			po1.set("TITLE", pop[i].get("TITLE").toString());
+			po1.set("CONTENT", pop[i].get("CONTENT").toString());
+			blogs.add(po1);
+		}
+		System.out.println("b");
+		ac.setObjValue("BLOGS", blogs);
+		
+		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
+		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+		ac.setObjValue("PAGE_BEAN", jsonObject);
+		System.out.println(jsonObject.get("TotalPage")+"!@#!@$@#%%^");
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue("SIZE", String.valueOf(pop.length));
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_connected.html");		
+		return CONST_RESULT_SUCCESS;
+		}
+	}
+	
+	public int myblog(ActionContext ac) throws Exception {
+		String id = ac.getHttpRequest().getParameter("DOCTOR_ID");
+		System.out.println("id="+id);
+		StringBuilder ssql = new StringBuilder("SELECT * FROM BLOG B ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE B.ID IN(SELECT BLOG_ID from BLOG_DOCTOR where DOCTOR_ID LIKE '%").append(id).append("%') ");
+		}
+		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
+
+		
+		int pageNumber = BaseConstants.getQueryPageNumber(ac);
+		int pageSize = BaseConstants.getQueryPageSize(ac);
+					
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
+		
+		
+		List<DBDYPO> polist = page.getThisPageList();
+		List<DBDYPO> blogs = new ArrayList<DBDYPO>();
+		String jsonStr  = FastJsonUtil.jdbcPage2JsonString(page);
+		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+		String currentpage = jsonObject.getString("CurrentPage");
+		int c = Integer.parseInt(currentpage);
+		System.out.println("currentpage="+c);
+		System.out.println("polistsize="+polist.size());
+		int n = (c-1)*2;
+		for(int i = 0; i< polist.size();i++,n++){
+			System.out.println("enter if");
+			DBDYPO po1 = polist.get(i);	
+			po1.set("TITLE", pop[n].get("TITLE").toString());
+			po1.set("CONTENT", pop[n].get("CONTENT").toString());
+			blogs.add(po1);
+		}
+		System.out.println("b");
+		ac.setObjValue("BLOGS", blogs);
+		
+		
+		ac.setObjValue("PAGE_BEAN", jsonObject);
+		System.out.println(jsonObject.get("TotalPage")+"!@#!@$@#%%^");
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/connectedblog_main.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 

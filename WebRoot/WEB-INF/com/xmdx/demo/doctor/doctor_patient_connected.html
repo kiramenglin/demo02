@@ -32,11 +32,17 @@ window.load=validate();
 				</div>
 				
 				<ul class="nav nav-tabs nav-stacked">
-				    <li><a href="javascript:void(0)"><i class="icon-facebook"></i> 博客</a></li>
-				   
+				    
+				   <form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.connected!blogInfo">
+					
+						<input  type="hidden"  name="DOCTOR_ID" id="DOCTOR_ID" value="@{USER.get('DOCTOR_ID')}"><br>
+						
+						<input type="submit" class="btn btn-link" value="博客">
+					</form>
 				</ul>
 			</div>
 			<div class="col-md-8">
+			
 				<h4>@{USER.get("NAME")}<br><small>@{USER.get("PLACE")}</small></h4>
 				<table class="table table-borderless">
 				    <tbody>
