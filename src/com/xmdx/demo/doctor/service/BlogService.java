@@ -218,12 +218,14 @@ public class BlogService extends BusinessServices {
 			result = DBDYDao.update(ac.getConnection(), blog);
 			if(0 == result) {
 				//log(ac, LOGLEVEL_W, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户失败!");
-				setMessage(ac, "修改失败!");
+				//setMessage(ac, "修改失败!");
+				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_success.html");
 			} else {
 				//log(ac, LOGLEVEL_I, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户成功!");
-				setMessage(ac, "修改成功!");
+				//setMessage(ac, "修改成功!");
+				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_success.html");
 			}
-			return CONST_RESULT_AJAX;
+			return CONST_RESULT_SUCCESS;
 		} else {
 			//新增
 			checkAuth(ac, authFuncNo, RIGHT_TWO);
@@ -246,9 +248,10 @@ public class BlogService extends BusinessServices {
 				setMessage(ac, "新增失败!");
 			} else {
 				//log(ac, LOGLEVEL_I, "SYS01", blog.getTableName(), id, isAdd ? "insert" : "update", "保存用户成功!");
-				setMessage(ac, "新增成功!");
+				//setMessage(ac, "新增成功!");
+				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_success.html");
 			}
-			return CONST_RESULT_AJAX;
+			return CONST_RESULT_SUCCESS;
 		}
 		
 		
