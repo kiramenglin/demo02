@@ -38,6 +38,8 @@ public class ConnectedDoctorService extends BusinessServices {
 	
 	private static final String TABLE_PATIENT = "PATIENT";
 	
+	private static String uid = null;
+	
 	/**
 	 * 删除用户
 	 */
@@ -220,7 +222,7 @@ public class ConnectedDoctorService extends BusinessServices {
 	
 	public int blogInfo(ActionContext ac) throws Exception {
 		System.out.println("enter goto");
-		String uid = ac.getHttpRequest().getParameter("DOCTOR_ID");
+		uid = ac.getHttpRequest().getParameter("DOCTOR_ID");
 		System.out.println("doctor id = "+uid);
 		// TODO Auto-generated method stub
 
@@ -269,10 +271,11 @@ public class ConnectedDoctorService extends BusinessServices {
 	
 	public int myblog(ActionContext ac) throws Exception {
 		String id = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		System.out.println("id="+id);
+		ac.setStringValue("DOCTOR_ID", uid);
+		System.out.println("id="+uid);
 		StringBuilder ssql = new StringBuilder("SELECT * FROM BLOG B ");
-		if(StringUtils.isNotBlank(id)) {
-			ssql.append(" WHERE B.ID IN(SELECT BLOG_ID from BLOG_DOCTOR where DOCTOR_ID LIKE '%").append(id).append("%') ");
+		if(StringUtils.isNotBlank(uid)) {
+			ssql.append(" WHERE B.ID IN(SELECT BLOG_ID from BLOG_DOCTOR where DOCTOR_ID LIKE '%").append(uid).append("%') ");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 

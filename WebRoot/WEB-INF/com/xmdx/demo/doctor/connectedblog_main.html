@@ -1,6 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+
 <style type="text/css">
 #content{overflow-y:hidden;max-height:143px;}
 </style>
+<link href="css/css/title.css" rel="stylesheet" />
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
 <script type="text/javascript">
 var data = {
 		CurrentPage :"@{PAGE_BEAN.get('CurrentPage')}",	
@@ -26,7 +33,7 @@ $(document).ready(function(){
 
 function myProject(option){
 	var params = $.extend({rows:10},option);
-	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.connected!myblog&DOCTOR_ID="+ @{USER.get('DOCTOR_ID')} + "&TMP=" + new Date(),params,{
+	$.webAjax("HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.connected!myblog&DOCTOR_ID="+ #{DOCTOR_ID} + "&TMP=" + new Date(),params,{
 		dataType:"html",
 		success:function(data){
 			
@@ -38,7 +45,8 @@ function myProject(option){
 
 
 </script>
-
+</head>
+<body>
 
 	<div class="container-fluid">
 		
@@ -50,7 +58,7 @@ function myProject(option){
 			@foreach{BLOG: BLOGS}
 				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=doctor.blog!blogView">
 				<input type="hidden" style="width:90%" name="ID" id="ID" value="@{BLOG.get('ID')}"/>
-				<input type="submit" class="btn btn-link" value="@{BLOG.get('TITLE')}">
+				<input type="submit" class="bt link" value="@{BLOG.get('TITLE')}">
 				</form>
 				<div id="content">@{BLOG.get("CONTENT")}</div>
 				
@@ -65,3 +73,5 @@ function myProject(option){
 		
 	</div>
 
+</body>
+</html>
