@@ -294,7 +294,7 @@ public class ConnectedDoctorService extends BusinessServices {
 		int c = Integer.parseInt(currentpage);
 		System.out.println("currentpage="+c);
 		System.out.println("polistsize="+polist.size());
-		int n = (c-1)*2;
+		int n = (c-1)*10;
 		for(int i = 0; i< polist.size();i++,n++){
 			System.out.println("enter if");
 			DBDYPO po1 = polist.get(i);	
