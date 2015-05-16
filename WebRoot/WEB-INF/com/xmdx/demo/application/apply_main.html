@@ -6,12 +6,15 @@
 <title>私人医生申请信息</title>
 <link href="css/css/bootstrap.min.css" rel="stylesheet" />
 <link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+
 <script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+
 <script type="text/javascript" src="js/websiteCommon.js"></script>  
  
 <script type="text/javascript" src="js/js/bootstrap.min.js"></script>  
-
+<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/>
 <script type="text/javascript">
+var validateForm = false;
 
 $(document).ready(function(){
 	/* myProject(); */
@@ -32,6 +35,15 @@ $(document).ready(function(){
 		hidePaperOnOnePage:0
 	});
 	
+	var text=$("#edit_myfrom textarea").val();
+    var counter=text.length;
+    $("#numtj var").text(200-counter);
+    $(document).keyup(function() {
+        var text=$("#edit_myfrom textarea").val();
+        var counter=text.length;
+        $("#numtj var").text(200-counter);
+    });
+	
 });
 
 function myProject(option){
@@ -49,6 +61,36 @@ function myProject(option){
 	
 }
 
+function saveInfo(formname){
+	submitInfoForm(formname, "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=apply.info");
+	  validateForm = true;
+	  $('#'+formname).submit();
+	
+}
+
+function saveInfo1(formname){
+	
+	var str1=document.getElementById("MESSAGE").value;
+	  
+	  
+	  if(str1==""){
+		  alert("请输入拒绝理由！");
+		  validateForm = false;
+	  
+	  }
+	  else{
+	 submitInfoForm(formname, "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info");
+	  validateForm = true;
+	  $('#'+formname).submit();
+	  }
+}
+
+function saveInfo2(formname){
+	submitInfoForm(formname, "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.info");
+	  validateForm = true;
+	  $('#'+formname).submit();
+	
+}
 </script>
 </head>
 <body>
@@ -80,58 +122,85 @@ function myProject(option){
 						<td class="warning" >@{APPS.get("MESSAGE")}</td>
 						<td class="warning">@{APPS.get("CREATE_TIME")}</td>
 						<td class="warning">待审查</td>
+						<td class="warning">
+				<div class="row">
+					<div class="col-md-3">
+						<form method="post" name="infoForm-@{APPS.get('PATIENT_ID')}" id="infoForm-@{APPS.get('PATIENT_ID')}">
+						<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+						<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+						
+						</form>
+					
+						<button class="btn btn-success btn-sm" style="width:50px;" onclick="saveInfo('infoForm-@{APPS.get('PATIENT_ID')}')">同意</button>
+
+					</div>
+					<div class="col-md-3">
+						<button type="button" class="btn btn-warning btn-sm" style="width:50px;" data-toggle="modal" data-target="#myModal-@{APPS.get('PATIENT_ID')}">拒绝</button>
+					</div>
+					
+				</div>
+				
+					
+					
+			<div class="modal fade"  id="myModal-@{APPS.get('PATIENT_ID')}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" >
+				<div class="modal-content">
+					<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">拒绝申请</h4>
+					</div>
+					<form method="post" name="infoForm1-@{APPS.get('PATIENT_ID')}" id="infoForm1-@{APPS.get('PATIENT_ID')}" >
+						<input type="hidden" style="width:90%" name="DOCTOR1_ID" id="DOCTOR1_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+						<input type="hidden" style="width:90%" name="PATIENT1_ID" id="PATIENT1_ID" value="@{APPS.get("PATIENT_ID")}"/>
+					    <div class="form-group">
+					<label for="inputPassword" class="col-sm-2 control-label">拒绝理由</label>
+					<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea id="MESSAGE" name="MESSAGE" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					<button class="btn btn-warning btn-sm" style="width:50px;" onclick="saveInfo1('infoForm1-@{APPS.get('PATIENT_ID')}')">拒绝</button>
+					</div>
+				</div>		
+						
+					</form>
+					
+				
+			</div>
+		</div>
+		</div>
+		</td>
 						@else{APPS.get("STATE")=="1"}
 						<td class="success">@{APPS.get("PATIENT_NAME")}</td>
 						<td class="success" >@{APPS.get("MESSAGE")}</td>
 						<td class="success">@{APPS.get("CREATE_TIME")}</td>
 						<td class="success">已通过</td>
+						<td class="success">
+					<form method="post" name="infoForm2-@{APPS.get('PATIENT_ID')}" id="infoForm2-@{APPS.get('PATIENT_ID')}" >
+						<input type="hidden" style="width:90%" name="DOCTOR1_ID" id="DOCTOR1_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+					    <input type="hidden" style="width:90%" name="PATIENT1_ID" id="PATIENT1_ID" value="@{APPS.get("PATIENT_ID")}"/>
+						
+					</form>
+					<button class="btn btn-danger btn-sm" style="width:50px;" onclick="saveInfo2('infoForm2-@{APPS.get('PATIENT_ID')}')">删除</button>
+					</td>
 						@else{}
 						<td class="danger">@{APPS.get("PATIENT_NAME")}</td>
 						<td class="danger" >@{APPS.get("MESSAGE")}</td>
 						<td class="danger">@{APPS.get("CREATE_TIME")}</td>
 						<td class="danger">已拒绝</td>
+						<td class="success">
+					<form method="post" name="infoForm2-@{APPS.get('PATIENT_ID')}" id="infoForm2-@{APPS.get('PATIENT_ID')}" >
+						<input type="hidden" style="width:90%" name="DOCTOR1_ID" id="DOCTOR1_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+					    <input type="hidden" style="width:90%" name="PATIENT1_ID" id="PATIENT1_ID" value="@{APPS.get("PATIENT_ID")}"/>
+						
+					</form>
+					<button class="btn btn-danger btn-sm" style="width:50px;" onclick="saveInfo2('infoForm2-@{APPS.get('PATIENT_ID')}')">删除</button>
+					</td>
 						@end{}	
 					
-				@if{APPS.get("STATE")=="0"}
-				<td class="warning">
-				<div class="row">
-					<div class="col-md-3">
-						<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=apply.info">
-						<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-						<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-						<input class="btn btn-success btn-sm" type="submit" value="同意">
-						</form>
-					</div>
-					<div class="col-md-3">
-						<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">拒绝</button>
-					</div>
-				</div>
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="myModalLabel">申请私人医生</h4>
-					</div>
-					<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.info">
-						<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-						<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-						<textarea class="form-control" rows="8" cols="40" id="MESSAGE" name="MESSAGE">拒绝理由</textarea>
-						<input class="btn btn-danger btn-sm" type="submit" value="拒绝">
-					</form>
-				</div>
-			</div>
-		</div>
-		</td>
-					@else{}
-					<td class="success">
-					<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.info">
-						<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-					    <input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-						<input class="btn btn-danger btn-sm" type="submit" value="删除">
-					</form>
-					</td>
-					@end{}
+				
+					
+					
 					
 					</tr> 
 					@end{}

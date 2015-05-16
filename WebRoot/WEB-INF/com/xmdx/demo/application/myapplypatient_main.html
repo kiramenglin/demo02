@@ -31,7 +31,14 @@ $(document).ready(function(){
 		showHeadAndTail : 1,
 		hidePaperOnOnePage:0
 	});
-	
+	var text=$("#edit_myfrom textarea").val();
+    var counter=text.length;
+    $("#numtj var").text(200-counter);
+    $(document).keyup(function() {
+        var text=$("#edit_myfrom textarea").val();
+        var counter=text.length;
+        $("#numtj var").text(200-counter);
+    });
 });
 
 function myProject(option){

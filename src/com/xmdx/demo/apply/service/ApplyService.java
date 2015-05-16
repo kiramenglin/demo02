@@ -31,14 +31,17 @@ public class ApplyService extends BusinessServices {
 		// TODO Auto-generated method stub
 		System.out.println("enter delete");
 		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		String did = ac.getHttpRequest().getParameter("DOCTOR1_ID");
+		String pid = ac.getHttpRequest().getParameter("PATIENT1_ID");
+		
+		System.out.println("patient_id="+pid);
+		System.out.println("doctor_id="+did);
 		
 		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
 		pop.set("DOCTOR_ID", did);
 		pop.set("PATIENT_ID", pid);
-		DBDYDao.selectByID(ac.getConnection(), pop);
-		
+	    DBDYDao.selectByID(ac.getConnection(), pop);
+
 		result = DBDYDao.delete(ac.getConnection(), pop);
 		if(0 == result) {
 			
@@ -53,13 +56,16 @@ public class ApplyService extends BusinessServices {
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("enter reject");
+		System.out.println("enter goto");
 		
 		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
-		String message = ac.getHttpRequest().getParameter("MESSAGE");
+		String did = ac.getHttpRequest().getParameter("DOCTOR1_ID");
+		String pid = ac.getHttpRequest().getParameter("PATIENT1_ID");
 		
+		System.out.println("patient_id="+pid);
+		System.out.println("doctor_id="+did);
+		String message = ac.getHttpRequest().getParameter("MESSAGE");
+		System.out.println("message="+message);
 		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
 		pop.set("DOCTOR_ID", did);
 		pop.set("PATIENT_ID", pid);
@@ -75,6 +81,7 @@ public class ApplyService extends BusinessServices {
 			setMessage(ac, "拒绝成功!");
 		}
 		return CONST_RESULT_AJAX;
+		
 	}
 
 	@Override
@@ -107,7 +114,7 @@ public class ApplyService extends BusinessServices {
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();
@@ -118,6 +125,8 @@ public class ApplyService extends BusinessServices {
 			po1.set("MESSAGE", pop[i].get("MESSAGE").toString());
 			po1.set("CREATE_TIME", pop[i].get("CREATE_TIME").toString());
 			po1.set("STATE", pop[i].get("STATE").toString());
+			po1.set("PATIENT_ID", pop[i].get("PATIENT_ID").toString());
+			po1.set("DOCTOR_ID", pop[i].get("DOCTOR_ID").toString());
 			projects.add(po1);
 		}
 		
@@ -205,7 +214,7 @@ public class ApplyService extends BusinessServices {
 		int pageNumber = BaseConstants.getQueryPageNumber(ac);
 		int pageSize = BaseConstants.getQueryPageSize(ac);
 					
-		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 10);
+		JdbcPage page =  DBDYDao.select2JdbcPage(ac.getConnection(), ssql.toString(), pageNumber, 2);
 		
 		
 		List<DBDYPO> polist = page.getThisPageList();
@@ -225,6 +234,7 @@ public class ApplyService extends BusinessServices {
 			po1.set("MESSAGE", pop[n].get("MESSAGE").toString());
 			po1.set("CREATE_TIME", pop[n].get("CREATE_TIME").toString());
 			po1.set("STATE", pop[n].get("STATE").toString());
+			
 			projects.add(po1);
 		}
 		

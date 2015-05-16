@@ -31,7 +31,14 @@ $(document).ready(function(){
 		showHeadAndTail : 1,
 		hidePaperOnOnePage:0
 	});
-	
+	var text=$("#edit_myfrom textarea").val();
+    var counter=text.length;
+    $("#numtj var").text(200-counter);
+    $(document).keyup(function() {
+        var text=$("#edit_myfrom textarea").val();
+        var counter=text.length;
+        $("#numtj var").text(200-counter);
+    });
 });
 
 function myProject(option){
@@ -48,6 +55,8 @@ function myProject(option){
 	});
 	
 }
+
+
 
 </script>
 </head>
@@ -131,9 +140,18 @@ function myProject(option){
 			     
 				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.patient">
 												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-                                        		<textarea class="form-control" rows="8" cols="40" id="MESSAGE" name="MESSAGE">修改理由</textarea>
-												<input type="submit" value="提交">
+                                        		<input  type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+                                        		<div class="form-group">
+												<label for="inputPassword" class="col-sm-2 control-label">预约内容</label>
+												<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       											 <p class="textinput"><label><textarea name="MESSAGE" cols="" rows="" maxlength="200" style="height:60px; width:400px" required></textarea></label></p>
+       				 								<p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					<input type="submit" class="btn btn-primary btn-sm" onclick="saveInfo()" value="提交">
+												</div>
+												</div>
+												
 				   								</form>
 			   
 			    

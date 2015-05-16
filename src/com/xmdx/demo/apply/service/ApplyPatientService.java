@@ -39,14 +39,16 @@ public class ApplyPatientService extends BusinessServices {
 		DBDYDao.selectByID(ac.getConnection(), pop);
 		
 		result = DBDYDao.delete(ac.getConnection(), pop);
-		if(0 == result) {
-			
-			setMessage(ac, "删除失败!");
-		} else {
-			
-			setMessage(ac, "删除成功!");
-		}
-		return CONST_RESULT_AJAX;
+//		if(0 == result) {
+//			
+//			setMessage(ac, "删除失败!");
+//		} else {
+//			
+//			setMessage(ac, "删除成功!");
+//		}
+//		return CONST_RESULT_AJAX;
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/apply_success.html");
+		return CONST_RESULT_SUCCESS;
 	}
 
 	@Override
@@ -66,14 +68,16 @@ public class ApplyPatientService extends BusinessServices {
 		
 		pop.set("MESSAGE", message);
 		result = DBDYDao.update(ac.getConnection(), pop);
-		if(0 == result) {
-			
-			setMessage(ac, "修改失败!");
-		} else {
-			
-			setMessage(ac, "修改成功!");
-		}
-		return CONST_RESULT_AJAX;
+//		if(0 == result) {
+//			
+//			setMessage(ac, "修改失败!");
+//		} else {
+//			
+//			setMessage(ac, "修改成功!");
+//		}
+//		return CONST_RESULT_AJAX;
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/apply_success.html");
+		return CONST_RESULT_SUCCESS;
 	}
 
 	@Override
