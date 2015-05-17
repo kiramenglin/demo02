@@ -47,7 +47,32 @@ public class ApplyPatientService extends BusinessServices {
 //			setMessage(ac, "删除成功!");
 //		}
 //		return CONST_RESULT_AJAX;
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/apply_success.html");
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/applydelete_success.html");
+		return CONST_RESULT_SUCCESS;
+	}
+	
+	public int delete1(ActionContext ac) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("enter delete");
+		int result = 0;
+		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
+		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		
+		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
+		pop.set("DOCTOR_ID", did);
+		pop.set("PATIENT_ID", pid);
+		DBDYDao.selectByID(ac.getConnection(), pop);
+		
+		result = DBDYDao.delete(ac.getConnection(), pop);
+//		if(0 == result) {
+//			
+//			setMessage(ac, "删除失败!");
+//		} else {
+//			
+//			setMessage(ac, "删除成功!");
+//		}
+//		return CONST_RESULT_AJAX;
+		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/applydelete_success.html");
 		return CONST_RESULT_SUCCESS;
 	}
 

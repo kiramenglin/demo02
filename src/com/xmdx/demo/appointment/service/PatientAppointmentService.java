@@ -160,12 +160,12 @@ public class PatientAppointmentService extends BusinessServices {
 		DBDYPO pop = new DBDYPO(tableName,keyField);
 		pop.set("APPOINTMENT_ID", messageid);
 		DBDYDao.selectByID(ac.getConnection(), pop);
-		pop.set("IS_READ", state);
+		
 		pop.set("IS_REPLY", new_state);
 		DBDYDao.update(ac.getConnection(), pop);
 		
 		DBDYPO[] alist = DBDYDao.selectByID(ac.getConnection(), pop);
-		pop.set("IS_READ", state);
+		
 		pop.set("IS_NEW", new_state);
 		DBDYDao.update(ac.getConnection(), pop);
 		

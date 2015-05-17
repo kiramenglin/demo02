@@ -1,4 +1,4 @@
-package com.xmdx.demo.message.service;
+package com.xmdx.demo.suggestion.service;
 
 import java.io.File;
 import java.net.URLEncoder;
@@ -24,24 +24,24 @@ import com.xmzy.frameext.simpledb.DBDYDao;
 import com.xmzy.frameext.simpledb.DBDYPO;
 import com.xmzy.frameext.simpledb.page.JdbcPage;
 import com.xmzy.framework.context.ActionContext;
-@Service(name="patient.message")
+@Service(name="doctor.suggestion")
 /**
  * 
  * @author Jinghui Lu
- * 病患端消息服务
+ * 医生端建议服务
  *
  */
-public class PatientMessageService extends BusinessServices {
+public class DoctorSuggestionService extends BusinessServices {
 	/**
 	 * 病患向医生咨询服务
 	 * 
 	 */
 	//功能号
-	private static final String authFuncNo = "patient.message";
+	private static final String authFuncNo = "doctor.suggestion";
 	//表名
-	private static final String tableName = "MESSAGE";
+	private static final String tableName = "SUGGESTION";
 	//主键名
-	private static final String keyField = "MESSAGE_ID";
+	private static final String keyField = "SUGGESTION_ID";
 	//医生id
 	private static String id = null;
 	//诊疗咨询图片
@@ -57,8 +57,8 @@ public class PatientMessageService extends BusinessServices {
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
 		System.out.println("enter goto");
-		id = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		System.out.println("doctor id = "+id);
+		id = ac.getHttpRequest().getParameter("PATIENT_ID");
+		System.out.println("patient id = "+id);
 		
 		// TODO Auto-generated method stub
 
@@ -73,7 +73,7 @@ public class PatientMessageService extends BusinessServices {
 //		checkAuth(ac, authFuncNo, RIGHT_ONE);
 //		
 //		ac.setStringValue("tabLogo", authFuncNo);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/message_submit.html");		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/suggestion/suggestion_submit.html");		
 		return CONST_RESULT_SUCCESS;
 
 	}
@@ -90,15 +90,15 @@ public class PatientMessageService extends BusinessServices {
 		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
 		String id =po[0].getString("PERSON_ID");
 		System.out.println("id="+id);
-		StringBuilder ssql = new StringBuilder("SELECT * FROM MESSAGE U ");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM SUGGESTION U ");
 		if(StringUtils.isNotBlank(id)) {
-			ssql.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ORDER BY IS_REPLY DESC,TIME DESC ");
+			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ORDER BY IS_REPLY DESC,TIME DESC ");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 		if(pop.length==0)
 		{
 			ac.setStringValue("SIZE", String.valueOf(pop.length));
-			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/patient_message_main.html");		
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/suggestion/doctor_suggestion_main.html");		
 			return CONST_RESULT_SUCCESS;
 		}
 		
@@ -123,6 +123,8 @@ public class PatientMessageService extends BusinessServices {
 			//po1.set("IMAGE", pop[i].get("IMAGE").toString());
 			po1.set("DOCTOR_NAME", pop[i].get("DOCTOR_NAME").toString());
 			po1.set("TIME", pop[i].get("TIME").toString());
+			po1.set("TITLE", pop[i].get("TITLE").toString());
+			po1.set("SUGGESTION_ID", pop[i].get("SUGGESTION_ID").toString());
 			projects.add(po1);
 		}
 		
@@ -132,7 +134,7 @@ public class PatientMessageService extends BusinessServices {
 		JSONObject jsonObject = JSONObject.parseObject(jsonStr);
 		ac.setObjValue("PAGE_BEAN", jsonObject);
 		ac.setStringValue("SIZE", String.valueOf(pop.length));
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/patient_message_main.html");
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/suggestion/doctor_suggestion_main.html");
 	
 		return CONST_RESULT_SUCCESS;
 		}
@@ -142,24 +144,24 @@ public class PatientMessageService extends BusinessServices {
 	 * 
 	 * @param ac
 	 * @return
-	 * @throws 病患查看消息详细信息
+	 * @throws 医生查看建议详细信息
 	 */
 	public int read(ActionContext ac) throws Exception {
-		System.out.println("enter read message");
+		System.out.println("enter read suggestion");
 		int state = 1;
 		int new_state = 0;
-		String messageid = ac.getHttpRequest().getParameter("MESSAGE_ID");
-		System.out.println("message id = "+messageid);
-		StringBuilder sql = new StringBuilder("SELECT * FROM MESSAGE U ");
+		String suggestionid = ac.getHttpRequest().getParameter("SUGGESTION_ID");
+		System.out.println("suggestion id = "+suggestionid);
+		StringBuilder sql = new StringBuilder("SELECT * FROM SUGGESTION U ");
 		
-		if(StringUtils.isNotBlank(messageid)) {
-			sql.append(" WHERE U.MESSAGE_ID LIKE '%").append(messageid).append("%' ");
+		if(StringUtils.isNotBlank(suggestionid)) {
+			sql.append(" WHERE U.SUGGESTION_ID LIKE '%").append(suggestionid).append("%' ");
 		}
 		
-		StringBuilder ssql = new StringBuilder("SELECT * FROM COMMENT U ");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM SCOMMENT U ");
 		
-		if(StringUtils.isNotBlank(messageid)) {
-			ssql.append(" WHERE U.MESSAGE_ID LIKE '%").append(messageid).append("%' ORDER BY TIME ASC");
+		if(StringUtils.isNotBlank(suggestionid)) {
+			ssql.append(" WHERE U.SUGGESTION_ID LIKE '%").append(suggestionid).append("%' ORDER BY TIME ASC");
 		}
 		
 		DBDYPO[] pocom = DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
@@ -168,7 +170,7 @@ public class PatientMessageService extends BusinessServices {
 		DBDYPO[] po =DBDYDao.selectBySQL(ac.getConnection(), sql.toString());
 
 		DBDYPO pop = new DBDYPO(tableName,keyField);
-		pop.set("MESSAGE_ID", messageid);
+		pop.set("SUGGESTION_ID", suggestionid);
 		DBDYDao.selectByID(ac.getConnection(), pop);
 		
 		pop.set("IS_REPLY", new_state);
@@ -198,11 +200,12 @@ public class PatientMessageService extends BusinessServices {
 		DBDYPO[] popatient =DBDYDao.selectBySQL(ac.getConnection(), patientsql.toString());
 		ac.setObjValue("PATIENT", popatient[0]);
 		
+		System.out.println("end1");
 		
 		ac.setObjValue("MESSAGE", po[0]);
 		ac.setObjValue("COMMENT",pocom);
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/patient_message_read.html");
-		
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/suggestion/doctor_suggestion_read.html");
+		System.out.println("end2");
 		return CONST_RESULT_SUCCESS;
 	
 	}
@@ -231,46 +234,46 @@ public class PatientMessageService extends BusinessServices {
 			sql.append(" WHERE U.OPNO LIKE '%").append(userName).append("%' ");
 		}
 		
-		StringBuilder ssql = new StringBuilder("SELECT * FROM DOCTOR U ");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM PATIENT U ");
 		if(StringUtils.isNotBlank(userName)) {
-			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ");
+			ssql.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ");
 		}
 		DBDYPO[] ppo =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 		name = ppo[0].getString("NAME");
-		System.out.println("doctorname = "+name);
+		System.out.println("patientname = "+name);
 		int state = 0;
 		int result = 0;
 		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
-		String pid =po[0].getString("PERSON_ID");
-		String message = ac.getHttpRequest().getParameter("MESSAGE");
+		String did =po[0].getString("PERSON_ID");
+		String suggestion = ac.getHttpRequest().getParameter("MESSAGE");
 		String title = ac.getHttpRequest().getParameter("TITLE");
-		StringBuilder psql = new StringBuilder("SELECT * FROM PATIENT U ");
-		if(StringUtils.isNotBlank(pid)) {
-			psql.append(" WHERE U.PATIENT_ID LIKE '%").append(pid).append("%' ");
+		StringBuilder dsql = new StringBuilder("SELECT * FROM DOCTOR U ");
+		if(StringUtils.isNotBlank(did)) {
+			dsql.append(" WHERE U.DOCTOR_ID LIKE '%").append(did).append("%' ");
 		}
-		DBDYPO[] ppop =DBDYDao.selectBySQL(ac.getConnection(), psql.toString());
-		String patientname = ppop[0].getString("NAME");
+		DBDYPO[] ppop =DBDYDao.selectBySQL(ac.getConnection(), dsql.toString());
+		String doctorname = ppop[0].getString("NAME");
 		int idlLen = 20;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		 Timestamp nowdate1 = new Timestamp(System.currentTimeMillis());
 		 String datestr = sdf.format(nowdate1);
-		String messageID = super.genIdString("", idlLen);
+		String suggestionID = super.genIdString("", idlLen);
 		
-		System.out.println("content="+message);
+		System.out.println("content="+suggestion);
 		System.out.println("doctor_id="+id);
 		System.out.println("patient_id="+pid);
-		System.out.println("doctor_name="+name);
-		System.out.println("patient_name="+patientname);
+		System.out.println("doctor_name="+doctorname);
+		System.out.println("patient_name="+name);
 		System.out.println("time="+datestr);
-		System.out.println("message_id="+messageID);
+		System.out.println("suggestion_id="+suggestionID);
 		
 		DBDYPO newMessage = new DBDYPO(tableName, keyField);
-		newMessage.set(keyField, messageID);
-		newMessage.set("CONTENT", message);
-		newMessage.set("DOCTOR_ID", id);
-		newMessage.set("PATIENT_ID", pid);
-		newMessage.set("DOCTOR_NAME", name);
-		newMessage.set("PATIENT_NAME", patientname);
+		newMessage.set(keyField, suggestionID);
+		newMessage.set("CONTENT", suggestion);
+		newMessage.set("DOCTOR_ID", did);
+		newMessage.set("PATIENT_ID", id);
+		newMessage.set("DOCTOR_NAME", doctorname);
+		newMessage.set("PATIENT_NAME", name);
 		newMessage.set("TIME", datestr);
 		newMessage.set("IS_REPLY", state);
 		newMessage.set("IS_NEW", state);
@@ -283,11 +286,11 @@ public class PatientMessageService extends BusinessServices {
 		if(0 == result) {
 			
 		    ac.getConnection().rollback();
-		    setMessage(ac, "询问失败!");
+		    setMessage(ac, "建议失败!");
 			
 		} 
 		else{
-			setMessage(ac, "询问成功!");
+			setMessage(ac, "建议成功!");
 		}
 		return CONST_RESULT_AJAX;
 		
@@ -304,12 +307,20 @@ public class PatientMessageService extends BusinessServices {
 		System.out.println("enter save");
 		
 		String content = ac.getHttpRequest().getParameter("CONTENT");
-		String messageid = ac.getHttpRequest().getParameter("MESSAGE_ID");
+		String suggestionid = ac.getHttpRequest().getParameter("MESSAGE_ID");
 		String doctorid = ac.getHttpRequest().getParameter("DOCTOR_ID");
 		String patientid = ac.getHttpRequest().getParameter("PATIENT_ID");
 		String doctorname = ac.getHttpRequest().getParameter("DOCTOR_NAME");
 		String patientname = ac.getHttpRequest().getParameter("PATIENT_NAME");
-		DBDYPO pop = new DBDYPO("COMMENT","COMMENT_ID");
+		
+		System.out.println("content="+content);
+		System.out.println("doctorid="+doctorid);
+		System.out.println("doctorname="+doctorname);
+		System.out.println("patientid="+patientid);
+		System.out.println("patientname="+patientname);
+		System.out.println("suggestionid="+suggestionid);
+	
+		DBDYPO pop = new DBDYPO("SCOMMENT","SCOMMENT_ID");
 		int idlLen = 20;
 		int state = 0;
 		int result = 0;
@@ -318,20 +329,20 @@ public class PatientMessageService extends BusinessServices {
 		 Timestamp nowdate1 = new Timestamp(System.currentTimeMillis());
 		 String datestr = sdf.format(nowdate1);
 		String commentID = super.genIdString("", idlLen);
-		pop.set("COMMENT_ID", commentID);
-		pop.set("MESSAGE_ID", messageid);
+		pop.set("SCOMMENT_ID", commentID);
+		pop.set("SUGGESTION_ID", suggestionid);
 		pop.set("CONTENT", content);
 		pop.set("TIME", datestr);
 		pop.set("DOCTOR_ID", doctorid);
-		pop.set("FROM_NAME", patientname);
+		pop.set("FROM_NAME", doctorname);
 		pop.set("PATIENT_ID", patientid);
-		pop.set("TO_NAME", doctorname);
+		pop.set("TO_NAME", patientname);
 		pop.set("STATE", state);
 		
 		result = DBDYDao.insert(ac.getConnection(), pop);
 		
 		DBDYPO po = new DBDYPO(tableName,keyField);
-		po.set("MESSAGE_ID", messageid);
+		po.set("SUGGESTION_ID", suggestionid);
 		DBDYDao.selectByID(ac.getConnection(), po);
 		//给病患指示器，0时表示医生无新回复，1时表示医生有新回复
 		po.set("IS_NEW", reply_state);
@@ -367,12 +378,12 @@ public class PatientMessageService extends BusinessServices {
 	}
 	
 	/**
-	 * patient message分页
+	 * patient suggestion分页
 	 * @param ac
 	 * @return
 	 * @throws Exception
 	 */
-	public int mymessage(ActionContext ac) throws Exception {
+	public int mysuggestion(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
 		
 		String userName=SessionUtil.getOpno(ac);
@@ -385,9 +396,9 @@ public class PatientMessageService extends BusinessServices {
 		DBDYPO[] po =DBDYDao.selectBySQL(DBConn.getConnection("SSOdbService"), sql.toString());
 		String id =po[0].getString("PERSON_ID");
 		System.out.println("id="+id);
-		StringBuilder ssql = new StringBuilder("SELECT * FROM MESSAGE U ");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM SUGGESTION U ");
 		if(StringUtils.isNotBlank(id)) {
-			ssql.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ORDER BY IS_REPLY DESC,TIME DESC");
+			ssql.append(" WHERE U.DOCTOR_ID LIKE '%").append(id).append("%' ORDER BY IS_REPLY DESC,TIME DESC");
 		}
 		DBDYPO[] pop =DBDYDao.selectBySQL(ac.getConnection(), ssql.toString());
 //		
@@ -397,7 +408,7 @@ public class PatientMessageService extends BusinessServices {
 		if(pop.length==0)
 		{
 			ac.setStringValue("SIZE", String.valueOf(pop.length));
-			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/patient_mymessage_main.html");		
+			ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/suggestion/doctor_mysuggestion_main.html");		
 			return CONST_RESULT_SUCCESS;
 		}
 		else{
@@ -431,6 +442,8 @@ public class PatientMessageService extends BusinessServices {
 			//po1.set("IMAGE", pop[n].get("IMAGE").toString());
 			po1.set("DOCTOR_NAME", pop[n].get("DOCTOR_NAME").toString());
 			po1.set("TIME", pop[n].get("TIME").toString());
+			po1.set("TITLE", pop[n].get("TITLE").toString());
+			po1.set("SUGGESTION_ID", pop[n].get("SUGGESTION_ID").toString());
 			projects.add(po1);
 		}
 		
@@ -438,7 +451,7 @@ public class PatientMessageService extends BusinessServices {
 		
 		
 		ac.setStringValue("SIZE", String.valueOf(pop.length));
-		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/message/patient_mymessage_main.html");
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/suggestion/doctor_mysuggestion_main.html");
 	
 		return CONST_RESULT_SUCCESS;
 		

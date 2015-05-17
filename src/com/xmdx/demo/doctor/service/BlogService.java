@@ -46,10 +46,10 @@ public class BlogService extends BusinessServices {
 					if(result == 0) {
 						setMessage(ac,"删除失败");
 					} else {
-						setMessage(ac,"删除成功");
+						ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_success.html");
 					}
 				}
-		return CONST_RESULT_AJAX;
+		return CONST_RESULT_SUCCESS;
 	}
 		
 		

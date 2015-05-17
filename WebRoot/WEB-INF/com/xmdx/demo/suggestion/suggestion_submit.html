@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<!-- 预约提交页面 -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>预约提交</title>
+<link href="css/css/bootstrap.min.css" rel="stylesheet" />
+<link href="css/css/bootstrap-theme.css" rel="stylesheet" />
+
+<script src="/e9common/bootstrap/js/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="/e9common/swfupload/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/swfupload.queue.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/fileprogress.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/e9common/ckeditor/adapters/jquery.js"></script>
+<script type="text/javascript" src="/e9common/swfupload/js/handlers.js"></script>
+<script type="text/javascript" src="js/js/bootstrap.min.js"></script>   
+<script type="text/javascript" src="js/common.js"></script>  
+<customtag var="getform" delegation="com.xmzy.frameext.form.tag.GetFormFileTag" src="com/e9rj/platform/common/form/include.html"/> 
+<script type="text/javascript">
+
+var validateForm = false;
+$(function(){
+	 submitInfoForm("infoForm", "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=doctor.suggestion");
+	 var text=$("#edit_myfrom textarea").val();
+	    var counter=text.length;
+	    $("#numtj var").text(200-counter);
+	    $(document).keyup(function() {
+	        var text=$("#edit_myfrom textarea").val();
+	        var counter=text.length;
+	        $("#numtj var").text(200-counter);
+	    });
+});	
+
+function saveInfo(){
+	var str1=document.infoForm.TITLE.value;
+	  var str2=document.infoForm.MESSAGE.value;
+	  if(str1==""){
+		  alert("请输入标题！");
+		  validateForm = false;
+	   return  false ;
+	  }
+	  if(str2==""){
+		  alert("请输入内容！");
+		  validateForm = false;
+	   return  false ;
+	  }
+	  
+	  validateForm = true;
+	  $('#infoForm').submit();
+	
+}
+
+
+
+</script>
+</head>
+<body>
+	<form class="form-horizontal" method="post" name="infoForm" id="infoForm"   >
+				
+			<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">标题</label>
+			<div class="col-sm-5">
+			  	<input  name="TITLE" id="TITLE" maxlength="20">
+			</div>
+		</div>		
+		<div class="form-group">
+			<label for="inputPassword" class="col-sm-2 control-label">建议内容</label>
+			<div id="edit_myfrom" class="col-sm-5">
+   					
+          			 
+       				 <p class="textinput"><label><textarea name="MESSAGE" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
+   					
+					</div>
+		</div>				
+			    
+					
+				
+</form>
+<div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		    	<button   class="btn btn-primary" onclick="saveInfo()" >提交建议</button>
+		    </div>
+  		</div>	
+</body>
+</html>

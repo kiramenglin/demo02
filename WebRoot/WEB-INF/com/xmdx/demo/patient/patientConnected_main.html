@@ -90,6 +90,14 @@
 			window.location.href=url;
 		});
 		
+		$("#info1Btn").click(function(){
+			var selectedId = getSelectedCheckbox("gridTable");
+			if(!selectOne(selectedId))return;
+			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
+			var url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.suggestion" + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
+			window.location.href=url;
+		});
+		
 	});
 	
 
@@ -119,7 +127,7 @@
 	        <div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;">
 				<span id="buttonset">
 	                <button id="infoBtn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>详情</button>
-					
+					<button id="info1Btn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>建议</button>
 				</span>
 	        </div>
 		</div>
