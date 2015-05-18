@@ -33,4 +33,22 @@
 		</PresentationConfig>
 	</Action>
 	
+	<Action id="LOGIN_ACTION">
+		<Description>login action</Description>
+		<ErrorAction>com.xmzy.frameext.simpledb.action.RollbackAndEndTrans</ErrorAction>
+		<ActionContext>
+		</ActionContext>
+		<ActionParam>
+			<ActionStep id="1" classname="com.xmzy.frameext.simpledb.action.BeginConnWithNoTrans" on1Do="next" onOtherDo="error" />
+			<ActionStep id="2" classname="com.xmdx.demo.website.action.LoginAction" onOtherDo="next" on0Do="error" isresult="true" />
+			<ActionStep id="3" classname="com.xmzy.frameext.simpledb.action.EndConnWithNoTrans" on1Do="return" onOtherDo="error" />
+		</ActionParam>
+		<PresentationConfig>
+			<ActionDestination method="forward" return_code="error">main/error.jsp</ActionDestination>
+			<ActionDestination method="form" return_code="1">com/e9rj/platform/common/form/main.html</ActionDestination>
+			<ActionDestination method="form" return_code="2">com/xmdx/demo/doctor/doctor_index.html</ActionDestination>
+			<ActionDestination method="form" return_code="3">com/xmdx/demo/patient/patient_index.html</ActionDestination>
+		</PresentationConfig>
+	</Action>
+	
 </Config>
