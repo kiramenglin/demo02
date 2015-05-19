@@ -29,9 +29,10 @@ public class ApplyPatientService extends BusinessServices {
 	public int delete(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("enter delete");
+		JSONObject json = null;
 		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		String did = new String(request.getParameter("DOCTOR_ID").getBytes("ISO-8859-1"),"utf-8");
+		String pid = new String(request.getParameter("PATIENT_ID").getBytes("ISO-8859-1"),"utf-8");
 		
 		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
 		pop.set("DOCTOR_ID", did);
@@ -39,53 +40,32 @@ public class ApplyPatientService extends BusinessServices {
 		DBDYDao.selectByID(ac.getConnection(), pop);
 		
 		result = DBDYDao.delete(ac.getConnection(), pop);
-//		if(0 == result) {
-//			
-//			setMessage(ac, "删除失败!");
-//		} else {
-//			
-//			setMessage(ac, "删除成功!");
-//		}
-//		return CONST_RESULT_AJAX;
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/applydelete_success.html");
-		return CONST_RESULT_SUCCESS;
+		json = new JSONObject();
+		if(0 == result)
+		{
+			json.put("result","删除申请失败！");
+		}
+		else
+		{
+			json.put("result","删除申请成功！");
+		}					
+			
+		ac.getHttpResponse().getWriter().write(json.toString());
+		return CONST_RESULT_AJAX;
 	}
 	
-	public int delete1(ActionContext ac) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("enter delete");
-		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
-		
-		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
-		pop.set("DOCTOR_ID", did);
-		pop.set("PATIENT_ID", pid);
-		DBDYDao.selectByID(ac.getConnection(), pop);
-		
-		result = DBDYDao.delete(ac.getConnection(), pop);
-//		if(0 == result) {
-//			
-//			setMessage(ac, "删除失败!");
-//		} else {
-//			
-//			setMessage(ac, "删除成功!");
-//		}
-//		return CONST_RESULT_AJAX;
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/applydelete_success.html");
-		return CONST_RESULT_SUCCESS;
-	}
+	
 
 	@Override
 	public int goTo(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("enter reject");
-		
+		System.out.println("enter edit");
+		JSONObject json = null;
 		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
-		String message = ac.getHttpRequest().getParameter("MESSAGE");
-		
+		String did = new String(request.getParameter("DOCTOR_ID").getBytes("ISO-8859-1"),"utf-8");
+		String pid = new String(request.getParameter("PATIENT_ID").getBytes("ISO-8859-1"),"utf-8");
+		String message = new String(request.getParameter("MESSAGE").getBytes("ISO-8859-1"),"utf-8");
+		System.out.println("message="+message);
 		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
 		pop.set("DOCTOR_ID", did);
 		pop.set("PATIENT_ID", pid);
@@ -93,16 +73,18 @@ public class ApplyPatientService extends BusinessServices {
 		
 		pop.set("MESSAGE", message);
 		result = DBDYDao.update(ac.getConnection(), pop);
-//		if(0 == result) {
-//			
-//			setMessage(ac, "修改失败!");
-//		} else {
-//			
-//			setMessage(ac, "修改成功!");
-//		}
-//		return CONST_RESULT_AJAX;
-		ac.setStringValue("FORMNAME", "com/xmdx/demo/application/apply_success.html");
-		return CONST_RESULT_SUCCESS;
+		json = new JSONObject();
+		if(0 == result)
+		{
+			json.put("result","修改申请失败！");
+		}
+		else
+		{
+			json.put("result","修改申请成功！");
+		}					
+			
+		ac.getHttpResponse().getWriter().write(json.toString());
+		return CONST_RESULT_AJAX;
 	}
 
 	@Override
@@ -146,6 +128,9 @@ public class ApplyPatientService extends BusinessServices {
 			po1.set("MESSAGE", pop[i].get("MESSAGE").toString());
 			po1.set("CREATE_TIME", pop[i].get("CREATE_TIME").toString());
 			po1.set("STATE", pop[i].get("STATE").toString());
+			po1.set("PATIENT_ID", pop[i].get("PATIENT_ID").toString());
+			po1.set("DOCTOR_ID", pop[i].get("DOCTOR_ID").toString());
+			po1.set("DOCTOR_NAME", pop[i].get("DOCTOR_NAME").toString());
 			projects.add(po1);
 		}
 		
@@ -247,7 +232,7 @@ public class ApplyPatientService extends BusinessServices {
 		String currentpage = jsonObject.getString("CurrentPage");
 		int c = Integer.parseInt(currentpage);
 		System.out.println("currentpage="+currentpage);
-		int n = (c-1)*2;
+		int n = (c-1)*10;
 		
 		for(int i = 0; i< polist.size();i++,n++){
 			System.out.println("enter if");
@@ -256,6 +241,9 @@ public class ApplyPatientService extends BusinessServices {
 			po1.set("MESSAGE", pop[n].get("MESSAGE").toString());
 			po1.set("CREATE_TIME", pop[n].get("CREATE_TIME").toString());
 			po1.set("STATE", pop[n].get("STATE").toString());
+			po1.set("PATIENT_ID", pop[n].get("PATIENT_ID").toString());
+			po1.set("DOCTOR_ID", pop[n].get("DOCTOR_ID").toString());
+			po1.set("DOCTOR_NAME", pop[n].get("DOCTOR_NAME").toString());
 			projects.add(po1);
 		}
 		

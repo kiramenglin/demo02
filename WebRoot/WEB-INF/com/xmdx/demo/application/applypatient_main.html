@@ -56,7 +56,44 @@ function myProject(option){
 	
 }
 
+function saveInfo(doctorid,patientid){
+	
+	$.ajax({
+		type: "post",
+		 url: "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.patient&PATIENT_ID="+patientid+"&DOCTOR_ID="+doctorid,
+		dataType: "json",
+		success: function(data){		            			            
+				           
+			alert(data.result);	
+		}
+	 });
+	  
+	
+}
 
+function saveInfo1(doctorid,patientid){
+	
+	var str1=document.getElementById("MESSAGE-"+doctorid).value;
+	  
+	  
+	  if(str1==""){
+		  alert("请输入修改内容！");
+		  validateForm = false;
+	  
+	  }
+	  else{
+	
+		  $.ajax({
+				type: "post",
+				 url: "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.patient&PATIENT_ID="+patientid+"&DOCTOR_ID="+doctorid+"&MESSAGE="+str1,
+				dataType: "json",
+				success: function(data){		            			            
+						           
+					alert(data.result);	
+				}
+			 });
+	  }
+}
 
 </script>
 </head>
@@ -119,18 +156,18 @@ function myProject(option){
                                         	<td class="warning">
                                         	<div class="row">
                                         	<div class="col-md-3">
-                                        	<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.patient">
+                                        	<form method="post" name="infoForm-@{APPS.get('DOCTOR_ID')}" id="infoForm-@{APPS.get('DOCTOR_ID')}">
 											<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
                                         	<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-											<input class="btn btn-danger btn-sm" type="submit" value="删除">
+											<button class="btn btn-danger btn-sm" style="width:50px;" onclick="saveInfo('@{APPS.get('DOCTOR_ID')}','@{APPS.get('PATIENT_ID')}')">删除</button>
 				   							</form>
 				   							</div>
 				   							<div class="col-md-3">
-											<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal">修改</button>
+											<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#myModal-@{APPS.get('DOCTOR_ID')}">修改</button>
 				
 										    </div>
 										    </div>
-				   							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				   							<div class="modal fade" id="myModal-@{APPS.get('DOCTOR_ID')}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  									<div class="modal-dialog">
 			    								<div class="modal-content">
 			     								<div class="modal-header">
@@ -138,17 +175,17 @@ function myProject(option){
 			        							<h4 class="modal-title" id="myModalLabel">修改理由</h4>
 			      								</div>
 			     
-				   								<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=apply.patient">
-												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        		<input  type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+				   								<form method="post" name="infoForm-@{APPS.get('DOCTOR_ID')}" id="infoForm-@{APPS.get('DOCTOR_ID')}">
+												<input  style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+                                        		<input  style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
                                         		<div class="form-group">
 												<label for="inputPassword" class="col-sm-2 control-label">预约内容</label>
 												<div id="edit_myfrom" class="col-sm-5">
    					
           			 
-       											 <p class="textinput"><label><textarea name="MESSAGE" cols="" rows="" maxlength="200" style="height:60px; width:400px" required></textarea></label></p>
+       											 <p class="textinput"><label><textarea name="MESSAGE-@{APPS.get('DOCTOR_ID')}" id="MESSAGE-@{APPS.get('DOCTOR_ID')}" cols="" rows="" maxlength="200" style="height:60px; width:400px" required></textarea></label></p>
        				 								<p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
-   					<input type="submit" class="btn btn-primary btn-sm" onclick="saveInfo()" value="提交">
+   					<button class="btn btn-warning btn-sm" style="width:50px;" onclick="saveInfo1('@{APPS.get('DOCTOR_ID')}','@{APPS.get('PATIENT_ID')}')">修改</button>
 												</div>
 												</div>
 												
@@ -161,10 +198,10 @@ function myProject(option){
 											</td>
 											@else{}
 											<td class="success">
-											<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=apply.patient!delete1">
+											<form method="post" name="infoForm-@{APPS.get('DOCTOR_ID')}" id="infoForm-@{APPS.get('DOCTOR_ID')}" >
 											<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
                                         	<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
-											<input class="btn btn-danger btn-sm" type="submit" value="删除">
+											<button class="btn btn-danger btn-sm" style="width:50px;" onclick="saveInfo('@{APPS.get('DOCTOR_ID')}','@{APPS.get('PATIENT_ID')}')">删除</button>
 				   							</form>
 				   							</td>
 											@end{}

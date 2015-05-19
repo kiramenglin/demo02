@@ -1,10 +1,20 @@
 package com.xmdx.demo.apply.service;
 
+
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+
+
+
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
+
 
 import com.alibaba.fastjson.JSONObject;
 import com.e9rj.platform.common.BaseConstants;
@@ -30,9 +40,10 @@ public class ApplyService extends BusinessServices {
 	public int delete(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("enter delete");
+		JSONObject json = null;
 		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR1_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT1_ID");
+		String did = new String(request.getParameter("DOCTOR_ID").getBytes("ISO-8859-1"),"utf-8");
+		String pid = new String(request.getParameter("PATIENT_ID").getBytes("ISO-8859-1"),"utf-8");
 		
 		System.out.println("patient_id="+pid);
 		System.out.println("doctor_id="+did);
@@ -43,13 +54,17 @@ public class ApplyService extends BusinessServices {
 	    DBDYDao.selectByID(ac.getConnection(), pop);
 
 		result = DBDYDao.delete(ac.getConnection(), pop);
+		json = new JSONObject();
 		if(0 == result) {
 			
-			setMessage(ac, "删除失败!");
+			json.put("result","删除失败！");
 		} else {
+			 
 			
-			setMessage(ac, "删除成功!");
+			
+			json.put("result","删除成功！");
 		}
+		ac.getHttpResponse().getWriter().write(json.toString());
 		return CONST_RESULT_AJAX;
 	}
 
@@ -57,14 +72,14 @@ public class ApplyService extends BusinessServices {
 	public int goTo(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("enter goto");
-		
+		JSONObject json = null;
 		int result = 0;
-		String did = ac.getHttpRequest().getParameter("DOCTOR1_ID");
-		String pid = ac.getHttpRequest().getParameter("PATIENT1_ID");
+		String did = new String(request.getParameter("DOCTOR_ID").getBytes("ISO-8859-1"),"utf-8");
+		String pid = new String(request.getParameter("PATIENT_ID").getBytes("ISO-8859-1"),"utf-8");
 		
 		System.out.println("patient_id="+pid);
 		System.out.println("doctor_id="+did);
-		String message = ac.getHttpRequest().getParameter("MESSAGE");
+		String message = new String(request.getParameter("MESSAGE").getBytes("ISO-8859-1"),"utf-8");
 		System.out.println("message="+message);
 		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
 		pop.set("DOCTOR_ID", did);
@@ -73,13 +88,18 @@ public class ApplyService extends BusinessServices {
 		pop.set("STATE","2");
 		pop.set("REJECT_MESSAGE", message);
 		result = DBDYDao.update(ac.getConnection(), pop);
+		System.out.println("resultsaoifjsaodjf="+result);
+		json = new JSONObject();
 		if(0 == result) {
 			
-			setMessage(ac, "拒绝失败!");
+			json.put("result","拒绝失败！");
 		} else {
+			 
 			
-			setMessage(ac, "拒绝成功!");
+			
+			json.put("result","拒绝成功！");
 		}
+		ac.getHttpResponse().getWriter().write(json.toString());
 		return CONST_RESULT_AJAX;
 		
 	}
@@ -159,26 +179,37 @@ public class ApplyService extends BusinessServices {
 
 	@Override
 	public int save(ActionContext ac) throws Exception {
-		// TODO Auto-generated method stub
+		
 		System.out.println("enter agree");
+		JSONObject json = null;
+		
+		
 		int result = 0;
 		String did = ac.getHttpRequest().getParameter("DOCTOR_ID");
 		String pid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		System.out.println("doctorid="+did);
+		System.out.println("patient="+pid);
 		DBDYPO pop = new DBDYPO(tableName,"DOCTOR_ID,PATIENT_ID");
 		pop.set("DOCTOR_ID", did);
 		pop.set("PATIENT_ID", pid);
 		DBDYDao.selectByID(ac.getConnection(), pop);
 		pop.set("STATE","1");
 		result = DBDYDao.update(ac.getConnection(), pop);
+		System.out.println("result2132133="+result);
+		json = new JSONObject();
 		if(0 == result) {
 			
-			setMessage(ac, "通过失败!");
+			json.put("result","通过失败！");
 		} else {
+			 
 			
-			setMessage(ac, "通过成功!");
+			
+			json.put("result","通过成功！");
 		}
+		ac.getHttpResponse().getWriter().write(json.toString());
 		return CONST_RESULT_AJAX;
 	}
+	
 
 	public int myapply(ActionContext ac) throws Exception {
 		// TODO Auto-generated method stub

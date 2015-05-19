@@ -427,7 +427,7 @@ public class DoctorSuggestionService extends BusinessServices {
 		String currentpage = jsonObject.getString("CurrentPage");
 		int c = Integer.parseInt(currentpage);
 		System.out.println("currentpage="+currentpage);
-		int n = (c-1)*2;
+		int n = (c-1)*10;
 		
 		for(int i = 0; i< polist.size();i++,n++){
 			System.out.println("enter if");
