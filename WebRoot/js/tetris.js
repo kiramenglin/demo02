@@ -11,8 +11,7 @@ var GameCanvasContext = GameCanvas.getContext("2d");
 var BackgroundAudioPlayer = document.getElementById("Background-AudioPlayer");//背景音乐
 var ScoreAudioPlayer = document.getElementById("Score-AudioPlayer");//得分特效音
 var GameOverAudioPlayer = document.getElementById("GameOver-AudioPlayer");//游戏结束特效音
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext("2d");
+
 var rushBlock = new RusBlock();
 var nGameStatus = 1;//游戏处于开始状态
 
