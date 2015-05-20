@@ -24,6 +24,11 @@
     <script src="/e9common/js/common.js"></script>
 	<!-- CUSTOMIZE/OVERRIDE THE DEFAULT CSS -->
 	<style type="text/css">
+		#info{
+			margin-left: 20px;
+			margin-top: 20px;
+			padding: 50px;
+		}
 		/* remove padding and scrolling from elements that contain an Accordion OR a content-div */
 		.ui-layout-center ,	/* has content-div */
 		.ui-layout-west ,	/* has Accordion */
@@ -944,7 +949,7 @@
 						
 						
 		
-		<div class="row">
+		<div class="row" id="info">
 			<div class="col-md-4">
 			@if{USER.get("IMAGE")!=null}
 			 	<div class="text-center profile-pic">

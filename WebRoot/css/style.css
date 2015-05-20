@@ -7,7 +7,7 @@ li{ list-style:none;}
 body{ text-align:left; background:#f0f0f0; font-size:12px; color:#1d70eb;}
 
 .main{ width:960px; border:solid #ddd; background:#fff; margin:0 auto; padding-top:20px; height:800px; border-width:0 1px;}
-.warp{ width:420px; height:420px; border:1px solid #8aadfd; margin:0px 20px; background:#fff; overflow:hidden; position:relative;}
+.warp{ width:420px; height:420px; border:1px solid #8aadfd; margin:0px 200px; background:#fff; overflow:hidden; position:relative;}
 .issue{ position:absolute; top:0; left:0; width:420px; height:auto; z-index:99;}
 .issue div{ height:387px; padding-bottom:33px; background:#fff;}
 .issue h3{ line-height:1.4em; font-size:1.1em; color:#1348c1; padding:.8em .5em .5em; border-bottom:1px solid #8aadfd; font-weight:100;}
