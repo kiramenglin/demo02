@@ -50,10 +50,21 @@ function myProject(option){
 	});
 }
 
-function validate(){
-	  document.getElementByIdx_x('infoForm').submit();
+function validate(id){
+	
+	$.ajax({
+		type: "post",
+		 url: "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=doctor.blog&ID="+id,
+		dataType: "json",
+		success: function(data){		            			            
+		           
+			alert(data.result);
+			location.reload();
+		}
+	 });
+	  
 	}
-window.load=validate();
+
 </script>
 </head>
 <body>
@@ -92,12 +103,13 @@ window.load=validate();
 				</div>
 				<div class="col-md-1">
 				
-				<form method="post" name="infoForm" id="infoForm" action="HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=doctor.blog">
+				<form method="post" name="infoForm-@{BLOG.get('ID')}" id="infoForm-@{BLOG.get('ID')}">
 					
-					<input  type="hidden"  name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
+					<input type="hidden" name="ID" id="ID" value="@{BLOG.get('ID')}"><br>
 					
-					<input type="submit" class="btn btn-danger" value="删除">
+					
 				</form>
+				<button class="btn btn-danger" onclick="validate('@{BLOG.get('ID')}')">删除</button>
 				</div>
 				</div>
 				@end{}

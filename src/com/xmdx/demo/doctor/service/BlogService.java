@@ -41,15 +41,19 @@ public class BlogService extends BusinessServices {
 					DBDYPO po = new DBDYPO(tableName, keyField);
 					po.set(keyField, uidStr);
 					DBDYDao.selectByID(ac.getConnection(), po);
+					ac.setObjValue("BLOG_BEAN", po);
 					result = DBDYDao.delete(ac.getConnection(), po);
-					
+					JSONObject json = null;
+					json = new JSONObject();
 					if(result == 0) {
-						setMessage(ac,"删除失败");
+						json.put("result","删除失败！");
 					} else {
-						ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_success.html");
+						json.put("result","删除成功！");
 					}
+					ac.getHttpResponse().getWriter().write(json.toString());
 				}
-		return CONST_RESULT_SUCCESS;
+		
+		return CONST_RESULT_AJAX;
 	}
 		
 		
@@ -252,6 +256,7 @@ public class BlogService extends BusinessServices {
 				ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/doctor/blog_success.html");
 			}
 			return CONST_RESULT_SUCCESS;
+			
 		}
 		
 		
