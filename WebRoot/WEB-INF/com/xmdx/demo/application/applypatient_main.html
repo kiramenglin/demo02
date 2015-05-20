@@ -65,6 +65,7 @@ function saveInfo(doctorid,patientid){
 		success: function(data){		            			            
 				           
 			alert(data.result);	
+			location.reload();
 		}
 	 });
 	  
@@ -176,8 +177,8 @@ function saveInfo1(doctorid,patientid){
 			      								</div>
 			     
 				   								<form method="post" name="infoForm-@{APPS.get('DOCTOR_ID')}" id="infoForm-@{APPS.get('DOCTOR_ID')}">
-												<input  style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
-                                        		<input  style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
+												<input type="hidden" style="width:90%" name="DOCTOR_ID" id="DOCTOR_ID" value="@{APPS.get("DOCTOR_ID")}"/>
+                                        		<input type="hidden" style="width:90%" name="PATIENT_ID" id="PATIENT_ID" value="@{APPS.get("PATIENT_ID")}"/>
                                         		<div class="form-group">
 												<label for="inputPassword" class="col-sm-2 control-label">预约内容</label>
 												<div id="edit_myfrom" class="col-sm-5">
