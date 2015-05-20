@@ -67,11 +67,12 @@ function saveInfo(doctorid,patientid){
 	
 	$.ajax({
 		type: "post",
-		 url: "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=apply.info&PATIENT_ID="+patientid+"&DOCTOR_ID="+doctorid,
+		 url: "HttpChannel?action=SAVE_ACTION&BUSINESS_TYPE=apply.info&PATIENT_ID="+patientid+"&DOCTOR_ID="+doctorid,
 		dataType: "json",
 		success: function(data){		            			            
 				           
 			alert(data.result);	
+			location.reload();
 		}
 	 });
 	  
@@ -97,6 +98,7 @@ function saveInfo1(doctorid,patientid){
 				success: function(data){		            			            
 						           
 					alert(data.result);	
+					location.reload();
 				}
 			 });
 	  }
@@ -110,6 +112,8 @@ function saveInfo2(doctorid,patientid){
 		success: function(data){		            			            
 				           
 			alert(data.result);	
+			location.reload();
+			
 		}
 	 });
 	
@@ -180,7 +184,7 @@ function saveInfo2(doctorid,patientid){
 					<div id="edit_myfrom" class="col-sm-5">
    					
           			 
-       				 <p class="textinput"><label><textarea id="MESSAGE" name="MESSAGE" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
+       				 <p class="textinput"><label><textarea id="MESSAGE-@{APPS.get('PATIENT_ID')}" name="MESSAGE-@{APPS.get('PATIENT_ID')}" cols="" rows="" maxlength="200" style="height:60px; width:400px"></textarea></label></p>
        				 <p id="numtj">你还可以输入<var style="color:#C00">--</var>个字符。</p>
    					<button class="btn btn-warning btn-sm" style="width:50px;" onclick="saveInfo1('@{APPS.get('DOCTOR_ID')}','@{APPS.get('PATIENT_ID')}')">拒绝</button>
 					</div>
