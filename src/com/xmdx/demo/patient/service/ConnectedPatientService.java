@@ -26,6 +26,7 @@ public class ConnectedPatientService extends BusinessServices {
 	
 	private static final String TABLE_PATIENT = "PATIENT";
 	
+	private static String patientid = null;
 	/**
 	 * 删除用户
 	 */
@@ -184,9 +185,13 @@ public class ConnectedPatientService extends BusinessServices {
 		
 		return CONST_RESULT_AJAX;
 	}
-
+	
+	
+	
+	
 	public int checkPatient(ActionContext ac) throws Exception {
 		String id = ac.getHttpRequest().getParameter("PATIENT_ID");
+		patientid = id;
 		StringBuilder sqlp = new StringBuilder("SELECT * FROM PATIENT U ");
 		if(StringUtils.isNotBlank(id)) {
 			sqlp.append(" WHERE U.PATIENT_ID LIKE '%").append(id).append("%' ");
@@ -198,6 +203,59 @@ public class ConnectedPatientService extends BusinessServices {
 		
 		ac.setStringValue("tabLogo", authFuncNo);
 		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/patient/patient_info.html");		
+		return CONST_RESULT_SUCCESS;
+	}
+	
+	public int generalQuery(ActionContext ac) throws Exception {
+		String id = patientid;
+		System.out.println(id+"!!!!!!!");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM ROUTINE_TEST U ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE U.TEST_ID IN(SELECT TEST_ID from PATIENT_TEST where PATIENT_ID LIKE '%").append(id).append("%') ");
+		}
+		
+
+		ssql.append(super.order(ac, "U.TEST_ID", "DESC"));
+		
+		querySql = ssql.toString();
+		this.commonQuery(ac, true);
+		
+		return CONST_RESULT_AJAX;
+	}
+	
+	public int eyeQuery(ActionContext ac) throws Exception {
+		String id = patientid;
+		System.out.println(id+"!!!!!!!");
+		StringBuilder ssql = new StringBuilder("SELECT * FROM EYE_TEST U ");
+		if(StringUtils.isNotBlank(id)) {
+			ssql.append(" WHERE U.EYE_ID IN(SELECT EYE_ID from PATIENT_EYE where PATIENT_ID LIKE '%").append(id).append("%') ");
+		}
+		
+
+		ssql.append(super.order(ac, "U.EYE_ID", "DESC"));
+		System.out.println("sql end");
+		querySql = ssql.toString(); 
+		this.commonQuery(ac, true);
+		
+		
+		return CONST_RESULT_AJAX;
+	}
+	
+	public int initGeneral(ActionContext ac) throws Exception {
+		patientid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		checkAuth(ac, authFuncNo, RIGHT_ONE);
+		
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/patient/connected_tab1.html");		
+		return CONST_RESULT_SUCCESS;
+	}
+	
+	public int initEye(ActionContext ac) throws Exception {
+		patientid = ac.getHttpRequest().getParameter("PATIENT_ID");
+		checkAuth(ac, authFuncNo, RIGHT_ONE);
+		
+		ac.setStringValue("tabLogo", authFuncNo);
+		ac.setStringValue(CONST_FORMNAME, "com/xmdx/demo/patient/connected_tab2.html");		
 		return CONST_RESULT_SUCCESS;
 	}
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!-- 所属病人列表页面 -->
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Insert title here</title>
@@ -10,9 +9,7 @@
     <script type="text/javascript">
     var pDialog;//用于弹窗
     var gridHeight=0;//必须要，用于计算grid高度
-    var queryAction = "HttpChannel?action=QUERY_ACTION&BUSINESS_TYPE=patient.connected";
-    var gotoAction = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=patient.connected";
-    var delAction = "HttpChannel?action=DEL_ACTION&BUSINESS_TYPE=patient.connected";
+    var queryAction = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.connected!eyeQuery";
     
 	$(document).ready(function () {
 		//过滤按钮权限
@@ -35,19 +32,11 @@
 					colModel:
 						#{com.e9rj.platform.form.GridFormUtil.getColumnSetting(SESSION_USER_BEAN.getSysUserPO().getOpNo(),
 						tabLogo, 
-						'[{name:"PATIENT_ID",hidden:true, index:"PATIENT_ID",label:"病患ID",width:"60px"},' +
-						'{name:"NAME",index:"NAME",label:"病患名称",width:"60px"},' +
-						'{name:"GENDER",index:"GENDER",label:"性别",width:"30px", align:"center"},' +
-						'{name:"BIRTHDAY",index:"BIRTHDAY",label:"年龄",width:"70px",align:"center",formatter:"date",formatoptions:{newformat: "Y-m-d"}},' +
-						'{name:"NATION",index:"NATION",label:"民族",width:"30px", align:"center"},' +
-						'{name:"OCCUPATION",index:"OCCUPATION",label:"职业",width:"30px", align:"center"},' +
-						'{name:"MARRIAGE",index:"MARRIAGE",label:"婚姻",width:"30px", align:"center"},' +
-						
-						
-						'{name:"WORKPLACE",index:"WORKPLACE",label:"工作地点",width:"30px", align:"center"},' +
-						
-						
-						
+						'[{name:"EYE_ID",hidden:true,index:"EYE_ID",label:"常规检查单ID",width:"60px"},' +
+						'{name:"NV",index:"NV",label:"裸眼视力",width:"60px"},' +
+						'{name:"TENSION",index:"TENSION",label:"眼压",width:"60px", align:"center"},' +
+						'{name:"CANAL",index:"CANAL",label:"泪河",width:"60px",align:"center"},' +
+						'{name:"TBUT",index:"TBUT",label:"TBUT",width:"60px"},' +
 						']'
 						)},
 						multiselect: false,
@@ -55,8 +44,8 @@
 			    	ondblClickRow:function(rowid,iRow,iCol,e){
 			    		selectCheckbox("gridTable",rowid);
 			    		var rowData = $("#gridTable").jqGrid("getRowData", rowid);  
-						var url = gotoAction + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-						popReadInfo(url,"查看病患信息",globalPopWidth,globalPopHeightShort);
+						var url = gotoAction + "&EYE_ID="+rowData.EYE_ID+"&TMP="+new Date();
+						popReadInfo(url,"查看详细信息",globalPopWidth,globalPopHeightShort);
 			    	},
 			    	gridComplete: function () {
 			    		//设置菜单
@@ -82,37 +71,68 @@
 			$("#searchform")[0].reset();
 		});
 		
-		$("#infoBtn").click(function(){
-			var selectedId = getSelectedCheckbox("gridTable");
-			if(!selectOne(selectedId))return;
-			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.connected!checkPatient" + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-			window.location.href=url;
+		//新增按钮
+		$("#addBtn").click(function(){
+	 
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.eye!newInfo" +"&TMP="+new Date();
+			popSaveInfo(url,"新建信息",globalPopWidth,globalPopWidth);
+			
 		});
 		
-		$("#info1Btn").click(function(){
+		//修改按钮
+		$("#updateBtn").click(function(){
+			
+			
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
-			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = "HttpChannel?action=GOTO_ACTION&BUSINESS_TYPE=doctor.suggestion" + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-			window.location.href=url;
+	        var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
+	        
+	        
+	        var url = gotoAction + "&EYE_ID="+rowData.EYE_ID+"&TMP="+new Date();
+	        popSaveInfo(url,"修改信息",globalPopWidth,globalPopWidth);
+	        
 		});
 		
-		$("#infoBtn2").click(function(){
+		//查看按钮
+		$("#readBtn").click(function(){
 			var selectedId = getSelectedCheckbox("gridTable");
 			if(!selectOne(selectedId))return;
 			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.connected!initGeneral" + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-			window.location.href=url;
+			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.eye!info" + "&EYE_ID="+rowData.EYE_ID+"&TMP="+new Date();
+			
+			popReadInfo(url,"查看信息",globalPopWidth,globalPopWidth);
 		});
 		
-		$("#infoBtn3").click(function(){
+		//删除按钮
+		$("#delBtn").click(function(e){
 			var selectedId = getSelectedCheckbox("gridTable");
-			if(!selectOne(selectedId))return;
-			var rowData = $("#gridTable").jqGrid("getRowData", selectedId);  
-			var url = "HttpChannel?action=COMMON_ACTION&BUSINESS_TYPE=patient.connected!initEye" + "&PATIENT_ID="+rowData.PATIENT_ID+"&TMP="+new Date();
-			window.location.href=url;
+			if(selectedId==""){
+				$.uialert("请选择数据!");
+				return;
+			}
+			deleteInfo(e,selectedId);
 		});
+		
+		
+		
+		//删除操作
+		function deleteInfo(e,rowid){
+			var rows = rowid.split(",");
+			var ids = "";
+			jQuery.each(rows, function() {
+				var rowData = $("#gridTable").jqGrid("getRowData", this);  
+				ids = ids + rowData.EYE_ID + ",";
+			});
+			$.uiconfirm("确定要删除吗？", "确认提示",
+		      function() {
+				var url = delAction + "&EYE_ID="+ids;
+				commonDelete(url);
+		      },
+		      function() {
+		        //取消删除
+		      });
+		}
+		
 	});
 	
 
@@ -141,10 +161,11 @@
 	        <div id="gridPager" style="height: 36px"></div>
 	        <div id="buttonDiv" style="position:absolute;bottom:10px;left:6px;">
 				<span id="buttonset">
-	                <button id="infoBtn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>详情</button>
-					<button id="info1Btn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>建议</button>
-					<button id="infoBtn2" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>眼科</button>
-					<button id="infoBtn3" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>一般</button>
+					<button id="readBtn" rightval="1"><span class="ui-icon ui-icon-newwin" style="float: left;"></span>查看</button>
+					<button id="addBtn" rightval="2"><span class="ui-icon ui-icon-plus" style="float: left;"></span>新增</button>
+					<button id="updateBtn" rightval="4"><span class="ui-icon ui-icon-pencil" style="float: left;"></span>修改</button>
+					<button id="delBtn" rightval="8"><span class="ui-icon ui-icon-trash" style="float: left;"></span>删除</button>
+					
 				</span>
 	        </div>
 		</div>
